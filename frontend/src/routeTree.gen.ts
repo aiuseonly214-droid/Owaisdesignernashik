@@ -31,6 +31,7 @@ import { Route as AuthenticatedQuotationsNewRouteImport } from './routes/_authen
 import { Route as AuthenticatedReceiptsIndexRouteImport } from './routes/_authenticated/receipts/index'
 import { Route as AuthenticatedReceiptsIdRouteImport } from './routes/_authenticated/receipts/$id'
 import { Route as AuthenticatedReceiptsNewRouteImport } from './routes/_authenticated/receipts/new'
+import { Route as VerifyTypeIdRouteImport } from './routes/verify.$type.$id'
 import { Route as AuthenticatedInvoicesIdEditRouteImport } from './routes/_authenticated/invoices/$id_.edit'
 import { Route as AuthenticatedQuotationsIdEditRouteImport } from './routes/_authenticated/quotations/$id_.edit'
 
@@ -151,6 +152,11 @@ const AuthenticatedReceiptsNewRoute =
     path: '/receipts/new',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const VerifyTypeIdRoute = VerifyTypeIdRouteImport.update({
+  id: '/verify/$type/$id',
+  path: '/verify/$type/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedInvoicesIdEditRoute =
   AuthenticatedInvoicesIdEditRouteImport.update({
     id: '/invoices/$id_/edit',
@@ -183,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/quotations/new': typeof AuthenticatedQuotationsNewRoute
   '/receipts/$id': typeof AuthenticatedReceiptsIdRoute
   '/receipts/new': typeof AuthenticatedReceiptsNewRoute
+  '/verify/$type/$id': typeof VerifyTypeIdRoute
   '/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/quotations/': typeof AuthenticatedQuotationsIndexRoute
   '/receipts/': typeof AuthenticatedReceiptsIndexRoute
@@ -208,6 +215,7 @@ export interface FileRoutesByTo {
   '/quotations/new': typeof AuthenticatedQuotationsNewRoute
   '/receipts/$id': typeof AuthenticatedReceiptsIdRoute
   '/receipts/new': typeof AuthenticatedReceiptsNewRoute
+  '/verify/$type/$id': typeof VerifyTypeIdRoute
   '/invoices': typeof AuthenticatedInvoicesIndexRoute
   '/quotations': typeof AuthenticatedQuotationsIndexRoute
   '/receipts': typeof AuthenticatedReceiptsIndexRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/_authenticated/quotations/new': typeof AuthenticatedQuotationsNewRoute
   '/_authenticated/receipts/$id': typeof AuthenticatedReceiptsIdRoute
   '/_authenticated/receipts/new': typeof AuthenticatedReceiptsNewRoute
+  '/verify/$type/$id': typeof VerifyTypeIdRoute
   '/_authenticated/invoices/': typeof AuthenticatedInvoicesIndexRoute
   '/_authenticated/quotations/': typeof AuthenticatedQuotationsIndexRoute
   '/_authenticated/receipts/': typeof AuthenticatedReceiptsIndexRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/quotations/new'
     | '/receipts/$id'
     | '/receipts/new'
+    | '/verify/$type/$id'
     | '/invoices/'
     | '/quotations/'
     | '/receipts/'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/quotations/new'
     | '/receipts/$id'
     | '/receipts/new'
+    | '/verify/$type/$id'
     | '/invoices'
     | '/quotations'
     | '/receipts'
@@ -313,6 +324,7 @@ export interface FileRouteTypes {
     | '/_authenticated/quotations/new'
     | '/_authenticated/receipts/$id'
     | '/_authenticated/receipts/new'
+    | '/verify/$type/$id'
     | '/_authenticated/invoices/'
     | '/_authenticated/quotations/'
     | '/_authenticated/receipts/'
@@ -327,6 +339,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   EmployeeLoginRoute: typeof EmployeeLoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  VerifyTypeIdRoute: typeof VerifyTypeIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -485,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReceiptsNewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/verify/$type/$id': {
+      id: '/verify/$type/$id'
+      path: '/verify/$type/$id'
+      fullPath: '/verify/$type/$id'
+      preLoaderRoute: typeof VerifyTypeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/invoices/$id_/edit': {
       id: '/_authenticated/invoices/$id_/edit'
       path: '/invoices/$id/edit'
@@ -554,6 +574,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   EmployeeLoginRoute: EmployeeLoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  VerifyTypeIdRoute: VerifyTypeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

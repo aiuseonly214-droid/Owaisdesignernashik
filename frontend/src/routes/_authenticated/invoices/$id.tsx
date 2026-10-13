@@ -59,6 +59,7 @@ function InvoiceView() {
         customer={doc.customers}
         items={items}
         doc={{
+          id: doc.id,
           code: doc.code,
           date: doc.date,
           secondaryDate: doc.due_date,

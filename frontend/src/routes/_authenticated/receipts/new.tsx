@@ -103,7 +103,20 @@ function NewReceipt() {
 
   async function submit() {
     if (!form.customer_id) return toast.error("Please select a customer");
-    if (toNumber(form.amount_received) <= 0) return toast.error("Enter the amount received");
+    const amountReceived = toNumber(form.amount_received);
+    if (amountReceived <= 0) return toast.error("Enter a valid amount received (greater than 0)");
+
+    const totalAmount = toNumber(form.total_amount);
+    const previousPaid = toNumber(form.previous_paid);
+    if (totalAmount > 0) {
+      const remainingDue = Math.max(0, totalAmount - previousPaid);
+      if (amountReceived > remainingDue) {
+        return toast.error(
+          `Amount exceeds remaining balance! Maximum payable amount is ₹${remainingDue.toLocaleString("en-IN")}`,
+        );
+      }
+    }
+
     setSaving(true);
     try {
       const id = await saveReceipt({

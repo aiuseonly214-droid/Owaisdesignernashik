@@ -55,14 +55,16 @@ export function DocTitleBar({ title }: { title: string }) {
 export function DocFooter({
   company,
   leftLabel = "Customer Signature",
+  verificationQr,
 }: {
   company: CompanyProfile;
   leftLabel?: string;
+  verificationQr?: React.ReactNode;
 }) {
   return (
     <div className="mt-auto">
-      <div className="flex items-end justify-between gap-8 px-10 pb-6 pt-10">
-        <div className="w-[210px] text-center">
+      <div className="flex items-end justify-between gap-4 px-10 pb-6 pt-10">
+        <div className="w-[190px] text-center">
           <div
             style={{ borderColor: DOC.border }}
             className="mb-1 h-[56px] border-b border-dashed"
@@ -72,7 +74,13 @@ export function DocFooter({
           </p>
         </div>
 
-        <div className="relative w-[240px] text-center">
+        {verificationQr && (
+          <div className="max-w-[220px]">
+            {verificationQr}
+          </div>
+        )}
+
+        <div className="relative w-[210px] text-center">
           <div className="relative flex h-[56px] items-end justify-center">
             <img
               src={company.signature_url || DEFAULT_SIGNATURE_URL}

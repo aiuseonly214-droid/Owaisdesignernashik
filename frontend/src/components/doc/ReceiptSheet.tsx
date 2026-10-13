@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import type { CompanyProfile, Customer, Receipt } from "@/lib/crm";
 import { formatAmount, formatDate } from "@/lib/format";
 import { DocFooter, DocHeader, DocTitleBar, InfoBlock } from "./DocChrome";
+import { DocumentVerificationQR } from "./DocumentVerificationQR";
 import { DOC } from "@/lib/branding";
 
 const MODE_LABEL: Record<string, string> = {
@@ -104,7 +105,22 @@ export const ReceiptSheet = forwardRef<
         </div>
       )}
 
-      <DocFooter company={company} leftLabel="Customer Signature" />
+      <DocFooter
+        company={company}
+        leftLabel="Customer Signature"
+        verificationQr={
+          receipt.id ? (
+            <DocumentVerificationQR
+              type="receipt"
+              id={receipt.id}
+              code={receipt.code}
+              amount={receipt.amount_received}
+              date={receipt.date}
+              customerName={customer?.name}
+            />
+          ) : undefined
+        }
+      />
     </div>
   );
 });

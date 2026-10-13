@@ -92,6 +92,7 @@ function QuotationView() {
         customer={doc.customers}
         items={items}
         doc={{
+          id: doc.id,
           code: doc.code,
           date: doc.date,
           secondaryDate: doc.valid_till,
