@@ -17,17 +17,30 @@ export const Route = createFileRoute("/verify/$type/$id")({
   component: VerifyDocPage,
 });
 
-async function fetchPublicDocVerification(type: string, id: string) {
+async function fetchPublicDocVerification(type: string, idOrCode: string) {
   const table = type === "quotation" ? "quotations" : type === "invoice" ? "invoices" : "receipts";
+  
+  // Try matching by id first, then code
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrCode);
+  const column = isUuid ? "id" : "code";
+
   const { data, error } = await (supabase as any)
     .from(table)
-    .select("id, code, date, grand_total, total_amount, amount_received, status, mode, created_at, customers(name, code, city)")
-    .eq("id", id)
+    .select("id, code, date, grand_total, total_amount, amount_received, status, mode, created_at, customer_id, customers(name, code, city)")
+    .eq(column, idOrCode)
     .maybeSingle();
 
   if (error) {
-    console.warn("Doc fetch verification error", error);
-    return null;
+    console.warn("Doc fetch verification error:", error.message || error);
+    // If lookup with relation fails due to customer RLS, try fetching document row standalone
+    const { data: fallbackDoc, error: fError } = await (supabase as any)
+      .from(table)
+      .select("id, code, date, grand_total, total_amount, amount_received, status, mode, created_at, customer_id")
+      .eq(column, idOrCode)
+      .maybeSingle();
+    
+    if (fError || !fallbackDoc) return null;
+    return fallbackDoc;
   }
   return data;
 }

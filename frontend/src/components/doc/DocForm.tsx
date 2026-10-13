@@ -272,8 +272,10 @@ export function DocForm({
         toast.success("Invoice saved");
         navigate({ to: "/invoices/$id", params: { id } });
       }
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Could not save");
+    } catch (e: any) {
+      console.error("Save error details:", e);
+      const msg = e?.message || e?.error_description || (typeof e === "string" ? e : "Could not save document");
+      toast.error(msg);
     } finally {
       setSaving(false);
     }

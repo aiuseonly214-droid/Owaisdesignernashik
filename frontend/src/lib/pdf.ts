@@ -53,20 +53,25 @@ function saveBlob(blob: Blob, filename: string) {
 /** Wait until fonts and every <img> inside the node are really painted. */
 async function waitForPaint(el: HTMLElement) {
   try {
-    await (document as Document & { fonts?: FontFaceSet }).fonts?.ready;
+    await Promise.race([
+      (document as Document & { fonts?: FontFaceSet }).fonts?.ready,
+      new Promise((res) => setTimeout(res, 1200)),
+    ]);
   } catch {
     /* ignore */
   }
-  await Promise.all(
-    Array.from(el.querySelectorAll("img")).map((img) =>
-      img.complete
-        ? img.decode().catch(() => undefined)
-        : new Promise<void>((res) => {
-            img.addEventListener("load", () => res(), { once: true });
-            img.addEventListener("error", () => res(), { once: true });
-          }),
-    ),
-  );
+  const imgPromises = Array.from(el.querySelectorAll("img")).map((img) => {
+    if (img.complete) return Promise.resolve();
+    return new Promise<void>((res) => {
+      img.addEventListener("load", () => res(), { once: true });
+      img.addEventListener("error", () => res(), { once: true });
+      setTimeout(res, 1500); // 1.5s timeout per image fallback
+    });
+  });
+  await Promise.race([
+    Promise.all(imgPromises),
+    new Promise((res) => setTimeout(res, 2500)),
+  ]);
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(null))));
 }
 
@@ -81,12 +86,12 @@ export async function exportElementToPdf(el: HTMLElement, filename: string) {
   let canvas: HTMLCanvasElement;
   try {
     canvas = await html2canvas(el, {
-      scale: Math.min(2, window.devicePixelRatio || 1) * 2,
+      scale: 2,
       backgroundColor: "#ffffff",
       useCORS: true,
-      allowTaint: false,
+      allowTaint: true,
       logging: false,
-      windowWidth: el.scrollWidth,
+      windowWidth: el.scrollWidth || 794,
       onclone: (_doc, clone) => {
         // Re-apply each element's own inline colours as !important so a
         // missed style never leaves the letterhead / table header blank white.
