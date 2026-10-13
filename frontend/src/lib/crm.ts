@@ -276,16 +276,34 @@ export async function saveQuotation(doc: Partial<Quotation> & { id?: string }, i
   let id = doc.id;
   const { id: _omit, customers: _c, code: _code, created_at: _ca, ...body } = doc as any;
   if (id) {
-    const { error } = await db.from("quotations").update(body).eq("id", id);
-    if (error) throw error;
+    let { error } = await db.from("quotations").update(body).eq("id", id);
+    if (error && error.message && error.message.includes("column")) {
+      // Fallback if show_section_subtotals or show_totals is not yet migrated in postgres
+      const { show_section_subtotals: _s, show_totals: _t, ...stripped } = body;
+      const res = await db.from("quotations").update(stripped).eq("id", id);
+      if (res.error) throw res.error;
+    } else if (error) {
+      throw error;
+    }
     await db.from("quotation_items").delete().eq("quotation_id", id);
   } else {
-    const { data, error } = await db
+    let { data, error } = await db
       .from("quotations")
       .insert({ ...body, created_by: await currentUserId() })
       .select("id")
       .single();
-    if (error) throw error;
+    if (error && error.message && error.message.includes("column")) {
+      const { show_section_subtotals: _s, show_totals: _t, ...stripped } = body;
+      const res = await db
+        .from("quotations")
+        .insert({ ...stripped, created_by: await currentUserId() })
+        .select("id")
+        .single();
+      if (res.error) throw res.error;
+      data = res.data;
+    } else if (error) {
+      throw error;
+    }
     id = data.id as string;
   }
   if (items.length) {
@@ -301,8 +319,15 @@ export async function saveQuotation(doc: Partial<Quotation> & { id?: string }, i
       include_in_total: it.include_in_total !== false,
       group_name: it.group_name ?? null,
     }));
-    const { error } = await db.from("quotation_items").insert(rows as any);
-    if (error) throw error;
+    let { error } = await db.from("quotation_items").insert(rows as any);
+    if (error && error.message && error.message.includes("column")) {
+      // Fallback if include_in_total or group_name column is missing
+      const strippedRows = rows.map(({ include_in_total: _i, group_name: _g, ...rest }) => rest);
+      const res = await db.from("quotation_items").insert(strippedRows as any);
+      if (res.error) throw res.error;
+    } else if (error) {
+      throw error;
+    }
   }
   return id as string;
 }
@@ -339,16 +364,33 @@ export async function saveInvoice(doc: Partial<Invoice> & { id?: string }, items
   let id = doc.id;
   const { id: _omit, customers: _c, code: _code, created_at: _ca, ...body } = doc as any;
   if (id) {
-    const { error } = await db.from("invoices").update(body).eq("id", id);
-    if (error) throw error;
+    let { error } = await db.from("invoices").update(body).eq("id", id);
+    if (error && error.message && error.message.includes("column")) {
+      const { show_section_subtotals: _s, show_totals: _t, ...stripped } = body;
+      const res = await db.from("invoices").update(stripped).eq("id", id);
+      if (res.error) throw res.error;
+    } else if (error) {
+      throw error;
+    }
     await db.from("invoice_items").delete().eq("invoice_id", id);
   } else {
-    const { data, error } = await db
+    let { data, error } = await db
       .from("invoices")
       .insert({ ...body, created_by: await currentUserId() })
       .select("id")
       .single();
-    if (error) throw error;
+    if (error && error.message && error.message.includes("column")) {
+      const { show_section_subtotals: _s, show_totals: _t, ...stripped } = body;
+      const res = await db
+        .from("invoices")
+        .insert({ ...stripped, created_by: await currentUserId() })
+        .select("id")
+        .single();
+      if (res.error) throw res.error;
+      data = res.data;
+    } else if (error) {
+      throw error;
+    }
     id = data.id as string;
   }
   if (items.length) {
@@ -364,8 +406,14 @@ export async function saveInvoice(doc: Partial<Invoice> & { id?: string }, items
       include_in_total: it.include_in_total !== false,
       group_name: it.group_name ?? null,
     }));
-    const { error } = await db.from("invoice_items").insert(rows as any);
-    if (error) throw error;
+    let { error } = await db.from("invoice_items").insert(rows as any);
+    if (error && error.message && error.message.includes("column")) {
+      const strippedRows = rows.map(({ include_in_total: _i, group_name: _g, ...rest }) => rest);
+      const res = await db.from("invoice_items").insert(strippedRows as any);
+      if (res.error) throw res.error;
+    } else if (error) {
+      throw error;
+    }
   }
   // Totals may have moved, so the paid/partial/unpaid flag has to follow.
   await syncInvoiceStatus(id as string);
