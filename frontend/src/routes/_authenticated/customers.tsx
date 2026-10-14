@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ConfirmDelete } from "@/components/doc/ConfirmDelete";
+import { Skeleton } from "@/components/ui/skeleton";
 import { isValidMobile, onlyDigits } from "@/lib/format";
 import { deleteCustomer, fetchCustomers, saveCustomer, type Customer } from "@/lib/crm";
 
@@ -52,6 +53,7 @@ function CustomersPage() {
   const { data: customers = [], isLoading } = useQuery({
     queryKey: ["customers", search],
     queryFn: () => fetchCustomers(search),
+    staleTime: 30_000,
   });
 
   const save = useMutation({
@@ -101,7 +103,7 @@ function CustomersPage() {
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="bg-muted/30 hover:bg-muted/30">
                   <TableHead>Code</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Mobile</TableHead>
@@ -110,13 +112,16 @@ function CustomersPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoading && (
-                  <TableRow>
-                    <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">
-                      Loading…
-                    </TableCell>
-                  </TableRow>
-                )}
+                {isLoading &&
+                  Array.from({ length: 5 }).map((_, i) => (
+                    <TableRow key={`skeleton-${i}`}>
+                      <TableCell><Skeleton className="h-4 w-14" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell className="text-right"><Skeleton className="ml-auto h-8 w-16" /></TableCell>
+                    </TableRow>
+                  ))}
                 {!isLoading && customers.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">

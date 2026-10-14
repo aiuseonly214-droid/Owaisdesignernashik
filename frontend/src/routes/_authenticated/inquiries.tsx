@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
+import { statusStyle } from "@/lib/status";
 import {
   Dialog,
   DialogContent,
@@ -63,13 +64,7 @@ export const Route = createFileRoute("/_authenticated/inquiries")({
 
 type Draft = Partial<Inquiry>;
 
-const STATUS_TONE: Record<string, string> = {
-  new: "bg-secondary text-secondary-foreground",
-  contacted: "bg-accent/15 text-accent-foreground",
-  quoted: "bg-primary/10 text-primary",
-  won: "bg-success/15 text-success",
-  lost: "bg-destructive/10 text-destructive",
-};
+
 
 function InquiriesPage() {
   const qc = useQueryClient();
@@ -183,7 +178,7 @@ function InquiriesPage() {
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="bg-muted/30">
                   <TableHead>Code</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Mobile</TableHead>
@@ -196,13 +191,20 @@ function InquiriesPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {isLoading && (
-                  <TableRow>
-                    <TableCell colSpan={9} className="py-8 text-center text-muted-foreground">
-                      Loading…
-                    </TableCell>
-                  </TableRow>
-                )}
+                {isLoading &&
+                  Array.from({ length: 4 }).map((_, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-28" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                      <TableCell><Skeleton className="h-5 w-16 rounded-full" /></TableCell>
+                      <TableCell />
+                    </TableRow>
+                  ))}
                 {!isLoading && inquiries.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={9} className="py-8 text-center text-muted-foreground">
@@ -220,9 +222,12 @@ function InquiriesPage() {
                     <TableCell className="text-right">{formatINR(i.budget)}</TableCell>
                     <TableCell>{i.follow_up_date ? formatDate(i.follow_up_date) : "—"}</TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className={STATUS_TONE[i.status]}>
-                        {labelOf(INQUIRY_STATUS, i.status)}
-                      </Badge>
+                      {(() => { const s = statusStyle(i.status); return (
+                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${s.badge}`}>
+                          <span className={`size-1.5 rounded-full ${s.dot}`} />
+                          {s.label || labelOf(INQUIRY_STATUS, i.status)}
+                        </span>
+                      ); })()}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">

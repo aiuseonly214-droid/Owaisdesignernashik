@@ -26,8 +26,9 @@ export function DocumentVerificationQR({
   useEffect(() => {
     let isMounted = true;
 
-    // Use current origin if in browser, or fall back to window.location.origin
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    // Use configured public URL (for production/mobile scanning) or current window origin
+    const publicUrl = (import.meta.env.VITE_PUBLIC_URL as string | undefined)?.replace(/\/$/, "");
+    const origin = publicUrl || (typeof window !== "undefined" ? window.location.origin : "");
     const verifyUrl = `${origin}/verify/${type}/${id}`;
 
     QRCode.toDataURL(verifyUrl, {

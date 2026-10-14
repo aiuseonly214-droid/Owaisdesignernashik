@@ -15,16 +15,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ConfirmDelete } from "@/components/doc/ConfirmDelete";
+import { Skeleton } from "@/components/ui/skeleton";
 import { formatINR, onlyNumeric } from "@/lib/format";
+import { statusStyle } from "@/lib/status";
 import {
   fetchStaff,
   saveStaff,
@@ -57,11 +52,13 @@ function PayrollPage() {
   const { data: staff = [], isLoading: isLoadingStaff } = useQuery({
     queryKey: ["staff"],
     queryFn: fetchStaff,
+    staleTime: 30_000,
   });
 
   const { data: salaries = [], isLoading: isLoadingSalaries } = useQuery({
     queryKey: ["salaries"],
     queryFn: () => fetchSalaries(),
+    staleTime: 30_000,
   });
 
   function refresh() {
@@ -160,7 +157,7 @@ function PayrollPage() {
       <div className="mb-8 overflow-hidden rounded-md border bg-card">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="bg-muted/30 hover:bg-muted/30">
               <TableHead>Name</TableHead>
               <TableHead>Designation</TableHead>
               <TableHead>Phone</TableHead>
@@ -170,31 +167,47 @@ function PayrollPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {staff.length === 0 && (
+            {isLoadingStaff &&
+              Array.from({ length: 4 }).map((_, i) => (
+                <TableRow key={`skeleton-staff-${i}`}>
+                  <TableCell><Skeleton className="h-4 w-28" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                  <TableCell className="text-right"><Skeleton className="ml-auto h-4 w-20" /></TableCell>
+                  <TableCell><Skeleton className="h-5 w-16 rounded-full" /></TableCell>
+                  <TableCell className="text-right"><Skeleton className="ml-auto h-7 w-12" /></TableCell>
+                </TableRow>
+              ))}
+            {!isLoadingStaff && staff.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
                   No staff members added.
                 </TableCell>
               </TableRow>
             )}
-            {staff.map((s) => (
-              <TableRow key={s.id}>
-                <TableCell className="font-medium">{s.name}</TableCell>
-                <TableCell>{s.designation || "—"}</TableCell>
-                <TableCell>{s.phone || "—"}</TableCell>
-                <TableCell className="text-right">{formatINR(s.monthly_salary)}</TableCell>
-                <TableCell>
-                  <span className={`inline-flex rounded-full px-2 py-0.5 text-xs ${s.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {s.active ? "Active" : "Inactive"}
-                  </span>
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button variant="ghost" size="sm" onClick={() => setDraftStaff(s)}>
-                    Edit
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {!isLoadingStaff &&
+              staff.map((s) => {
+                const st = statusStyle(s.active ? "active" : "cancelled");
+                return (
+                  <TableRow key={s.id}>
+                    <TableCell className="font-medium">{s.name}</TableCell>
+                    <TableCell>{s.designation || "—"}</TableCell>
+                    <TableCell>{s.phone || "—"}</TableCell>
+                    <TableCell className="text-right">{formatINR(s.monthly_salary)}</TableCell>
+                    <TableCell>
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${st.badge}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
+                        {s.active ? "Active" : "Inactive"}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="ghost" size="sm" onClick={() => setDraftStaff(s)}>
+                        Edit
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </div>
@@ -212,7 +225,7 @@ function PayrollPage() {
       <div className="overflow-hidden rounded-md border bg-card">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="bg-muted/30 hover:bg-muted/30">
               <TableHead>Date</TableHead>
               <TableHead>Staff Member</TableHead>
               <TableHead>Period</TableHead>
@@ -222,29 +235,41 @@ function PayrollPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {salaries.length === 0 && (
+            {isLoadingSalaries &&
+              Array.from({ length: 4 }).map((_, i) => (
+                <TableRow key={`skeleton-sal-${i}`}>
+                  <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-28" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-14" /></TableCell>
+                  <TableCell className="text-right"><Skeleton className="ml-auto h-4 w-20" /></TableCell>
+                  <TableCell className="text-right"><Skeleton className="ml-auto h-7 w-12" /></TableCell>
+                </TableRow>
+              ))}
+            {!isLoadingSalaries && salaries.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
                   No payouts recorded.
                 </TableCell>
               </TableRow>
             )}
-            {salaries.map((s) => (
-              <TableRow key={s.id}>
-                <TableCell>{s.paid_on}</TableCell>
-                <TableCell className="font-medium">{s.staff_members?.name || "Unknown"}</TableCell>
-                <TableCell>{s.period}</TableCell>
-                <TableCell className="capitalize">{s.mode}</TableCell>
-                <TableCell className="text-right font-medium">{formatINR(s.amount)}</TableCell>
-                <TableCell className="text-right">
-                  <ConfirmDelete
-                    entity="Salary Payment"
-                    onConfirm={() => removeSalary.mutate(s.id)}
-                    trigger={<Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
+            {!isLoadingSalaries &&
+              salaries.map((s) => (
+                <TableRow key={s.id}>
+                  <TableCell>{s.paid_on}</TableCell>
+                  <TableCell className="font-medium">{s.staff_members?.name || "Unknown"}</TableCell>
+                  <TableCell>{s.period}</TableCell>
+                  <TableCell className="capitalize">{s.mode}</TableCell>
+                  <TableCell className="text-right font-medium">{formatINR(s.amount)}</TableCell>
+                  <TableCell className="text-right">
+                    <ConfirmDelete
+                      entity="Salary Payment"
+                      onConfirm={() => removeSalary.mutate(s.id)}
+                      trigger={<Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>

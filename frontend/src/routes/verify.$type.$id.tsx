@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, FileText, Loader2, ShieldCheck, XCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { fetchCompany } from "@/lib/crm";
 import { supabase } from "@/integrations/supabase/client";
 import { formatAmount, formatDate } from "@/lib/format";
+import { statusStyle } from "@/lib/status";
 
 export const Route = createFileRoute("/verify/$type/$id")({
   head: () => ({
@@ -24,22 +24,36 @@ async function fetchPublicDocVerification(type: string, idOrCode: string) {
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrCode);
   const column = isUuid ? "id" : "code";
 
+  // Select fields specifically per table so PostgREST schema cache does not fail on non-existent columns
+  let selectFields = "";
+  if (type === "quotation") {
+    selectFields = "id, code, date, grand_total, status, created_at, customer_id";
+  } else if (type === "invoice") {
+    selectFields = "id, code, date, grand_total, status, created_at, customer_id";
+  } else {
+    selectFields = "id, code, date, total_amount, amount_received, mode, created_at, customer_id";
+  }
+
+  // 1. Try fetching with customer details joined
   const { data, error } = await (supabase as any)
     .from(table)
-    .select("id, code, date, grand_total, total_amount, amount_received, status, mode, created_at, customer_id, customers(name, code, city)")
+    .select(`${selectFields}, customers(name, code, city)`)
     .eq(column, idOrCode)
     .maybeSingle();
 
   if (error) {
-    console.warn("Doc fetch verification error:", error.message || error);
-    // If lookup with relation fails due to customer RLS, try fetching document row standalone
+    console.warn("Doc fetch verification error with join:", error.message || error);
+    // 2. If lookup with relation fails (e.g. customer RLS), fetch document row standalone
     const { data: fallbackDoc, error: fError } = await (supabase as any)
       .from(table)
-      .select("id, code, date, grand_total, total_amount, amount_received, status, mode, created_at, customer_id")
+      .select(selectFields)
       .eq(column, idOrCode)
       .maybeSingle();
     
-    if (fError || !fallbackDoc) return null;
+    if (fError || !fallbackDoc) {
+      console.warn("Doc verification fallback error:", fError?.message || fError);
+      return null;
+    }
     return fallbackDoc;
   }
   return data;
@@ -133,9 +147,15 @@ function VerifyDocPage() {
                 </div>
                 <div>
                   <span className="text-xs text-slate-500 uppercase tracking-wider block">Status</span>
-                  <Badge variant="outline" className="capitalize mt-0.5">
-                    {doc.status || "Completed"}
-                  </Badge>
+                  {(() => {
+                    const st = statusStyle(doc.status || (type === "receipt" ? "paid" : "approved"));
+                    return (
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium mt-0.5 ${st.badge}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
+                        {st.label}
+                      </span>
+                    );
+                  })()}
                 </div>
               </div>
 

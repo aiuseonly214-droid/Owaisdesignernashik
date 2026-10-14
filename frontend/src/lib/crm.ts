@@ -518,6 +518,44 @@ export async function fetchSummary() {
   };
 }
 
+/**
+ * Dashboard-optimised: fetch only the 5 most recent records of each type.
+ * This avoids pulling the full lists just to show a preview card.
+ */
+export async function fetchRecentDocs() {
+  const [q, i, r] = await Promise.all([
+    db
+      .from("quotations")
+      .select("id, code, date, grand_total, customers(name)")
+      .order("created_at", { ascending: false })
+      .limit(5),
+    db
+      .from("invoices")
+      .select("id, code, date, grand_total, customers(name)")
+      .order("created_at", { ascending: false })
+      .limit(5),
+    db
+      .from("receipts")
+      .select("id, code, date, amount_received, customers(name)")
+      .order("created_at", { ascending: false })
+      .limit(5),
+  ]);
+  return {
+    quotations: (q.data ?? []) as Array<{
+      id: string; code: string; date: string; grand_total: number;
+      customers: { name: string } | null;
+    }>,
+    invoices: (i.data ?? []) as Array<{
+      id: string; code: string; date: string; grand_total: number;
+      customers: { name: string } | null;
+    }>,
+    receipts: (r.data ?? []) as Array<{
+      id: string; code: string; date: string; amount_received: number;
+      customers: { name: string } | null;
+    }>,
+  };
+}
+
 /* ---------------- inquiries ---------------- */
 
 export type Inquiry = {

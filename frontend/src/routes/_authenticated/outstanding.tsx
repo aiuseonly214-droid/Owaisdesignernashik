@@ -17,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { fetchOutstanding, type OutstandingCustomer } from "@/lib/crm";
 import { formatDate, formatINR } from "@/lib/format";
+import { statusStyle } from "@/lib/status";
 
 export const Route = createFileRoute("/_authenticated/outstanding")({
   head: () => ({
@@ -309,27 +310,13 @@ function Stat({ label, value, accent }: { label: string; value: string; accent?:
 }
 
 function StatusPill({ status, overdue }: { status: string; overdue: boolean }) {
-  const label = overdue
-    ? "Overdue"
-    : status === "paid"
-      ? "Paid"
-      : status === "partial"
-        ? "Partial"
-        : "Unpaid";
+  const s = statusStyle(status, overdue);
   return (
     <span
-      className={cn(
-        "rounded-full px-2 py-0.5 text-[11px] font-medium",
-        overdue
-          ? "bg-destructive/10 text-destructive"
-          : status === "paid"
-            ? "bg-accent/15 text-accent-foreground"
-            : status === "partial"
-              ? "bg-primary/10 text-primary"
-              : "bg-muted text-muted-foreground",
-      )}
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${s.badge}`}
     >
-      {label}
+      <span className={`size-1.5 rounded-full ${s.dot}`} />
+      {s.label}
     </span>
   );
 }
