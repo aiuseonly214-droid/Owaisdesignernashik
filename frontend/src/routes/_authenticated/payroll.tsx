@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, IndianRupee, Users } from "lucide-react";
+import { Plus, IndianRupee, Users, ShieldX } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import { ConfirmDelete } from "@/components/doc/ConfirmDelete";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatINR, onlyNumeric } from "@/lib/format";
 import { statusStyle } from "@/lib/status";
+import { useRole, useSession } from "@/hooks/use-session";
 import {
   fetchStaff,
   saveStaff,
@@ -46,18 +47,24 @@ type DraftSalary = Partial<SalaryPayment>;
 
 function PayrollPage() {
   const qc = useQueryClient();
+  const { user } = useSession();
+  const { data: role, isLoading: loadingRole } = useRole(user?.id);
+  const isAdmin = role === "admin";
+
   const [draftStaff, setDraftStaff] = useState<DraftStaff | null>(null);
   const [draftSalary, setDraftSalary] = useState<DraftSalary | null>(null);
 
   const { data: staff = [], isLoading: isLoadingStaff } = useQuery({
     queryKey: ["staff"],
     queryFn: fetchStaff,
+    enabled: isAdmin,
     staleTime: 30_000,
   });
 
   const { data: salaries = [], isLoading: isLoadingSalaries } = useQuery({
     queryKey: ["salaries"],
     queryFn: () => fetchSalaries(),
+    enabled: isAdmin,
     staleTime: 30_000,
   });
 
@@ -131,21 +138,32 @@ function PayrollPage() {
         title="Staff & Payroll"
         description="Manage your team and track monthly salary payouts."
       />
-
-      <div className="mb-6 grid gap-4 sm:grid-cols-2">
-        <Card>
-          <CardContent className="p-6">
-            <p className="text-sm font-medium text-muted-foreground">Active Team Members</p>
-            <p className="mt-2 text-3xl font-bold">{staff.filter(s => s.active).length}</p>
+      {(!loadingRole && !isAdmin) ? (
+        <Card className="mt-6 border-dashed">
+          <CardContent className="flex flex-col items-center justify-center p-12 text-center">
+            <ShieldX className="size-12 text-muted-foreground mb-3" />
+            <h3 className="text-lg font-semibold">Administrator Access Required</h3>
+            <p className="text-sm text-muted-foreground mt-1 max-w-md">
+              Staff payroll and salary records are restricted to administrators. Contact your administrator if you need access.
+            </p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-6">
-            <p className="text-sm font-medium text-muted-foreground">Monthly Payroll Commitment</p>
-            <p className="mt-2 text-3xl font-bold">{formatINR(totalPayroll)}</p>
-          </CardContent>
-        </Card>
-      </div>
+      ) : (
+        <>
+        <div className="mt-6 grid grid-cols-2 gap-4">
+          <Card>
+            <CardContent className="p-6">
+              <p className="text-sm font-medium text-muted-foreground">Active Team Members</p>
+              <p className="mt-2 text-3xl font-bold">{staff.filter(s => s.active).length}</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <p className="text-sm font-medium text-muted-foreground">Monthly Payroll Commitment</p>
+              <p className="mt-2 text-3xl font-bold">{formatINR(totalPayroll)}</p>
+            </CardContent>
+          </Card>
+        </div>
 
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold flex items-center gap-2"><Users className="size-5"/> Staff Directory</h2>
@@ -376,6 +394,8 @@ function PayrollPage() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+      )}
+      </>
       )}
     </div>
   );

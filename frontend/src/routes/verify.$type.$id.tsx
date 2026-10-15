@@ -18,45 +18,81 @@ export const Route = createFileRoute("/verify/$type/$id")({
 });
 
 async function fetchPublicDocVerification(type: string, idOrCode: string) {
-  const table = type === "quotation" ? "quotations" : type === "invoice" ? "invoices" : "receipts";
-  
-  // Try matching by id first, then code
-  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrCode);
-  const column = isUuid ? "id" : "code";
+  // Validate type parameter
+  if (!["quotation", "invoice", "receipt"].includes(type)) return null;
+  if (!idOrCode || typeof idOrCode !== "string") return null;
 
-  // Select fields specifically per table so PostgREST schema cache does not fail on non-existent columns
-  let selectFields = "";
-  if (type === "quotation") {
-    selectFields = "id, code, date, grand_total, status, created_at, customer_id";
-  } else if (type === "invoice") {
-    selectFields = "id, code, date, grand_total, status, created_at, customer_id";
-  } else {
-    selectFields = "id, code, date, total_amount, amount_received, mode, created_at, customer_id";
+  const trimmedId = idOrCode.trim();
+
+  // ── PRIMARY PATH: SECURITY DEFINER RPC ─────────────────────────────────────
+  // Works regardless of anon table grants.  Applied via migration 20261015000000.
+  try {
+    const { data: rpcData, error: rpcError } = await (supabase as any).rpc("verify_document", {
+      p_type: type,
+      p_id_or_code: trimmedId,
+    });
+
+    if (!rpcError) {
+      if (rpcData && rpcData.verified === true) {
+        // Document found and verified by the RPC
+        return {
+          id: trimmedId,
+          code: rpcData.code,
+          date: rpcData.date,
+          status: rpcData.status,
+          grand_total: rpcData.total_amount,
+          total_amount: rpcData.total_amount,
+          amount_received: rpcData.total_amount,
+          customers: {
+            name: rpcData.customer_name ?? "Client",
+            code: rpcData.customer_code ?? "",
+            city: rpcData.customer_city ?? null,
+          },
+        };
+      }
+      // RPC responded with verified:false (e.g., not_found) — document definitively absent
+      if (rpcData && rpcData.verified === false) {
+        console.info("verify_document: not found —", rpcData.error);
+        return null;
+      }
+    } else {
+      // rpcError present → RPC may not be installed yet; try fallback
+      console.warn("verify_document RPC error, falling back to direct query:", rpcError.message);
+    }
+  } catch (err) {
+    // Unexpected exception — function may not exist yet in database
+    console.warn("verify_document RPC exception, falling back:", err);
   }
 
-  // 1. Try fetching with customer details joined
+  // ── FALLBACK PATH: Direct table query (requires anon RLS policies) ──────────
+  // Used only when the verify_document RPC has not been applied to the database.
+  const table =
+    type === "quotation" ? "quotations" : type === "invoice" ? "invoices" : "receipts";
+  const isUuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(trimmedId);
+  const column = isUuid ? "id" : "code";
+
+  const selectFields =
+    type === "receipt"
+      ? "id, code, date, total_amount, amount_received, mode, customer_id"
+      : "id, code, date, grand_total, status, customer_id";
+
   const { data, error } = await (supabase as any)
     .from(table)
     .select(`${selectFields}, customers(name, code, city)`)
-    .eq(column, idOrCode)
+    .eq(column, trimmedId)
     .maybeSingle();
 
-  if (error) {
-    console.warn("Doc fetch verification error with join:", error.message || error);
-    // 2. If lookup with relation fails (e.g. customer RLS), fetch document row standalone
-    const { data: fallbackDoc, error: fError } = await (supabase as any)
-      .from(table)
-      .select(selectFields)
-      .eq(column, idOrCode)
-      .maybeSingle();
-    
-    if (fError || !fallbackDoc) {
-      console.warn("Doc verification fallback error:", fError?.message || fError);
-      return null;
-    }
-    return fallbackDoc;
-  }
-  return data;
+  if (!error && data) return data;
+
+  // Last-resort: join might be blocked by RLS — retry without it
+  const { data: bare, error: bareErr } = await (supabase as any)
+    .from(table)
+    .select(selectFields)
+    .eq(column, trimmedId)
+    .maybeSingle();
+
+  return bareErr || !bare ? null : bare;
 }
 
 function VerifyDocPage() {
