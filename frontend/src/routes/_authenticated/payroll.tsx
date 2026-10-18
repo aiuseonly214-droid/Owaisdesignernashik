@@ -281,9 +281,9 @@ function PayrollPage() {
                   <TableCell className="text-right font-medium">{formatINR(s.amount)}</TableCell>
                   <TableCell className="text-right">
                     <ConfirmDelete
-                      entity="Salary Payment"
+                      label="Delete Salary Payment"
+                      description="Are you sure you want to delete this salary payment record? This action cannot be undone."
                       onConfirm={() => removeSalary.mutate(s.id)}
-                      trigger={<Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>}
                     />
                   </TableCell>
                 </TableRow>
@@ -317,7 +317,7 @@ function PayrollPage() {
                 <Label>Monthly Salary (Base)</Label>
                 <Input
                   value={draftStaff.monthly_salary || ""}
-                  onChange={(e) => setDraftStaff({ ...draftStaff, monthly_salary: onlyNumeric(e.target.value) })}
+                  onChange={(e) => setDraftStaff({ ...draftStaff, monthly_salary: Number(onlyNumeric(e.target.value)) || 0 })}
                 />
               </div>
               <div className="grid gap-2">
@@ -383,7 +383,7 @@ function PayrollPage() {
                 <Label>Amount Paid</Label>
                 <Input
                   value={draftSalary.amount || ""}
-                  onChange={(e) => setDraftSalary({ ...draftSalary, amount: onlyNumeric(e.target.value) })}
+                  onChange={(e) => setDraftSalary({ ...draftSalary, amount: Number(onlyNumeric(e.target.value)) || 0 })}
                 />
               </div>
             </div>

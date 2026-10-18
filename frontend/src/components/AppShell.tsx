@@ -20,7 +20,14 @@ import { useRole, useSession } from "@/hooks/use-session";
 import { fetchCompany } from "@/lib/crm";
 import { DEFAULT_LOGO_URL } from "@/lib/branding";
 
-const NAV = [
+interface NavItem {
+  to: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  adminOnly?: boolean;
+}
+
+const NAV: readonly NavItem[] = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/inquiries", label: "Inquiries", icon: MessageSquarePlus },
   { to: "/customers", label: "Customers", icon: Users },

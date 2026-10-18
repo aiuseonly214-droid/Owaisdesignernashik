@@ -197,9 +197,9 @@ function ExpensesPage() {
                   <TableCell className="text-right font-medium">{formatINR(e.amount)}</TableCell>
                   <TableCell className="text-right">
                     <ConfirmDelete
-                      entity="Expense"
+                      label="Delete Expense"
+                      description="Are you sure you want to delete this expense record? This action cannot be undone."
                       onConfirm={() => removeMutation.mutate(e.id)}
-                      trigger={<Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">Delete</Button>}
                     />
                   </TableCell>
                 </TableRow>
@@ -237,7 +237,7 @@ function ExpensesPage() {
                 <Label>Amount</Label>
                 <Input
                   value={draft.amount || ""}
-                  onChange={(e) => setDraft({ ...draft, amount: onlyNumeric(e.target.value) })}
+                  onChange={(e) => setDraft({ ...draft, amount: Number(onlyNumeric(e.target.value)) || 0 })}
                 />
               </div>
               <div className="grid gap-2">

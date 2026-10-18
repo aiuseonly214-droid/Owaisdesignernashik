@@ -302,11 +302,11 @@ export async function fetchAllUsersAccess(): Promise<UserAccess[]> {
   if (rErr) throw rErr;
 
   const roleMap = new Map<string, Role>();
-  (roles || []).forEach((r) => {
+  (roles || []).forEach((r: any) => {
     roleMap.set(r.user_id, r.role as Role);
   });
 
-  return (profiles || []).map((p) => ({
+  return (profiles || []).map((p: any) => ({
     id: p.id,
     full_name: p.full_name,
     created_at: p.created_at,
