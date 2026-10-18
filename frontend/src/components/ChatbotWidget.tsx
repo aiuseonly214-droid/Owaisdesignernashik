@@ -131,6 +131,28 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
     return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   }
 
+  function renderFormattedMessage(content: string) {
+    const lines = content.split("\n");
+    return lines.map((line, lIdx) => {
+      // Parse markdown bold: **text**
+      const parts = line.split(/(\*\*.*?\*\*)/g);
+      return (
+        <span key={lIdx} className="block min-h-[1.1rem]">
+          {parts.map((part, pIdx) => {
+            if (part.startsWith("**") && part.endsWith("**")) {
+              return (
+                <strong key={pIdx} className="font-semibold text-slate-900">
+                  {part.slice(2, -2)}
+                </strong>
+              );
+            }
+            return part;
+          })}
+        </span>
+      );
+    });
+  }
+
   const findBestAnswer = (userQuery: string) => {
     const query = userQuery.toLowerCase().trim();
 
@@ -240,7 +262,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
   return (
     <>
       {/* Floating Toggle Button */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center">
+      <div className="fixed bottom-18 md:bottom-6 right-4 sm:right-6 z-50 flex items-center">
         {!isOpen && (
           <div className="hidden sm:flex items-center gap-2 mr-3 px-3 py-1.5 rounded-full bg-white/95 text-slate-800 text-xs font-semibold shadow-lg border border-slate-200 animate-bounce">
             <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -251,7 +273,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close AI Chatbot" : "Open AI Chatbot"}
-          className={`group relative flex size-14 items-center justify-center rounded-full shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 ${
+          className={`group relative flex size-13 sm:size-14 items-center justify-center rounded-full shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 ${
             isOpen
               ? "bg-slate-900 text-white hover:bg-slate-800 rotate-90"
               : "bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white hover:scale-105 hover:shadow-blue-500/50"
@@ -275,7 +297,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
 
       {/* Chat Window Dialog */}
       {isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 flex w-[calc(100vw-2rem)] sm:w-[400px] h-[580px] max-h-[85vh] flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xl transition-all animate-in fade-in slide-in-from-bottom-5 duration-200">
+        <div className="fixed bottom-20 md:bottom-24 right-2 sm:right-6 z-50 flex w-[calc(100vw-1rem)] sm:w-[400px] h-[550px] sm:h-[580px] max-h-[82vh] flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xl transition-all animate-in fade-in slide-in-from-bottom-5 duration-200">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-blue-800 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 px-4 py-3 text-white">
             <div className="flex items-center gap-3">
@@ -349,13 +371,13 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
                   </div>
 
                   <div
-                    className={`rounded-2xl px-3.5 py-2.5 text-xs shadow-xs leading-relaxed whitespace-pre-line ${
+                    className={`rounded-2xl px-3.5 py-2.5 text-xs shadow-xs leading-relaxed ${
                       msg.sender === "user"
-                        ? "bg-blue-600 text-white rounded-br-xs"
+                        ? "bg-blue-600 text-white rounded-br-xs whitespace-pre-wrap"
                         : "bg-white text-slate-800 border border-slate-200/90 rounded-bl-xs"
                     }`}
                   >
-                    {msg.text}
+                    {renderFormattedMessage(msg.text)}
 
                     {msg.actionLink && (
                       <div className="mt-2.5 pt-2 border-t border-slate-100">
