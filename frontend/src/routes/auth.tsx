@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DEFAULT_LOGO_URL } from "@/lib/branding";
+import { fetchCompany } from "@/lib/crm";
 import { ShieldCheck, Users } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
@@ -19,6 +21,8 @@ export const Route = createFileRoute("/auth")({
 
 function AuthChooserPage() {
   const navigate = useNavigate();
+  const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
+  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
 
   useEffect(() => {
     let active = true;
@@ -47,9 +51,9 @@ function AuthChooserPage() {
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <img
-            src={DEFAULT_LOGO_URL}
+            src={logoUrl}
             alt="Owais Interior Designer logo"
-            className="mb-3 size-24 rounded-full bg-white object-contain p-1"
+            className="mb-3 size-24 rounded-full bg-white object-contain p-1 border-2 border-blue-500/20 shadow-md"
           />
           <h1 className="font-display text-2xl text-sidebar-primary">Owais Interior Designer</h1>
           <p className="text-xs uppercase tracking-[0.22em] text-sidebar-foreground/70">

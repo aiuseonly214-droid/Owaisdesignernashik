@@ -201,6 +201,7 @@ function PublicLandingPage() {
 
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
   const landingConfig = parseLandingConfig(company?.website);
+  const companyLogoUrl = company?.logo_url || DEFAULT_LOGO_URL;
 
   const phonePrimary = company?.mobile1 || "7756043214";
   const phoneSecondary = company?.mobile2 || "7721926290";
@@ -569,7 +570,7 @@ function PublicLandingPage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3">
           <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0">
             <img
-              src={DEFAULT_LOGO_URL}
+              src={companyLogoUrl}
               alt="Owais Interior Designer Nashik Logo"
               className="size-8 sm:size-10 lg:size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10 shrink-0"
             />
@@ -1477,7 +1478,7 @@ function PublicLandingPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2.5">
                 <img
-                  src={DEFAULT_LOGO_URL}
+                  src={companyLogoUrl}
                   alt="Owais Interior Designer"
                   className="size-8 rounded-full bg-white p-0.5 object-contain"
                 />

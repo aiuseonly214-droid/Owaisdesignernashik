@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import {
   FileText,
   LayoutDashboard,
@@ -17,6 +17,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRole, useSession } from "@/hooks/use-session";
+import { fetchCompany } from "@/lib/crm";
+import { DEFAULT_LOGO_URL } from "@/lib/branding";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -36,6 +38,8 @@ export function AppShell() {
   const queryClient = useQueryClient();
   const { user } = useSession();
   const { data: role } = useRole(user?.id);
+  const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
+  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   async function signOut() {
@@ -61,14 +65,23 @@ export function AppShell() {
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="flex items-center justify-between border-b border-sidebar-border px-5 py-5">
-          <div>
-            <p className="font-display text-lg leading-tight text-sidebar-primary">Owais</p>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-sidebar-foreground/70">
-              Interior Designer
-            </p>
+        <div className="flex items-center justify-between border-b border-sidebar-border px-4 py-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <img
+              src={logoUrl}
+              alt="Owais Interior Logo"
+              className="size-9 rounded-full bg-white object-contain p-0.5 border border-blue-500/40 shadow-xs shrink-0"
+            />
+            <div className="min-w-0">
+              <p className="font-display text-base leading-tight text-sidebar-primary truncate">
+                {company?.name || "Owais"}
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/70 truncate">
+                Interior Designer
+              </p>
+            </div>
           </div>
-          <button className="lg:hidden" onClick={() => setOpen(false)} aria-label="Close menu">
+          <button className="lg:hidden text-sidebar-foreground/70 hover:text-white" onClick={() => setOpen(false)} aria-label="Close menu">
             <X className="size-5" />
           </button>
         </div>

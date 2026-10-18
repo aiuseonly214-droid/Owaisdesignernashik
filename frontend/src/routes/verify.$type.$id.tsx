@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, FileText, Loader2, ShieldCheck, XCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { fetchCompany } from "@/lib/crm";
+import { DEFAULT_LOGO_URL } from "@/lib/branding";
 import { supabase } from "@/integrations/supabase/client";
 import { formatAmount, formatDate } from "@/lib/format";
 import { statusStyle } from "@/lib/status";
@@ -130,9 +131,11 @@ function VerifyDocPage() {
     <div className="min-h-screen bg-gradient-to-b from-slate-100 to-slate-200 py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-lg space-y-6">
         <div className="text-center">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-md mb-3">
-            <ShieldCheck className="h-7 w-7" />
-          </div>
+          <img
+            src={company?.logo_url || DEFAULT_LOGO_URL}
+            alt={company?.name || "Owais Interior Designer"}
+            className="mx-auto mb-3 size-16 rounded-full bg-white object-contain p-1 border-2 border-blue-500/20 shadow-md"
+          />
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
             {company?.name || "Owais Interior Designer"}
           </h1>

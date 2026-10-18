@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Loader2, ArrowLeft, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DEFAULT_LOGO_URL } from "@/lib/branding";
+import { fetchCompany } from "@/lib/crm";
 
 export const Route = createFileRoute("/admin-login")({
   ssr: false,
@@ -24,6 +26,9 @@ function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+
+  const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
+  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
 
   useEffect(() => {
     let active = true;
@@ -110,9 +115,9 @@ function AdminLoginPage() {
 
         <div className="mb-6 flex flex-col items-center text-center">
           <img
-            src={DEFAULT_LOGO_URL}
+            src={logoUrl}
             alt="Owais Interior Designer logo"
-            className="mb-3 size-24 rounded-full bg-white object-contain p-1"
+            className="mb-3 size-24 rounded-full bg-white object-contain p-1 border-2 border-blue-500/20 shadow-md"
           />
           <div className="flex items-center gap-2">
             <ShieldCheck className="size-6 text-primary" />
