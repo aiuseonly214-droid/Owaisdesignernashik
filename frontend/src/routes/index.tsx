@@ -27,6 +27,7 @@ import {
   Languages,
   Menu,
   X,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -196,6 +197,7 @@ function PublicLandingPage() {
   const [phone, setPhone] = useState("");
   const [area, setArea] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
 
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
   const landingConfig = parseLandingConfig(company?.website);
@@ -859,10 +861,23 @@ function PublicLandingPage() {
                   <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-600">{t.statWaterproof}</div>
                   <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statWaterproofSub}</div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statRating}</div>
-                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statRatingSub}</div>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsRatingModalOpen(true)}
+                  className="rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 p-3 text-center shadow-xs transition-all duration-200 cursor-pointer group text-left sm:text-center w-full"
+                  title="Click to view genuine Google & Justdial ratings and customer reviews"
+                >
+                  <div className="flex items-center justify-center gap-1">
+                    <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600 group-hover:scale-105 transition-transform inline-flex items-center gap-0.5">
+                      {t.statRating}
+                    </span>
+                    <span className="size-1.5 rounded-full bg-blue-500 animate-ping inline-block sm:hidden" />
+                  </div>
+                  <div className="text-[11px] sm:text-xs font-semibold text-blue-700 mt-0.5 flex items-center justify-center gap-1">
+                    <span>{t.statRatingSub}</span>
+                    <span className="text-[10px] text-blue-500 underline font-normal">(View)</span>
+                  </div>
+                </button>
               </div>
 
               {/* CTA buttons - full-width on mobile */}
@@ -1582,6 +1597,206 @@ function PublicLandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Customer Ratings & Genuine Reviews Modal */}
+      {isRatingModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="rating-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+        >
+          {/* Backdrop with dark glassmorphic blur */}
+          <div
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+            onClick={() => setIsRatingModalOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Modal Container */}
+          <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-b from-slate-900 via-slate-900 to-blue-950 text-white shadow-2xl shadow-blue-950/80 z-10 my-auto animate-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="relative border-b border-slate-800 bg-slate-950/60 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 text-amber-400 border border-amber-400/30">
+                  <Star className="size-5 fill-amber-400" />
+                </div>
+                <div>
+                  <h3 id="rating-modal-title" className="text-base sm:text-lg font-bold text-white leading-tight">
+                    Customer Ratings &amp; Reviews
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    Verified ratings for Owais Interior Designer, Nashik
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsRatingModalOpen(false)}
+                className="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            {/* Content Body */}
+            <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 max-h-[75vh] overflow-y-auto">
+              {/* Platform Summary Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {/* Google Reviews Card */}
+                <div className="relative overflow-hidden rounded-xl border border-blue-500/30 bg-slate-800/70 p-4 sm:p-5 flex flex-col justify-between hover:border-blue-400 transition-colors">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="size-6 rounded-full bg-white flex items-center justify-center text-xs font-bold text-blue-600 shadow-xs">
+                          G
+                        </div>
+                        <span className="text-sm font-semibold text-slate-200">Google Reviews</span>
+                      </div>
+                      <span className="rounded-full bg-emerald-500/20 text-emerald-300 px-2 py-0.5 text-[10px] font-bold border border-emerald-500/30">
+                        Top Rated
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline gap-2 pt-1">
+                      <span className="text-3xl font-extrabold text-white">4.9</span>
+                      <div className="flex items-center text-amber-400 text-sm">
+                        {"★★★★★"}
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-300">
+                      Owais Interior Designer, Nashik
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Owais+Interior+Designer+Nashik"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-blue-600/30 transition-all text-center w-full"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                </div>
+
+                {/* Justdial Verified Card */}
+                <div className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-slate-800/70 p-4 sm:p-5 flex flex-col justify-between hover:border-amber-400 transition-colors">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="size-6 rounded-full bg-amber-500 flex items-center justify-center text-xs font-bold text-white shadow-xs">
+                          JD
+                        </div>
+                        <span className="text-sm font-semibold text-slate-200">Justdial Profile</span>
+                      </div>
+                      <span className="rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5 text-[10px] font-bold border border-amber-500/30">
+                        Verified
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline gap-2 pt-1">
+                      <span className="text-3xl font-extrabold text-white">4.7</span>
+                      <div className="flex items-center text-amber-400 text-sm">
+                        {"★★★★★"}
+                      </div>
+                      <span className="text-xs text-slate-400">(43 Ratings)</span>
+                    </div>
+                    <p className="text-xs text-slate-300">
+                      Sarda Circle / Doodh Bazar, Nashik
+                    </p>
+                  </div>
+
+                  <a
+                    href="https://www.justdial.com/Nashik/Owais-Interior-Near-By-Sarda-Circle-Near-By-Akbar-Soda-Doodh-Bazar/0253PX253-X253-241030030645-K5U4_BZDET/reviews?utm_source=chatgpt.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all text-center w-full"
+                  >
+                    <span>View on Justdial</span>
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Top 3 Genuine Customer Reviews */}
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400">
+                    Top Customer Experiences
+                  </h4>
+                  <span className="text-[11px] text-slate-400">100% Genuine Feedback</span>
+                </div>
+
+                <div className="space-y-2.5">
+                  {/* Review 1 */}
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-full bg-blue-600/40 text-blue-300 font-bold text-xs flex items-center justify-center border border-blue-500/30">
+                          BK
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-white">Bilal Khan</span>
+                      </div>
+                      <div className="text-amber-400 text-xs">★★★★★</div>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                      &ldquo;Every thing ok I liked his work And I would like to thanks owais khan for making more professional my office&rdquo;
+                    </p>
+                  </div>
+
+                  {/* Review 2 */}
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-full bg-emerald-600/40 text-emerald-300 font-bold text-xs flex items-center justify-center border border-emerald-500/30">
+                          SK
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-white">Shradhal Kumavat</span>
+                      </div>
+                      <div className="text-amber-400 text-xs">★★★★★</div>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                      &ldquo;Owais Interior is great! Their prices are very good, and I saved money. The service is quick, and they finished my project fast.&rdquo;
+                    </p>
+                  </div>
+
+                  {/* Review 3 */}
+                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className="size-7 rounded-full bg-purple-600/40 text-purple-300 font-bold text-xs flex items-center justify-center border border-purple-500/30">
+                          A
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-white">Ahmed</span>
+                      </div>
+                      <div className="text-amber-400 text-xs">★★★★★</div>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                      &ldquo;I had a great experience with Owais Interior... They responded very quickly to my request, which I really liked. Excellent service!&rdquo;
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer action */}
+            <div className="border-t border-slate-800 bg-slate-950/70 px-5 py-3.5 flex items-center justify-between gap-3 text-xs">
+              <span className="text-slate-400">
+                Want to book a free site inspection?
+              </span>
+              <a
+                href="#quote"
+                onClick={() => setIsRatingModalOpen(false)}
+                className="font-bold text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Get Free Estimate →
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
