@@ -53,7 +53,7 @@ export const Route = createFileRoute("/")({
           "Top-rated POP false ceiling & PVC wall panel contractor in Nashik. Expert gypsum ceiling, modular interiors & renovation. Call 7756043214 for free site estimate!",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://owaisinteriornashik.com/" },
+      { property: "og:url", content: "https://owais-interior.vercel.app/" },
       { property: "og:image", content: "/images/pop-ceiling-nashik.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
       {
@@ -73,7 +73,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": ["LocalBusiness", "HomeAndConstructionBusiness", "ProfessionalService"],
-          "@id": "https://owaisinteriornashik.com/#business",
+          "@id": "https://owais-interior.vercel.app/#business",
           name: "Owais Interior Designer",
           alternateName: [
             "Owais Interior Nashik",
@@ -81,9 +81,9 @@ export const Route = createFileRoute("/")({
             "Owais Interior",
             "nashikpop",
           ],
-          url: "https://owaisinteriornashik.com/",
-          logo: "https://owaisinteriornashik.com/owais-logo.png",
-          image: "https://owaisinteriornashik.com/images/pop-ceiling-nashik.jpg",
+          url: "https://owais-interior.vercel.app/",
+          logo: "https://owais-interior.vercel.app/owais-logo.png",
+          image: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg",
           description:
             "Premier POP false ceiling, PVC wall panel, and interior design contractor based in Nashik, Maharashtra. Offering customized false ceiling, modular kitchens, and turnkey interior solutions.",
           telephone: "+91-7756043214",
