@@ -1598,7 +1598,7 @@ function PublicLandingPage() {
         </div>
       </footer>
 
-      {/* Customer Ratings & Genuine Reviews Modal */}
+      {/* Customer Ratings & Genuine Reviews Modal - Royal Blue & Crisp White Theme */}
       {isRatingModalOpen && (
         <div
           role="dialog"
@@ -1606,26 +1606,26 @@ function PublicLandingPage() {
           aria-labelledby="rating-modal-title"
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
         >
-          {/* Backdrop with dark glassmorphic blur */}
+          {/* Backdrop with royal blue tinted glassmorphic blur */}
           <div
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-blue-950/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
             onClick={() => setIsRatingModalOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Modal Container */}
-          <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-b from-slate-900 via-slate-900 to-blue-950 text-white shadow-2xl shadow-blue-950/80 z-10 my-auto animate-in zoom-in-95 duration-200">
-            {/* Header */}
-            <div className="relative border-b border-slate-800 bg-slate-950/60 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between">
+          {/* Modal Container: Crisp White with Royal Blue Accents & Shadow */}
+          <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border-2 border-blue-100 bg-white text-slate-900 shadow-2xl shadow-blue-900/20 z-10 my-auto animate-in zoom-in-95 duration-200">
+            {/* Header: Royal Navy Blue Bar */}
+            <div className="relative border-b border-blue-800 bg-gradient-to-r from-blue-900 via-blue-850 to-blue-900 px-5 py-4 sm:px-6 sm:py-5 flex items-center justify-between text-white">
               <div className="flex items-center gap-2.5 sm:gap-3">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/15 text-amber-400 border border-amber-400/30">
-                  <Star className="size-5 fill-amber-400" />
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-300 border border-amber-300/40 shadow-xs">
+                  <Star className="size-5 fill-amber-300" />
                 </div>
                 <div>
                   <h3 id="rating-modal-title" className="text-base sm:text-lg font-bold text-white leading-tight">
                     Customer Ratings &amp; Reviews
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-blue-200">
                     Verified ratings for Owais Interior Designer, Nashik
                   </p>
                 </div>
@@ -1633,39 +1633,39 @@ function PublicLandingPage() {
               <button
                 type="button"
                 onClick={() => setIsRatingModalOpen(false)}
-                className="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
+                className="rounded-lg p-2 text-blue-200 hover:bg-blue-800 hover:text-white transition-colors"
                 aria-label="Close modal"
               >
                 <X className="size-5" />
               </button>
             </div>
 
-            {/* Content Body */}
-            <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 max-h-[75vh] overflow-y-auto">
+            {/* Content Body: Crisp White Background with Royal Blue Card Highlights */}
+            <div className="p-4 sm:p-6 space-y-5 sm:space-y-6 max-h-[75vh] overflow-y-auto bg-slate-50/50">
               {/* Platform Summary Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {/* Google Reviews Card */}
-                <div className="relative overflow-hidden rounded-xl border border-blue-500/30 bg-slate-800/70 p-4 sm:p-5 flex flex-col justify-between hover:border-blue-400 transition-colors">
+                <div className="relative overflow-hidden rounded-xl border border-blue-200 bg-white p-4 sm:p-5 flex flex-col justify-between shadow-xs hover:border-blue-400 hover:shadow-md transition-all">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="size-6 rounded-full bg-white flex items-center justify-center text-xs font-bold text-blue-600 shadow-xs">
+                        <div className="size-7 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center text-xs font-bold text-blue-700 shadow-xs">
                           G
                         </div>
-                        <span className="text-sm font-semibold text-slate-200">Google Reviews</span>
+                        <span className="text-sm font-bold text-slate-900">Google Reviews</span>
                       </div>
-                      <span className="rounded-full bg-emerald-500/20 text-emerald-300 px-2 py-0.5 text-[10px] font-bold border border-emerald-500/30">
+                      <span className="rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-0.5 text-[10px] font-bold border border-emerald-200">
                         Top Rated
                       </span>
                     </div>
 
                     <div className="flex items-baseline gap-2 pt-1">
-                      <span className="text-3xl font-extrabold text-white">4.9</span>
-                      <div className="flex items-center text-amber-400 text-sm">
+                      <span className="text-3xl font-extrabold text-blue-600">4.9</span>
+                      <div className="flex items-center text-amber-500 text-sm">
                         {"★★★★★"}
                       </div>
                     </div>
-                    <p className="text-xs text-slate-300">
+                    <p className="text-xs font-medium text-slate-500">
                       Owais Interior Designer, Nashik
                     </p>
                   </div>
@@ -1674,7 +1674,7 @@ function PublicLandingPage() {
                     href="https://www.google.com/maps/search/?api=1&query=Owais+Interior+Designer+Nashik"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-blue-600/30 transition-all text-center w-full"
+                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all text-center w-full"
                   >
                     <span>View on Google Maps</span>
                     <ExternalLink className="size-3.5" />
@@ -1682,28 +1682,28 @@ function PublicLandingPage() {
                 </div>
 
                 {/* Justdial Verified Card */}
-                <div className="relative overflow-hidden rounded-xl border border-amber-500/30 bg-slate-800/70 p-4 sm:p-5 flex flex-col justify-between hover:border-amber-400 transition-colors">
+                <div className="relative overflow-hidden rounded-xl border border-amber-200 bg-white p-4 sm:p-5 flex flex-col justify-between shadow-xs hover:border-amber-400 hover:shadow-md transition-all">
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="size-6 rounded-full bg-amber-500 flex items-center justify-center text-xs font-bold text-white shadow-xs">
+                        <div className="size-7 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-xs font-bold text-amber-700 shadow-xs">
                           JD
                         </div>
-                        <span className="text-sm font-semibold text-slate-200">Justdial Profile</span>
+                        <span className="text-sm font-bold text-slate-900">Justdial Profile</span>
                       </div>
-                      <span className="rounded-full bg-amber-500/20 text-amber-300 px-2 py-0.5 text-[10px] font-bold border border-amber-500/30">
+                      <span className="rounded-full bg-amber-50 text-amber-700 px-2.5 py-0.5 text-[10px] font-bold border border-amber-200">
                         Verified
                       </span>
                     </div>
 
                     <div className="flex items-baseline gap-2 pt-1">
-                      <span className="text-3xl font-extrabold text-white">4.7</span>
-                      <div className="flex items-center text-amber-400 text-sm">
+                      <span className="text-3xl font-extrabold text-amber-600">4.7</span>
+                      <div className="flex items-center text-amber-500 text-sm">
                         {"★★★★★"}
                       </div>
-                      <span className="text-xs text-slate-400">(43 Ratings)</span>
+                      <span className="text-xs text-slate-500">(43 Ratings)</span>
                     </div>
-                    <p className="text-xs text-slate-300">
+                    <p className="text-xs font-medium text-slate-500">
                       Sarda Circle / Doodh Bazar, Nashik
                     </p>
                   </div>
@@ -1712,7 +1712,7 @@ function PublicLandingPage() {
                     href="https://www.justdial.com/Nashik/Owais-Interior-Near-By-Sarda-Circle-Near-By-Akbar-Soda-Doodh-Bazar/0253PX253-X253-241030030645-K5U4_BZDET/reviews?utm_source=chatgpt.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/30 transition-all text-center w-full"
+                    className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-amber-600/20 transition-all text-center w-full"
                   >
                     <span>View on Justdial</span>
                     <ExternalLink className="size-3.5" />
@@ -1723,57 +1723,57 @@ function PublicLandingPage() {
               {/* Top 3 Genuine Customer Reviews */}
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-400">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-blue-700">
                     Top Customer Experiences
                   </h4>
-                  <span className="text-[11px] text-slate-400">100% Genuine Feedback</span>
+                  <span className="text-[11px] font-medium text-slate-500">100% Genuine Feedback</span>
                 </div>
 
                 <div className="space-y-2.5">
                   {/* Review 1 */}
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 space-y-2 hover:border-blue-300 shadow-2xs transition-colors">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="size-7 rounded-full bg-blue-600/40 text-blue-300 font-bold text-xs flex items-center justify-center border border-blue-500/30">
+                        <div className="size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center border border-blue-200">
                           BK
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-white">Bilal Khan</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">Bilal Khan</span>
                       </div>
-                      <div className="text-amber-400 text-xs">★★★★★</div>
+                      <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                       &ldquo;Every thing ok I liked his work And I would like to thanks owais khan for making more professional my office&rdquo;
                     </p>
                   </div>
 
                   {/* Review 2 */}
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 space-y-2 hover:border-blue-300 shadow-2xs transition-colors">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="size-7 rounded-full bg-emerald-600/40 text-emerald-300 font-bold text-xs flex items-center justify-center border border-emerald-500/30">
+                        <div className="size-7 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center border border-emerald-200">
                           SK
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-white">Shradhal Kumavat</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">Shradhal Kumavat</span>
                       </div>
-                      <div className="text-amber-400 text-xs">★★★★★</div>
+                      <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                       &ldquo;Owais Interior is great! Their prices are very good, and I saved money. The service is quick, and they finished my project fast.&rdquo;
                     </p>
                   </div>
 
                   {/* Review 3 */}
-                  <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-3.5 sm:p-4 space-y-2 hover:border-slate-700 transition-colors">
+                  <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 space-y-2 hover:border-blue-300 shadow-2xs transition-colors">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <div className="size-7 rounded-full bg-purple-600/40 text-purple-300 font-bold text-xs flex items-center justify-center border border-purple-500/30">
+                        <div className="size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center border border-blue-200">
                           A
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-white">Ahmed</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">Ahmed</span>
                       </div>
-                      <div className="text-amber-400 text-xs">★★★★★</div>
+                      <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-300 italic leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
                       &ldquo;I had a great experience with Owais Interior... They responded very quickly to my request, which I really liked. Excellent service!&rdquo;
                     </p>
                   </div>
@@ -1781,15 +1781,15 @@ function PublicLandingPage() {
               </div>
             </div>
 
-            {/* Footer action */}
-            <div className="border-t border-slate-800 bg-slate-950/70 px-5 py-3.5 flex items-center justify-between gap-3 text-xs">
-              <span className="text-slate-400">
+            {/* Footer action: Crisp White & Royal Blue Accent */}
+            <div className="border-t border-slate-200 bg-white px-5 py-3.5 flex items-center justify-between gap-3 text-xs">
+              <span className="text-slate-600">
                 Want to book a free site inspection?
               </span>
               <a
                 href="#quote"
                 onClick={() => setIsRatingModalOpen(false)}
-                className="font-bold text-blue-400 hover:text-blue-300 transition-colors"
+                className="font-bold text-blue-600 hover:text-blue-800 transition-colors"
               >
                 Get Free Estimate →
               </a>
