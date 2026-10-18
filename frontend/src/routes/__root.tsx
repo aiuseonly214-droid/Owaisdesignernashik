@@ -71,28 +71,51 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Owais Interior Designer CRM" },
+      { title: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior Contractors" },
       {
         name: "description",
         content:
-          "Professional CRM for Owais Interior Designer — manage customers, quotations, invoices and payment receipts.",
+          "Best POP false ceiling and PVC wall panel contractor in Nashik. Expert gypsum false ceiling, modular kitchens & modern interiors. Call +91 7756043214 for free site estimate in Nashik.",
+      },
+      {
+        name: "keywords",
+        content:
+          "owais interior, owaisinterior, nashikpop, pop contractor nashik, pvc panel nashik, false ceiling nashik, gypsum ceiling nashik, pop false ceiling nashik, pvc wall panel nashik, interior designer nashik, pop design nashik, wadala nashik interior",
       },
       { name: "author", content: "Owais Interior Designer" },
-      { property: "og:title", content: "Owais Interior Designer CRM" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      { property: "og:site_name", content: "Owais Interior Designer" },
+      {
+        property: "og:title",
+        content: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior Contractors",
+      },
       {
         property: "og:description",
         content:
-          "Professional CRM for Owais Interior Designer — manage customers, quotations, invoices and payment receipts.",
+          "Best POP false ceiling and PVC wall panel contractor in Nashik. Expert gypsum false ceiling, modular kitchens & modern interiors. Call +91 7756043214 for free site estimate in Nashik.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: "/images/pop-ceiling-nashik.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Top POP false ceiling & PVC wall panel contractor in Nashik. Free site measurement & quotes across Nashik.",
+      },
+      { name: "twitter:image", content: "/images/pop-ceiling-nashik.jpg" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
     ],
   }),
   shellComponent: RootShell,

@@ -1,14 +1,37 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /dashboard
+Disallow: /customers
+Disallow: /invoices
+Disallow: /quotations
+Disallow: /receipts
+Disallow: /outstanding
+Disallow: /expenses
+Disallow: /payroll
+Disallow: /settings
 
 User-agent: Bingbot
 Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+Disallow: /dashboard
+Disallow: /customers
+Disallow: /invoices
+Disallow: /quotations
+Disallow: /receipts
+Disallow: /outstanding
+Disallow: /expenses
+Disallow: /payroll
+Disallow: /settings
 
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /customers
+Disallow: /invoices
+Disallow: /quotations
+Disallow: /receipts
+Disallow: /outstanding
+Disallow: /expenses
+Disallow: /payroll
+Disallow: /settings
+
+Sitemap: https://owaisinteriornashik.com/sitemap.xml
