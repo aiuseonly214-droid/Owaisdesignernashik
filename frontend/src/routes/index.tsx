@@ -24,6 +24,9 @@ import {
   Facebook,
   Video,
   Globe,
+  Languages,
+  Menu,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -185,6 +188,8 @@ export const Route = createFileRoute("/")({
 });
 
 function PublicLandingPage() {
+  const [lang, setLang] = useState<"en" | "hi">("en");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [quoteService, setQuoteService] = useState("POP False Ceiling");
   const [propertyType, setPropertyType] = useState("2BHK Flat");
   const [name, setName] = useState("");
@@ -198,6 +203,149 @@ function PublicLandingPage() {
   const phonePrimary = company?.mobile1 || "7756043214";
   const phoneSecondary = company?.mobile2 || "7721926290";
 
+  const t = {
+    topBanner:
+      lang === "hi"
+        ? "नासिक व आसपास के सभी क्षेत्रों में सेवाएं — मुफ्त साइट विज़िट और एस्टीमेट"
+        : "Serving All Areas Across Nashik, Maharashtra — Free Site Inspection & Estimate",
+    staffLogin: lang === "hi" ? "स्टाफ लॉगिन" : "Staff Login",
+    navServices: lang === "hi" ? "सेवाएं" : "Services",
+    navPop: lang === "hi" ? "पीओपी सीलिंग" : "POP Ceilings",
+    navPvc: lang === "hi" ? "पीवीसी पैनल्स" : "PVC Panels",
+    navGallery: lang === "hi" ? "गैलरी" : "Work Gallery",
+    navAreas: lang === "hi" ? "नासिक क्षेत्र" : "Nashik Areas",
+    navQuote: lang === "hi" ? "मुफ्त कोटेशन" : "Free Quote",
+    navFaqs: lang === "hi" ? "सवाल-जवाब" : "FAQs",
+    tagline: lang === "hi" ? "नासिक पीओपी और पीवीसी स्पेशलिस्ट्स" : "Nashik POP & PVC Specialists",
+    badge:
+      lang === "hi"
+        ? "#1 नासिक का भरोसेमंद POP फॉल्स सीलिंग और PVC कांट्रैक्टर"
+        : "#1 POP False Ceiling & PVC Interior Contractor in Nashik",
+    heroTitle1: lang === "hi" ? "प्रीमियम" : "Premium",
+    heroTitlePop: lang === "hi" ? "POP फॉल्स सीलिंग" : "POP False Ceiling",
+    heroTitleAnd: lang === "hi" ? "और" : "&",
+    heroTitlePvc: lang === "hi" ? "PVC पैनलिंग" : "PVC Paneling",
+    heroTitleCity: lang === "hi" ? "नासिक में" : "in Nashik",
+    heroDesc:
+      lang === "hi"
+        ? "ओवैस इंटीरियर डिज़ाइनर के अनुभवी कारीगरों के साथ अपने घर, दुकान या ऑफिस को दें मॉडर्न और खूबसूरत लुक। नासिक में मॉडर्न POP सीलिंग, 100% वॉटरप्रूफ PVC वॉल पैनल्स, जिप्सम सीलिंग, कोव LED लाइटिंग और इंटीरियर का भरोसेमंद काम।"
+        : "Transform your home, shop, or office with master craftsmen from Owais Interior Designer. Specialists in designer POP false ceilings, 100% waterproof PVC wall panels, gypsum board ceilings, cove LED lighting, and turnkey interiors across Nashik.",
+    statExp: lang === "hi" ? "10+ वर्ष" : "10+ Years",
+    statExpSub: lang === "hi" ? "नासिक अनुभव" : "Nashik Experience",
+    statProj: lang === "hi" ? "500+" : "500+",
+    statProjSub: lang === "hi" ? "प्रोजेक्ट्स पूरे किए" : "Projects Done",
+    statWaterproof: lang === "hi" ? "100%" : "100%",
+    statWaterproofSub: lang === "hi" ? "वॉटरप्रूफ PVC" : "Waterproof PVC",
+    statRating: lang === "hi" ? "4.9 ★" : "4.9 ★",
+    statRatingSub: lang === "hi" ? "ग्राहकों की रेटिंग" : "Customer Rating",
+    btnFreeEstimate: lang === "hi" ? "मुफ्त साइट एस्टीमेट पाएं" : "Get Free Site Estimate",
+    btnCall: lang === "hi" ? "कॉल करें" : "Call",
+    trustLine:
+      lang === "hi"
+        ? "कोई बिचौलिया नहीं • सीधे कारीगर की वाजिब दरें • नासिक में फ्री साइट विज़िट"
+        : "Zero middleman commission • Direct master craftsmen rates • Free site visit in Nashik",
+    featuredBadge: lang === "hi" ? "नासिक का नया प्रोजेक्ट" : "Featured Nashik Project",
+    featuredCompleted: lang === "hi" ? "सफलतापूर्वक पूर्ण" : "Completed",
+    servicesSub: lang === "hi" ? "फॉल्स सीलिंग और वॉल सोलूशन्स" : "Complete False Ceiling & Wall Solutions",
+    servicesTitle: lang === "hi" ? "नासिक में हमारी प्रमुख सेवाएं" : "Specialized Interior Services in Nashik",
+    servicesDesc:
+      lang === "hi"
+        ? "मॉडर्न POP सीलिंग डिज़ाइन से लेकर नमी से सुरक्षित रखने वाले 100% वॉटरप्रूफ PVC वॉल पैनल्स तक, हम हर काम पूरी फिनिशिंग के साथ करते हैं।"
+        : "From contemporary POP ceiling patterns with ambient LED channels to durable waterproof PVC wall paneling, we handle projects of every scale.",
+    btnBookVisit: lang === "hi" ? "साइट विज़िट बुक करें" : "Book Site Visit",
+    gallerySub: lang === "hi" ? "डिज़ाइन पोर्टफोलियो" : "Design Portfolio",
+    galleryTitle: lang === "hi" ? "नासिक में हमारे हालिया प्रोजेक्ट्स" : "Recent Projects Across Nashik",
+    galleryBtn:
+      lang === "hi"
+        ? "व्हाट्सएप पर फोटो कैटलॉग मंगाएं"
+        : "Request Full Photo Catalogue on WhatsApp",
+    btnWatchClip: lang === "hi" ? "वीडियो देखें" : "Watch Clip",
+    btnSimilarQuote: lang === "hi" ? "ऐसा ही कोटेशन पाएं" : "Get Similar Quote",
+    quoteSub: lang === "hi" ? "सटीक और तुरंत एस्टीमेट" : "Fast & Accurate Estimation",
+    quoteTitle:
+      lang === "hi"
+        ? "नासिक में अपनी जगह के लिए तुरंत मुफ्त कोटेशन पाएं"
+        : "Get an Instant Free Quote For Your Space in Nashik",
+    quoteDesc:
+      lang === "hi"
+        ? "नीचे दिया गया फॉर्म भरें या सीधे व्हाट्सएप पर संपर्क करें। हम आपको अनुमानित खर्च, डिज़ाइन विकल्प और नासिक में 100% फ्री साइट नाप का समय देंगे।"
+        : "Fill out the quick inquiry below or reach out directly via WhatsApp. We'll provide estimated pricing, design options, and schedule a 100% free site measurement across Nashik.",
+    quoteF1Title: lang === "hi" ? "मुफ्त साइट नाप (Measurement)" : "Free Site Measurement",
+    quoteF1Desc:
+      lang === "hi"
+        ? "हम नासिक में कहीं भी आपके घर या साइट पर मटेरियल सैम्पल्स के साथ आते हैं।"
+        : "We visit your home or site anywhere in Nashik at your convenience with material samples.",
+    quoteF2Title: lang === "hi" ? "QR-सत्यापित डिजिटल कोटेशन" : "QR-Verified Digital Quotations",
+    quoteF2Desc:
+      lang === "hi"
+        ? "डिजिटल QR वेरिफिकेशन के साथ रूम-दर-रूम आइटमयुक्त पारदर्शी PDF कोटेशन प्राप्त करें।"
+        : "Receive an itemized room-by-room PDF quotation with digital QR verification.",
+    quoteF3Title: lang === "hi" ? "सीधे कांट्रैक्टर से संपर्क" : "Direct Contractor Contact",
+    quoteFormTitle: lang === "hi" ? "व्हाट्सएप पर तुरंत पूछताछ" : "Quick Inquiry & WhatsApp Quote",
+    quoteFormSub:
+      lang === "hi"
+        ? "व्हाट्सएप पर हमारे कारीगरों को अपनी आवश्यकताएं सीधे भेजें।"
+        : "Send requirements directly to our master craftsmen on WhatsApp.",
+    lblService: lang === "hi" ? "सर्विस चुनें" : "Select Service",
+    lblProperty: lang === "hi" ? "प्रॉपर्टी का प्रकार" : "Property Type",
+    lblName: lang === "hi" ? "आपका नाम" : "Your Name",
+    lblPhone: lang === "hi" ? "मोबाइल नंबर" : "Mobile Number",
+    lblLocation: lang === "hi" ? "नासिक में इलाका/लोकेशन" : "Nashik Locality",
+    btnSendInquiry:
+      lang === "hi"
+        ? "व्हाट्सएप पर तुरंत पूछताछ भेजें"
+        : "Send Instant Inquiry on WhatsApp",
+    formGuar:
+      lang === "hi"
+        ? "⚡ तुरंत जवाब • कोई स्पैम नहीं • सीधे कांट्रैक्टर से बातचीत"
+        : "⚡ Instant response • No spam • Direct communication with contractor",
+    whySub: lang === "hi" ? "हमारे साथ काम क्यों करें" : "Why Work With Us",
+    whyTitle: lang === "hi" ? "नासिक के भरोसेमंद इंटीरियर स्पेशलिस्ट" : "The Trusted Interior Specialists in Nashik",
+    why1Title: lang === "hi" ? "सीधे मास्टर कारीगर" : "Direct Master Craftsmen",
+    why1Desc:
+      lang === "hi"
+        ? "सीधे उन्हीं कारीगरों से काम करवाएं जो आपकी सीलिंग और पैनलिंग तैयार करते हैं। कोई बिचौलिया नहीं, सबसे किफायती दरें और बेहतरीन फिनिशिंग।"
+        : "Work directly with the artisans who execute your ceiling and paneling. No third-party markups, ensuring unbeatable rates and superior workmanship.",
+    why2Title: lang === "hi" ? "डिजिटल QR वेरिफिकेशन" : "Digital QR Verification",
+    why2Desc:
+      lang === "hi"
+        ? "हमारा हर कोटेशन और बिल डिजिटल QR कोड के साथ आता है जिसे कभी भी मोबाइल से स्कैन करके ऑनलाइन चेक किया जा सकता है।"
+        : "Every quotation, invoice, and payment receipt is backed by our secure QR code verification system to ensure complete transparency.",
+    why3Title: lang === "hi" ? "समय पर काम पूरा" : "On-Time Handover",
+    why3Desc:
+      lang === "hi"
+        ? "हम आपके समय की कद्र करते हैं। तय समय सीमा और समर्पित टीम के साथ आपका काम समय पर पूरा करते हैं।"
+        : "We respect your time. Committed deadlines with dedicated team mobilization ensure your false ceiling or PVC installation finishes on schedule.",
+    why4Title: lang === "hi" ? "सर्टिफाइड हाई-क्वालिटी मटेरियल" : "Certified Materials",
+    why4Desc:
+      lang === "hi"
+        ? "हम सिर्फ ओरिजिनल Plaster of Paris, Saint-Gobain Gyproc बोर्ड्स और मजबूत वॉटरप्रूफ PVC पैनल्स इस्तेमाल करते हैं।"
+        : "We only use verified high-tensile Plaster of Paris, genuine Saint-Gobain Gyproc boards, and heavy-gauge waterproof PVC louvers.",
+    areasSub: lang === "hi" ? "नासिक कवरेज" : "Local Nashik Coverage",
+    areasTitle:
+      lang === "hi"
+        ? "नासिक शहर और सभी उपनगरों में हमारी सेवाएं"
+        : "Serving All Localities Across Nashik & Surrounding Areas",
+    areasDesc:
+      lang === "hi"
+        ? "हमारी टीम नासिक के हर प्रमुख इलाके में ऑन-साइट नाप, डिज़ाइन कंसल्टेशन और इंस्टॉलेशन करती है।"
+        : "Our teams provide on-site measurement, design consultations, and installation in every major neighborhood of Nashik.",
+    faqSub: lang === "hi" ? "अक्सर पूछे जाने वाले सवाल" : "Frequently Asked Questions",
+    faqTitle: lang === "hi" ? "नासिक में POP और PVC से जुड़े सवाल-जवाब" : "POP & PVC Interior FAQs in Nashik",
+    ctaTitle:
+      lang === "hi"
+        ? "क्या आप अपने घर को खूबसूरत बनाने के लिए तैयार हैं?"
+        : "Ready to Beautify Your Home in Nashik?",
+    ctaDesc:
+      lang === "hi"
+        ? "मुफ्त साइट इंस्पेक्शन, 3D डिज़ाइन कैटलॉग और पारदर्शी कोटेशन के लिए आज ही ओवैस इंटीरियर डिज़ाइनर से संपर्क करें।"
+        : "Contact Owais Interior Designer today for a free site inspection, 3D design catalog, and transparent quotation.",
+    ctaChatBtn:
+      lang === "hi"
+        ? `व्हाट्सएप पर चैट करें (+91 ${phonePrimary})`
+        : `Chat on WhatsApp (+91 ${phonePrimary})`,
+  };
+
   function handleWhatsAppSubmit(e: React.FormEvent) {
     e.preventDefault();
     const cleanPhone = phone.trim() || "Not provided";
@@ -205,7 +353,7 @@ function PublicLandingPage() {
     const cleanArea = area.trim() || "Nashik";
 
     const message = encodeURIComponent(
-      `Hello Owais Interior Designer!\n\nI would like to get a free estimate and design catalog for:\n• Service: ${quoteService}\n• Property Type: ${propertyType}\n• Name: ${cleanName}\n• Contact: ${cleanPhone}\n• Location in Nashik: ${cleanArea}\n\nPlease contact me with quotation details.`
+      `Hello Owais Interior Designer!\n\nI would like to get a free estimate and design catalog for:\n• Service: ${quoteService}\n• Property Type: ${propertyType}\n• Name: ${cleanName}\n• Contact: ${cleanPhone}\n• Location in Nashik: ${cleanArea}\n• Preferred Language: ${lang === "hi" ? "Hindi" : "English"}\n\nPlease contact me with quotation details.`
     );
     window.open(`https://wa.me/91${phonePrimary}?text=${message}`, "_blank");
   }
@@ -320,21 +468,52 @@ function PublicLandingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
       {/* Top Banner - Royal Navy Blue */}
-      <aside aria-label="Announcement" className="border-b border-blue-800 bg-blue-900 px-4 py-2 text-xs text-blue-100 shadow-xs">
+      <aside aria-label="Announcement" className="border-b border-blue-800 bg-blue-900 px-3 py-2 text-xs text-blue-100 shadow-xs">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex size-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium">Serving All Areas Across Nashik, Maharashtra — Free Site Inspection &amp; Estimate</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="flex size-2 shrink-0 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-medium truncate text-[11px] sm:text-xs">
+              {t.topBanner}
+            </span>
           </div>
-          <div className="flex items-center gap-4">
-            {/* Real Social Media Account Links */}
-            <div className="flex items-center gap-3 pr-2 border-r border-blue-700/60">
+
+          <div className="flex items-center gap-3 shrink-0 ml-auto">
+            {/* Language Switcher Buttons (Hindi / English) */}
+            <div className="flex items-center rounded-lg bg-blue-950/90 p-0.5 border border-blue-700/80 shadow-xs">
+              <button
+                type="button"
+                onClick={() => setLang("en")}
+                className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all ${
+                  lang === "en"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-blue-200 hover:text-white"
+                }`}
+                title="Switch to English"
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => setLang("hi")}
+                className={`px-2 py-0.5 rounded text-[11px] font-bold transition-all ${
+                  lang === "hi"
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "text-blue-200 hover:text-white"
+                }`}
+                title="हिंदी में पढ़ें"
+              >
+                हिंदी
+              </button>
+            </div>
+
+            {/* Social Media Account Links */}
+            <div className="hidden sm:flex items-center gap-2.5 pr-2 border-r border-blue-700/60">
               {landingConfig.social?.instagram && (
                 <a
                   href={landingConfig.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-pink-300 hover:text-white transition-colors"
+                  className="text-pink-300 hover:text-white transition-colors p-1"
                   title="Follow us on Instagram"
                 >
                   <Instagram className="size-3.5" />
@@ -345,7 +524,7 @@ function PublicLandingPage() {
                   href={landingConfig.social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-red-300 hover:text-white transition-colors"
+                  className="text-red-300 hover:text-white transition-colors p-1"
                   title="Subscribe on YouTube"
                 >
                   <Youtube className="size-3.5" />
@@ -356,7 +535,7 @@ function PublicLandingPage() {
                   href={landingConfig.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-200 hover:text-white transition-colors"
+                  className="text-blue-200 hover:text-white transition-colors p-1"
                   title="Follow us on Facebook"
                 >
                   <Facebook className="size-3.5" />
@@ -366,70 +545,72 @@ function PublicLandingPage() {
 
             <a
               href={`tel:+91${phonePrimary}`}
-              className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-blue-200 transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 font-semibold text-white hover:text-blue-200 transition-colors"
             >
               <Phone className="size-3.5 text-blue-300" />
               +91 {phonePrimary}
             </a>
-            <span className="text-blue-700 hidden sm:inline">|</span>
+            <span className="text-blue-700 hidden lg:inline">|</span>
             <Link
               to="/auth"
-              className="hidden sm:inline-flex items-center gap-1 text-blue-200 hover:text-white transition-colors"
+              className="hidden sm:inline-flex items-center gap-1 text-blue-200 hover:text-white transition-colors text-[11px]"
             >
               <ShieldCheck className="size-3.5" />
-              Staff Login
+              {t.staffLogin}
             </Link>
           </div>
         </div>
       </aside>
 
-      {/* Header - Crisp White with Royal Blue Accents */}
+      {/* Header - Crisp White with Royal Blue Accents & Perfect Responsive Structure */}
       <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-          <Link to="/" className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
             <img
               src={DEFAULT_LOGO_URL}
               alt="Owais Interior Designer Nashik Logo"
-              className="size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10"
+              className="size-9 sm:size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10 shrink-0"
             />
-            <div>
-              <span className="block font-display text-lg font-bold tracking-tight text-blue-950 sm:text-xl">
+            <div className="min-w-0">
+              <span className="block font-display text-base sm:text-lg lg:text-xl font-bold tracking-tight text-blue-950 truncate leading-tight">
                 Owais Interior Designer
               </span>
-              <span className="block text-[11px] font-semibold tracking-widest text-blue-600 uppercase">
-                Nashik POP &amp; PVC Specialists
+              <span className="block text-[10px] sm:text-[11px] font-semibold tracking-wider text-blue-600 uppercase truncate">
+                {t.tagline}
               </span>
             </div>
           </Link>
 
-          <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600">
+          {/* Desktop Navigation */}
+          <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600">
             <a href="#services" className="hover:text-blue-600 transition-colors">
-              Services
+              {t.navServices}
             </a>
             <a href="#pop" className="hover:text-blue-600 transition-colors">
-              POP Ceilings
+              {t.navPop}
             </a>
             <a href="#pvc" className="hover:text-blue-600 transition-colors">
-              PVC Panels
+              {t.navPvc}
             </a>
             <a href="#gallery" className="hover:text-blue-600 transition-colors">
-              Work Gallery
+              {t.navGallery}
             </a>
             <a href="#areas" className="hover:text-blue-600 transition-colors">
-              Nashik Areas
+              {t.navAreas}
             </a>
             <a href="#quote" className="hover:text-blue-600 transition-colors">
-              Free Quote
+              {t.navQuote}
             </a>
             <a href="#faqs" className="hover:text-blue-600 transition-colors">
-              FAQs
+              {t.navFaqs}
             </a>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Header Social Icons */}
+          {/* Header Action Buttons */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            {/* Header Social Icons (Tablet & Desktop) */}
             {(landingConfig.social?.instagram || landingConfig.social?.youtube || landingConfig.social?.facebook) && (
-              <div className="hidden md:flex items-center gap-2 pr-1">
+              <div className="hidden xl:flex items-center gap-1.5 pr-1 border-r border-slate-200">
                 {landingConfig.social?.instagram && (
                   <a
                     href={landingConfig.social.instagram}
@@ -472,103 +653,245 @@ function PublicLandingPage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700 transition-all shrink-0"
+              title="Chat on WhatsApp"
             >
-              <MessageSquare className="size-4" />
+              <MessageSquare className="size-3.5 sm:size-4 shrink-0" />
               <span className="hidden sm:inline">WhatsApp</span>
             </a>
+
             <a
               href={`tel:+91${phonePrimary}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-3.5 py-2 text-xs sm:text-sm font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all shadow-xs"
+              className="inline-flex items-center gap-1 sm:gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all shadow-xs shrink-0"
+              title={`Call +91 ${phonePrimary}`}
             >
-              <Phone className="size-4" />
-              <span>Call</span>
+              <Phone className="size-3.5 sm:size-4 shrink-0" />
+              <span className="hidden sm:inline">{t.btnCall}</span>
             </a>
+
             <Link
               to="/auth"
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 text-xs font-medium text-slate-700 hover:text-blue-600 hover:border-blue-300 transition-all"
+              className="hidden md:inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-100 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:text-blue-600 hover:border-blue-300 transition-all shrink-0"
               title="Employee & Admin CRM Portal"
             >
               <span>Portal</span>
             </Link>
+
+            {/* Mobile Hamburger Menu Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-blue-600 transition-colors shrink-0"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Slide-down Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 py-4 space-y-3 shadow-lg">
+            <div className="grid grid-cols-2 gap-2 text-sm font-medium text-slate-700 border-b border-slate-100 pb-3">
+              <a
+                href="#services"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navServices}
+              </a>
+              <a
+                href="#pop"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navPop}
+              </a>
+              <a
+                href="#pvc"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navPvc}
+              </a>
+              <a
+                href="#gallery"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navGallery}
+              </a>
+              <a
+                href="#areas"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navAreas}
+              </a>
+              <a
+                href="#quote"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navQuote}
+              </a>
+              <a
+                href="#faqs"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.navFaqs}
+              </a>
+              <Link
+                to="/auth"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                CRM Portal
+              </Link>
+            </div>
+
+            {/* Mobile Language Switcher inside Drawer */}
+            <div className="flex items-center justify-between pt-1">
+              <span className="text-xs font-semibold text-slate-600 flex items-center gap-1.5">
+                <Languages className="size-4 text-blue-600" />
+                Language / भाषा:
+              </span>
+              <div className="flex items-center rounded-lg bg-slate-100 p-0.5 border border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => setLang("en")}
+                  className={`px-3 py-1 rounded text-xs font-bold transition-all ${
+                    lang === "en" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLang("hi")}
+                  className={`px-3 py-1 rounded text-xs font-bold transition-all ${
+                    lang === "hi" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  हिंदी
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Social Links in Drawer */}
+            {(landingConfig.social?.instagram || landingConfig.social?.youtube || landingConfig.social?.facebook) && (
+              <div className="flex items-center justify-center gap-4 pt-2 border-t border-slate-100 text-slate-600">
+                {landingConfig.social?.instagram && (
+                  <a
+                    href={landingConfig.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-slate-100 hover:text-pink-600 text-pink-600"
+                    title="Instagram"
+                  >
+                    <Instagram className="size-4" />
+                  </a>
+                )}
+                {landingConfig.social?.youtube && (
+                  <a
+                    href={landingConfig.social.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-slate-100 hover:text-red-600 text-red-600"
+                    title="YouTube"
+                  >
+                    <Youtube className="size-4" />
+                  </a>
+                )}
+                {landingConfig.social?.facebook && (
+                  <a
+                    href={landingConfig.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-slate-100 hover:text-blue-600 text-blue-600"
+                    title="Facebook"
+                  >
+                    <Facebook className="size-4" />
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </header>
 
       {/* Hero Section - Clean Blue & White Glow */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-slate-50 pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-100">
-        {/* Soft blue ambient glow accents */}
-        <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[600px] -translate-x-1/2 rounded-full bg-blue-400/15 blur-[140px]" />
-        <div className="pointer-events-none absolute top-1/3 -right-20 -z-10 size-[400px] rounded-full bg-sky-300/20 blur-[130px]" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-slate-50 pt-8 sm:pt-12 pb-16 sm:pb-20 lg:pt-20 lg:pb-28 border-b border-slate-100">
+        {/* Soft blue ambient glow accents - contained within bounds */}
+        <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[320px] sm:size-[500px] lg:size-[600px] -translate-x-1/2 rounded-full bg-blue-400/15 blur-[100px] sm:blur-[140px]" />
+        <div className="pointer-events-none absolute top-1/3 -right-20 -z-10 size-[250px] sm:size-[400px] rounded-full bg-sky-300/20 blur-[90px] sm:blur-[130px]" />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center">
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/70 px-3.5 py-1.5 text-xs font-semibold text-blue-800 shadow-xs">
-                <Sparkles className="size-3.5 text-blue-600" />
-                <span>#1 POP False Ceiling &amp; PVC Interior Contractor in Nashik</span>
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/70 px-3 py-1.5 text-xs font-semibold text-blue-800 shadow-xs max-w-full">
+                <Sparkles className="size-3.5 text-blue-600 shrink-0" />
+                <span className="truncate">{t.badge}</span>
               </div>
 
-              <h1 className="font-display text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl leading-[1.15]">
-                Premium <span className="text-blue-600">POP False Ceiling</span> &amp;{" "}
-                <span className="text-blue-900">PVC Paneling</span> in Nashik
+              <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
+                {t.heroTitle1} <span className="text-blue-600">{t.heroTitlePop}</span> {t.heroTitleAnd}{" "}
+                <span className="text-blue-900">{t.heroTitlePvc}</span> {t.heroTitleCity}
               </h1>
 
-              <p className="text-base text-slate-600 sm:text-lg leading-relaxed max-w-2xl">
-                Transform your home, shop, or office with master craftsmen from{" "}
-                <strong className="text-blue-950 font-bold">Owais Interior Designer</strong>.
-                Specialists in designer POP false ceilings, 100% waterproof PVC wall panels,
-                gypsum board ceilings, cove LED lighting, and turnkey interiors across Nashik.
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                {t.heroDesc}
               </p>
 
-              {/* Trust Badges - Crisp White Cards with Blue Stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 text-center shadow-xs">
-                  <div className="text-xl sm:text-2xl font-extrabold text-blue-600">10+ Years</div>
-                  <div className="text-xs font-medium text-slate-500 mt-0.5">Nashik Experience</div>
+              {/* Trust Badges - Responsive Grid (2 cols on mobile, 4 on desktop) */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-1">
+                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statExp}</div>
+                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statExpSub}</div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 text-center shadow-xs">
-                  <div className="text-xl sm:text-2xl font-extrabold text-blue-600">500+</div>
-                  <div className="text-xs font-medium text-slate-500 mt-0.5">Projects Done</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statProj}</div>
+                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statProjSub}</div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 text-center shadow-xs">
-                  <div className="text-xl sm:text-2xl font-extrabold text-emerald-600">100%</div>
-                  <div className="text-xs font-medium text-slate-500 mt-0.5">Waterproof PVC</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-600">{t.statWaterproof}</div>
+                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statWaterproofSub}</div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3.5 text-center shadow-xs">
-                  <div className="text-xl sm:text-2xl font-extrabold text-blue-600">4.9 ★</div>
-                  <div className="text-xs font-medium text-slate-500 mt-0.5">Customer Rating</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statRating}</div>
+                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statRatingSub}</div>
                 </div>
               </div>
 
-              {/* CTA buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* CTA buttons - full-width on mobile */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-2">
                 <a
                   href="#quote"
-                  className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition-all"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 sm:px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition-all text-center"
                 >
-                  <span>Get Free Site Estimate</span>
-                  <ArrowRight className="size-4" />
+                  <span>{t.btnFreeEstimate}</span>
+                  <ArrowRight className="size-4 shrink-0" />
                 </a>
                 <a
                   href={`tel:+91${phonePrimary}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400 transition-all"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400 transition-all text-center"
                 >
-                  <Phone className="size-4 text-blue-600" />
-                  <span>Call +91 {phonePrimary}</span>
+                  <Phone className="size-4 text-blue-600 shrink-0" />
+                  <span>{t.btnCall} +91 {phonePrimary}</span>
                 </a>
               </div>
 
               <div className="flex items-center gap-2 text-xs font-medium text-slate-500 pt-1">
                 <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
-                <span>Zero middleman commission • Direct master craftsmen rates • Free site visit in Nashik</span>
+                <span className="leading-snug">{t.trustLine}</span>
               </div>
             </div>
 
             {/* Right Hero Image Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative overflow-hidden rounded-2xl border-4 border-white bg-white shadow-2xl shadow-blue-900/10">
+            <div className="lg:col-span-5 relative mt-4 lg:mt-0">
+              <div className="relative overflow-hidden rounded-2xl border-2 sm:border-4 border-white bg-white shadow-xl shadow-blue-900/10">
                 <img
                   src="/images/pop-ceiling-nashik.jpg"
                   alt="Modern POP False Ceiling with LED cove lighting in Nashik living room"
@@ -577,23 +900,23 @@ function PublicLandingPage() {
                   fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl backdrop-blur-md bg-white/95 border border-slate-200/80 shadow-md">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                        Featured Nashik Project
+                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3 sm:p-4 rounded-xl backdrop-blur-md bg-white/95 border border-slate-200/80 shadow-md">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 truncate">
+                        {t.featuredBadge}
                       </p>
-                      <p className="text-sm font-bold text-slate-900">
-                        Modern Living Room POP Ceiling with Cove Lighting
+                      <p className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+                        Modern Living Room POP Ceiling
                       </p>
-                      <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                        <MapPin className="size-3 text-blue-600" />
+                      <p className="text-[11px] sm:text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
+                        <MapPin className="size-3 text-blue-600 shrink-0" />
                         Gangapur Road, Nashik
                       </p>
                     </div>
-                    <div className="text-right">
-                      <span className="inline-block rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-800">
-                        Completed
+                    <div className="shrink-0 text-right">
+                      <span className="inline-block rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-emerald-800">
+                        {t.featuredCompleted}
                       </span>
                     </div>
                   </div>
@@ -605,30 +928,29 @@ function PublicLandingPage() {
       </section>
 
       {/* Services Grid Section - Soft Blue Tinted Background */}
-      <section id="services" className="border-t border-slate-200/80 bg-slate-50/70 py-20">
+      <section id="services" className="border-t border-slate-200/80 bg-slate-50/70 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-2.5 sm:space-y-3">
             <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
-              Complete False Ceiling &amp; Wall Solutions
+              {t.servicesSub}
             </h2>
-            <h3 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">
-              Specialized Interior Services in Nashik
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+              {t.servicesTitle}
             </h3>
-            <p className="text-sm sm:text-base text-slate-600">
-              From contemporary POP ceiling patterns with ambient LED channels to durable waterproof
-              PVC wall paneling, we handle projects of every scale.
+            <p className="text-xs sm:text-sm md:text-base text-slate-600">
+              {t.servicesDesc}
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
             {services.map((svc) => (
               <div
                 key={svc.id}
                 id={svc.id}
-                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-600/10"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm transition-all duration-300 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-600/10 flex flex-col justify-between"
               >
-                <div className="grid gap-6 sm:grid-cols-12 sm:items-center">
-                  <div className="sm:col-span-5 overflow-hidden rounded-xl border border-slate-100">
+                <div className="grid gap-4 sm:gap-6 sm:grid-cols-12 sm:items-center">
+                  <div className="sm:col-span-5 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
                     <img
                       src={svc.image}
                       alt={`${svc.title} by Owais Interior Designer Nashik`}
@@ -636,11 +958,11 @@ function PublicLandingPage() {
                       loading="lazy"
                     />
                   </div>
-                  <div className="sm:col-span-7 space-y-3">
-                    <span className="inline-block rounded-md bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 border border-blue-200/60">
+                  <div className="sm:col-span-7 space-y-2.5 sm:space-y-3">
+                    <span className="inline-block rounded-md bg-blue-50 px-2.5 py-0.5 text-[11px] sm:text-xs font-semibold text-blue-700 border border-blue-200/60">
                       {svc.badge}
                     </span>
-                    <h4 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <h4 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {svc.title}
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -655,12 +977,12 @@ function PublicLandingPage() {
                       ))}
                     </ul>
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                      <span className="text-xs font-bold text-blue-700">{svc.priceHint}</span>
+                      <span className="text-xs sm:text-sm font-bold text-blue-700">{svc.priceHint}</span>
                       <a
                         href="#quote"
                         className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800"
                       >
-                        <span>Book Site Visit</span>
+                        <span>{t.btnBookVisit}</span>
                         <ChevronRight className="size-3" />
                       </a>
                     </div>
@@ -673,15 +995,15 @@ function PublicLandingPage() {
       </section>
 
       {/* Visual Work Gallery - Pure White Background */}
-      <section id="gallery" className="py-20 border-t border-slate-200/80 bg-white">
+      <section id="gallery" className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-blue-600">
-                Design Portfolio
+                {t.gallerySub}
               </p>
-              <h2 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">
-                Recent Projects Across Nashik
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+                {t.galleryTitle}
               </h2>
             </div>
             <a
@@ -690,18 +1012,18 @@ function PublicLandingPage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-800"
             >
-              <span>Request Full Photo Catalogue on WhatsApp</span>
-              <ArrowRight className="size-4" />
+              <span>{t.galleryBtn}</span>
+              <ArrowRight className="size-4 shrink-0" />
             </a>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {galleryItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="overflow-hidden aspect-[4/3] relative bg-slate-100">
@@ -722,11 +1044,11 @@ function PublicLandingPage() {
                         className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-red-600/90 hover:bg-red-700 backdrop-blur-xs px-2.5 py-1 text-[11px] font-semibold text-white shadow-md transition-all"
                       >
                         <Video className="size-3.5" />
-                        <span>Watch Clip</span>
+                        <span>{t.btnWatchClip}</span>
                       </a>
                     )}
                   </div>
-                  <div className="p-4 space-y-1.5">
+                  <div className="p-3.5 sm:p-4 space-y-1.5">
                     <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
                       {item.title}
                     </h3>
@@ -742,17 +1064,17 @@ function PublicLandingPage() {
                   </div>
                 </div>
 
-                <div className="p-4 pt-0">
+                <div className="p-3.5 sm:p-4 pt-0">
                   <a
                     href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
                       `Hello Owais Interior Designer! I loved your project "${item.title}" in ${item.location}. Can you provide an estimate for a similar design?`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-blue-200 bg-blue-50/70 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all"
+                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50/70 py-2.5 text-xs font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all text-center"
                   >
                     <MessageSquare className="size-3.5" />
-                    <span>Get Similar Quote</span>
+                    <span>{t.btnSimilarQuote}</span>
                   </a>
                 </div>
               </div>
@@ -762,32 +1084,30 @@ function PublicLandingPage() {
       </section>
 
       {/* Free Quotation Form & WhatsApp Estimator - Crisp Clean Gradient */}
-      <section id="quote" className="py-20 border-t border-slate-200/80 bg-gradient-to-br from-blue-50/60 via-white to-blue-50/40">
+      <section id="quote" className="py-16 sm:py-20 border-t border-slate-200/80 bg-gradient-to-br from-blue-50/60 via-white to-blue-50/40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center">
             {/* Left Info */}
-            <div className="lg:col-span-6 space-y-6">
+            <div className="lg:col-span-6 space-y-5 sm:space-y-6">
               <span className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
-                Fast &amp; Accurate Estimation
+                {t.quoteSub}
               </span>
-              <h2 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">
-                Get an Instant Free Quote For Your Space in Nashik
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 leading-snug">
+                {t.quoteTitle}
               </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Fill out the quick inquiry below or reach out directly via WhatsApp. We'll provide
-                estimated pricing, design options, and schedule a 100% free site measurement across
-                Nashik.
+              <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
+                {t.quoteDesc}
               </p>
 
-              <div className="space-y-4 pt-2">
+              <div className="space-y-3.5 sm:space-y-4 pt-1 sm:pt-2">
                 <div className="flex items-start gap-3">
                   <div className="rounded-lg bg-blue-100 p-2 text-blue-700 shrink-0">
                     <CheckCircle2 className="size-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">Free Site Measurement</h3>
+                    <h3 className="text-sm font-bold text-slate-900">{t.quoteF1Title}</h3>
                     <p className="text-xs text-slate-600">
-                      We visit your home or site anywhere in Nashik at your convenience with material samples.
+                      {t.quoteF1Desc}
                     </p>
                   </div>
                 </div>
@@ -797,9 +1117,9 @@ function PublicLandingPage() {
                     <ShieldCheck className="size-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">QR-Verified Digital Quotations</h3>
+                    <h3 className="text-sm font-bold text-slate-900">{t.quoteF2Title}</h3>
                     <p className="text-xs text-slate-600">
-                      Receive an itemized room-by-room PDF quotation with digital QR verification.
+                      {t.quoteF2Desc}
                     </p>
                   </div>
                 </div>
@@ -809,7 +1129,7 @@ function PublicLandingPage() {
                     <Phone className="size-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">Direct Contractor Contact</h3>
+                    <h3 className="text-sm font-bold text-slate-900">{t.quoteF3Title}</h3>
                     <p className="text-xs text-slate-600">
                       Call directly at <strong className="text-blue-900 font-semibold">+91 {phonePrimary}</strong> or{" "}
                       <strong className="text-blue-900 font-semibold">+91 {phoneSecondary}</strong>.
@@ -825,22 +1145,22 @@ function PublicLandingPage() {
                 <CardContent className="p-6 sm:p-8">
                   <form onSubmit={handleWhatsAppSubmit} className="space-y-4">
                     <div className="border-b border-slate-100 pb-3">
-                      <h3 className="text-lg font-bold text-blue-950">Quick Inquiry &amp; WhatsApp Quote</h3>
+                      <h3 className="text-lg font-bold text-blue-950">{t.quoteFormTitle}</h3>
                       <p className="text-xs text-slate-500">
-                        Send requirements directly to our master craftsmen on WhatsApp.
+                        {t.quoteFormSub}
                       </p>
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-3.5 sm:gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
                         <Label htmlFor="service-select" className="text-xs font-semibold text-slate-700">
-                          Select Service
+                          {t.lblService}
                         </Label>
                         <select
                           id="service-select"
                           value={quoteService}
                           onChange={(e) => setQuoteService(e.target.value)}
-                          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+                          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-hidden"
                         >
                           <option value="POP False Ceiling">POP False Ceiling</option>
                           <option value="PVC Wall Paneling & Ceiling">PVC Wall Panels / Louvers</option>
@@ -852,13 +1172,13 @@ function PublicLandingPage() {
 
                       <div className="space-y-1.5">
                         <Label htmlFor="property-select" className="text-xs font-semibold text-slate-700">
-                          Property Type
+                          {t.lblProperty}
                         </Label>
                         <select
                           id="property-select"
                           value={propertyType}
                           onChange={(e) => setPropertyType(e.target.value)}
-                          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-none"
+                          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-hidden"
                         >
                           <option value="1BHK Flat">1BHK Flat</option>
                           <option value="2BHK Flat">2BHK Flat</option>
@@ -871,7 +1191,7 @@ function PublicLandingPage() {
 
                     <div className="space-y-1.5">
                       <Label htmlFor="cust-name" className="text-xs font-semibold text-slate-700">
-                        Your Name
+                        {t.lblName}
                       </Label>
                       <Input
                         id="cust-name"
@@ -884,10 +1204,10 @@ function PublicLandingPage() {
                       />
                     </div>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-3.5 sm:gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
                         <Label htmlFor="cust-phone" className="text-xs font-semibold text-slate-700">
-                          Mobile Number
+                          {t.lblPhone}
                         </Label>
                         <Input
                           id="cust-phone"
@@ -902,7 +1222,7 @@ function PublicLandingPage() {
 
                       <div className="space-y-1.5">
                         <Label htmlFor="cust-area" className="text-xs font-semibold text-slate-700">
-                          Nashik Locality
+                          {t.lblLocation}
                         </Label>
                         <Input
                           id="cust-area"
@@ -917,14 +1237,14 @@ function PublicLandingPage() {
 
                     <Button
                       type="submit"
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-6 text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20"
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 sm:py-6 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 text-center"
                     >
-                      <Send className="size-4" />
-                      <span>Send Instant Inquiry on WhatsApp</span>
+                      <Send className="size-4 shrink-0" />
+                      <span className="truncate">{t.btnSendInquiry}</span>
                     </Button>
 
                     <p className="text-center text-[11px] text-slate-500">
-                      ⚡ Instant response • No spam • Direct communication with contractor
+                      {t.formGuar}
                     </p>
                   </form>
                 </CardContent>
@@ -935,59 +1255,55 @@ function PublicLandingPage() {
       </section>
 
       {/* Why Choose Owais Interior Designer */}
-      <section className="py-20 border-t border-slate-200/80 bg-white">
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-2.5 sm:space-y-3">
             <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
-              Why Work With Us
+              {t.whySub}
             </h2>
-            <h3 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">
-              The Trusted Interior Specialists in Nashik
+            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+              {t.whyTitle}
             </h3>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-6 space-y-3 shadow-xs">
-              <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+          <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
+              <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
                 <Award className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">Direct Master Craftsmen</h4>
+              <h4 className="text-base font-bold text-slate-900">{t.why1Title}</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Work directly with the artisans who execute your ceiling and paneling. No third-party
-                markups, ensuring unbeatable rates and superior workmanship.
+                {t.why1Desc}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-6 space-y-3 shadow-xs">
-              <div className="size-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
+              <div className="size-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
                 <ShieldCheck className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">Digital QR Verification</h4>
+              <h4 className="text-base font-bold text-slate-900">{t.why2Title}</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Every quotation, invoice, and payment receipt is backed by our secure QR code
-                verification system to ensure complete transparency.
+                {t.why2Desc}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-6 space-y-3 shadow-xs">
-              <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
+              <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
                 <Clock className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">On-Time Handover</h4>
+              <h4 className="text-base font-bold text-slate-900">{t.why3Title}</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                We respect your time. Committed deadlines with dedicated team mobilization ensure
-                your false ceiling or PVC installation finishes on schedule.
+                {t.why3Desc}
               </p>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-6 space-y-3 shadow-xs">
-              <div className="size-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
+              <div className="size-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600 shrink-0">
                 <Layers className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">Certified Materials</h4>
+              <h4 className="text-base font-bold text-slate-900">{t.why4Title}</h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                We only use verified high-tensile Plaster of Paris, genuine Saint-Gobain Gyproc
-                boards, and heavy-gauge waterproof PVC louvers.
+                {t.why4Desc}
               </p>
             </div>
           </div>
@@ -995,18 +1311,17 @@ function PublicLandingPage() {
       </section>
 
       {/* Local Nashik Service Areas (SEO Anchor Cloud) */}
-      <section id="areas" className="py-16 border-t border-slate-200/80 bg-slate-50/70">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center space-y-6">
+      <section id="areas" className="py-14 sm:py-16 border-t border-slate-200/80 bg-slate-50/70">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center space-y-5 sm:space-y-6">
           <div className="space-y-2">
             <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
-              Local Nashik Coverage
+              {t.areasSub}
             </h2>
-            <h3 className="font-display text-2xl font-bold text-slate-900 sm:text-3xl">
-              Serving All Localities Across Nashik &amp; Surrounding Areas
+            <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900">
+              {t.areasTitle}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
-              Our teams provide on-site measurement, design consultations, and installation in every
-              major neighborhood of Nashik.
+              {t.areasDesc}
             </p>
           </div>
 
@@ -1025,14 +1340,14 @@ function PublicLandingPage() {
       </section>
 
       {/* FAQ Section (Accordion) */}
-      <section id="faqs" className="py-20 border-t border-slate-200/80 bg-white">
+      <section id="faqs" className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <div className="text-center mb-12 space-y-2">
+          <div className="text-center mb-8 sm:mb-12 space-y-2">
             <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
-              Frequently Asked Questions
+              {t.faqSub}
             </h2>
-            <h3 className="font-display text-3xl font-extrabold text-slate-900">
-              POP &amp; PVC Interior FAQs in Nashik
+            <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
+              {t.faqTitle}
             </h3>
           </div>
 
@@ -1046,17 +1361,17 @@ function PublicLandingPage() {
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="flex w-full items-center justify-between p-5 text-left text-sm sm:text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
+                    className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-xs sm:text-sm md:text-base font-semibold text-slate-900 hover:text-blue-600 transition-colors"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown
-                      className={`size-4 text-slate-400 transition-transform duration-300 ${
+                      className={`size-4 text-slate-400 shrink-0 ml-2 transition-transform duration-300 ${
                         isOpen ? "rotate-180 text-blue-600" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 bg-white">
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 bg-white">
                       {faq.a}
                     </div>
                   )}
@@ -1068,37 +1383,67 @@ function PublicLandingPage() {
       </section>
 
       {/* CTA Strip - Royal Blue Accent */}
-      <section className="border-t border-blue-900 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-950 py-16 text-white">
-        <div className="mx-auto max-w-5xl px-4 text-center space-y-6">
-          <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">
-            Ready to Beautify Your Home in Nashik?
+      <section className="border-t border-blue-900 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-950 py-12 sm:py-16 text-white pb-24 md:pb-16">
+        <div className="mx-auto max-w-5xl px-4 text-center space-y-5 sm:space-y-6">
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+            {t.ctaTitle}
           </h2>
-          <p className="text-sm sm:text-base text-blue-100 max-w-2xl mx-auto">
-            Contact Owais Interior Designer today for a free site inspection, 3D design catalog, and
-            transparent quotation.
+          <p className="text-xs sm:text-sm md:text-base text-blue-100 max-w-2xl mx-auto leading-relaxed">
+            {t.ctaDesc}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
             <a
               href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
                 "Hello Owais Interior Designer, I would like to schedule a site visit for POP / PVC work in Nashik."
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-all text-center"
             >
-              <MessageSquare className="size-4" />
-              <span>Chat on WhatsApp (+91 {phonePrimary})</span>
+              <MessageSquare className="size-4 shrink-0" />
+              <span>{t.ctaChatBtn}</span>
             </a>
             <a
               href={`tel:+91${phonePrimary}`}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white px-6 py-3.5 text-sm font-bold text-blue-950 shadow-md hover:bg-blue-50 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white px-6 py-3.5 text-xs sm:text-sm font-bold text-blue-950 shadow-md hover:bg-blue-50 transition-all text-center"
             >
-              <Phone className="size-4 text-blue-600" />
-              <span>Call +91 {phonePrimary}</span>
+              <Phone className="size-4 text-blue-600 shrink-0" />
+              <span>{t.btnCall} +91 {phonePrimary}</span>
             </a>
           </div>
         </div>
       </section>
+
+      {/* Mobile Sticky Quick Action Bar (Never Moves / Always in Fixed Place) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center gap-2 shadow-2xl">
+        <a
+          href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
+            "Hello Owais Interior Designer, I would like to get a quote for POP / PVC work in Nashik."
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-emerald-700"
+        >
+          <MessageSquare className="size-4" />
+          <span>WhatsApp</span>
+        </a>
+
+        <a
+          href={`tel:+91${phonePrimary}`}
+          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-blue-700"
+        >
+          <Phone className="size-4" />
+          <span>Call Now</span>
+        </a>
+
+        <a
+          href="#quote"
+          className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2.5 text-slate-700"
+          title="Estimate"
+        >
+          <Send className="size-4 text-blue-600" />
+        </a>
+      </div>
 
       {/* Footer - Deep Navy */}
       <footer className="border-t border-slate-800 bg-slate-900 py-12 text-xs text-slate-400">
