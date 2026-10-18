@@ -468,16 +468,16 @@ function PublicLandingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
       {/* Top Banner - Royal Navy Blue */}
-      <aside aria-label="Announcement" className="border-b border-blue-800 bg-blue-900 px-3 py-2 text-xs text-blue-100 shadow-xs">
+      <aside aria-label="Announcement" className="border-b border-blue-800 bg-blue-900 px-3 py-1.5 sm:py-2 text-xs text-blue-100 shadow-xs">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             <span className="flex size-2 shrink-0 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium truncate text-[11px] sm:text-xs">
+            <span className="font-medium text-[11px] sm:text-xs leading-tight">
               {t.topBanner}
             </span>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 ml-auto">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Language Switcher Buttons (Hindi / English) */}
             <div className="flex items-center rounded-lg bg-blue-950/90 p-0.5 border border-blue-700/80 shadow-xs">
               <button
@@ -565,17 +565,17 @@ function PublicLandingPage() {
       {/* Header - Crisp White with Royal Blue Accents & Perfect Responsive Structure */}
       <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0">
             <img
               src={DEFAULT_LOGO_URL}
               alt="Owais Interior Designer Nashik Logo"
-              className="size-9 sm:size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10 shrink-0"
+              className="size-8 sm:size-10 lg:size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10 shrink-0"
             />
             <div className="min-w-0">
-              <span className="block font-display text-base sm:text-lg lg:text-xl font-bold tracking-tight text-blue-950 truncate leading-tight">
+              <span className="block font-display text-sm sm:text-base lg:text-xl font-bold tracking-tight text-blue-950 truncate leading-tight">
                 Owais Interior Designer
               </span>
-              <span className="block text-[10px] sm:text-[11px] font-semibold tracking-wider text-blue-600 uppercase truncate">
+              <span className="block text-[9px] sm:text-[11px] font-semibold tracking-wider text-blue-600 uppercase truncate">
                 {t.tagline}
               </span>
             </div>
@@ -892,34 +892,43 @@ function PublicLandingPage() {
             {/* Right Hero Image Card */}
             <div className="lg:col-span-5 relative mt-4 lg:mt-0">
               <div className="relative overflow-hidden rounded-2xl border-2 sm:border-4 border-white bg-white shadow-xl shadow-blue-900/10">
-                <img
-                  src="/images/pop-ceiling-nashik.jpg"
-                  alt="Modern POP False Ceiling with LED cove lighting in Nashik living room"
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3 sm:p-4 rounded-xl backdrop-blur-md bg-white/95 border border-slate-200/80 shadow-md">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-blue-600 truncate">
-                        {t.featuredBadge}
-                      </p>
-                      <p className="text-xs sm:text-sm font-bold text-slate-900 truncate">
-                        Modern Living Room POP Ceiling
-                      </p>
-                      <p className="text-[11px] sm:text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
-                        <MapPin className="size-3 text-blue-600 shrink-0" />
-                        Gangapur Road, Nashik
-                      </p>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      <span className="inline-block rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] sm:text-[11px] font-bold text-emerald-800">
-                        {t.featuredCompleted}
-                      </span>
-                    </div>
+                <div className="relative overflow-hidden bg-slate-900">
+                  <img
+                    src="/images/pop-ceiling-nashik.jpg"
+                    alt="Modern POP False Ceiling with LED cove lighting in Nashik living room"
+                    className="w-full h-auto max-h-[380px] sm:max-h-[440px] object-cover transition-transform duration-500 hover:scale-105"
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className="rounded-full bg-blue-900/90 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md border border-blue-400/30">
+                      {t.featuredBadge}
+                    </span>
                   </div>
+                  <div className="absolute top-3 right-3">
+                    <span className="rounded-full bg-emerald-600/95 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold text-white shadow-md border border-emerald-400/30">
+                      ✓ {t.featuredCompleted}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Clear uncropped Project Details bar directly below the photo */}
+                <div className="p-3.5 sm:p-4 bg-white border-t border-slate-100 flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-slate-900 truncate">
+                      Modern Living Room POP Ceiling
+                    </p>
+                    <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
+                      <MapPin className="size-3.5 text-blue-600 shrink-0" />
+                      Gangapur Road, Nashik
+                    </p>
+                  </div>
+                  <a
+                    href="#gallery"
+                    className="shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 px-2.5 py-1.5 rounded-lg border border-blue-100 transition-colors"
+                  >
+                    View All →
+                  </a>
                 </div>
               </div>
             </div>
