@@ -19,6 +19,148 @@ export type CompanyProfile = {
   default_terms: string;
 };
 
+export type ShowcaseProject = {
+  id: string;
+  title: string;
+  category: string;
+  location: string;
+  imageUrl: string;
+  videoUrl?: string;
+  description?: string;
+};
+
+export type ServiceRates = {
+  pop: string;
+  pvc: string;
+  gypsum: string;
+  commercial: string;
+};
+
+export type SocialLinks = {
+  instagram?: string;
+  youtube?: string;
+  facebook?: string;
+};
+
+export type LandingConfig = {
+  websiteUrl?: string;
+  rates: ServiceRates;
+  social: SocialLinks;
+  projects: ShowcaseProject[];
+};
+
+export const DEFAULT_SHOWCASE_PROJECTS: ShowcaseProject[] = [
+  {
+    id: "def-1",
+    title: "Luxury Living Room POP Ceiling",
+    category: "POP False Ceiling",
+    location: "Gangapur Road, Nashik",
+    imageUrl: "/images/pop-ceiling-nashik.jpg",
+    description:
+      "Multi-layered Plaster of Paris false ceiling with warm LED cove light channels and chandelier medallion.",
+  },
+  {
+    id: "def-2",
+    title: "Fluted PVC Wall Paneling & TV Unit",
+    category: "PVC Wall Panels",
+    location: "Indira Nagar, Nashik",
+    imageUrl: "/images/pvc-wall-panels-nashik.jpg",
+    description:
+      "100% waterproof fluted wooden PVC louvers and glossy marble-finish wall sheets with backlit LED strips.",
+  },
+  {
+    id: "def-3",
+    title: "Master Bedroom Gypsum False Ceiling",
+    category: "Gypsum False Ceiling",
+    location: "College Road, Nashik",
+    imageUrl: "/images/bedroom-gypsum-ceiling-nashik.jpg",
+    description:
+      "Minimalist Saint-Gobain Gyproc false ceiling with acoustic sound damping and perimeter cove downlights.",
+  },
+  {
+    id: "def-4",
+    title: "Modern Kitchen & Dining Ceiling",
+    category: "Commercial & Modular",
+    location: "Govind Nagar, Nashik",
+    imageUrl: "/images/modern-kitchen-ceiling-nashik.jpg",
+    description:
+      "Contemporary kitchen ceiling with magnetic track spotlighting and moisture-resistant board construction.",
+  },
+];
+
+export const DEFAULT_SERVICE_RATES: ServiceRates = {
+  pop: "Starting from ₹85/sq.ft",
+  pvc: "Starting from ₹75/sq.ft",
+  gypsum: "Starting from ₹95/sq.ft",
+  commercial: "Custom commercial quotes",
+};
+
+export const DEFAULT_LANDING_CONFIG: LandingConfig = {
+  websiteUrl: "https://owais-interior.vercel.app",
+  rates: DEFAULT_SERVICE_RATES,
+  social: {
+    instagram: "",
+    youtube: "",
+    facebook: "",
+  },
+  projects: DEFAULT_SHOWCASE_PROJECTS,
+};
+
+export function parseLandingConfig(rawWebsite?: string | null): LandingConfig {
+  if (!rawWebsite || !rawWebsite.trim()) {
+    return DEFAULT_LANDING_CONFIG;
+  }
+  const trimmed = rawWebsite.trim();
+  if (trimmed.startsWith("{")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      return {
+        websiteUrl: parsed.websiteUrl || parsed.url || "https://owais-interior.vercel.app",
+        rates: {
+          pop: parsed.rates?.pop || DEFAULT_SERVICE_RATES.pop,
+          pvc: parsed.rates?.pvc || DEFAULT_SERVICE_RATES.pvc,
+          gypsum: parsed.rates?.gypsum || DEFAULT_SERVICE_RATES.gypsum,
+          commercial: parsed.rates?.commercial || DEFAULT_SERVICE_RATES.commercial,
+        },
+        social: {
+          instagram: parsed.social?.instagram || "",
+          youtube: parsed.social?.youtube || "",
+          facebook: parsed.social?.facebook || "",
+        },
+        projects:
+          Array.isArray(parsed.projects) && parsed.projects.length > 0
+            ? parsed.projects
+            : DEFAULT_SHOWCASE_PROJECTS,
+      };
+    } catch {
+      // Fallback
+    }
+  }
+  return {
+    ...DEFAULT_LANDING_CONFIG,
+    websiteUrl: trimmed,
+  };
+}
+
+export function encodeLandingConfig(config: LandingConfig): string {
+  return JSON.stringify(config);
+}
+
+export function getDisplayWebsite(rawWebsite?: string | null): string {
+  if (!rawWebsite) return "";
+  const trimmed = rawWebsite.trim();
+  if (trimmed.startsWith("{")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      return parsed.websiteUrl || parsed.url || "https://owais-interior.vercel.app";
+    } catch {
+      return trimmed;
+    }
+  }
+  return trimmed;
+}
+
+
 export type Customer = {
   id: string;
   code: string;

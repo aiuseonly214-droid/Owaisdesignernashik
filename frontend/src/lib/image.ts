@@ -26,6 +26,33 @@ export async function fileToDataUrl(file: File, maxSize = 700): Promise<string> 
   return canvas.toDataURL("image/png");
 }
 
+/** Convert a project showcase photo File to a high-quality, lightweight compressed JPEG data URL (~50-80KB). */
+export async function projectPhotoToDataUrl(file: File, maxSize = 800): Promise<string> {
+  const raw = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error("Could not read image file"));
+    reader.readAsDataURL(file);
+  });
+
+  const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    const el = new Image();
+    el.onload = () => resolve(el);
+    el.onerror = () => reject(new Error("Could not load image"));
+    el.src = raw;
+  });
+
+  const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(img.width * scale);
+  canvas.height = Math.round(img.height * scale);
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return raw;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  return canvas.toDataURL("image/jpeg", 0.82);
+}
+
+
 /**
  * Knock the white/near-white paper out of a scanned stamp or signature so it
  * sits transparently on the letterhead, and optionally soften the ink a bit.

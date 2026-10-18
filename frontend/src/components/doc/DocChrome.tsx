@@ -1,9 +1,11 @@
 import type { CompanyProfile } from "@/lib/crm";
+import { getDisplayWebsite } from "@/lib/crm";
 import { DEFAULT_LOGO_URL, DEFAULT_SIGNATURE_URL, DOC } from "@/lib/branding";
 
 /** Blue + white letterhead shared by quotation, invoice and receipt sheets. */
 export function DocHeader({ company }: { company: CompanyProfile }) {
   const logo = company.logo_url || DEFAULT_LOGO_URL;
+  const displayWebsite = getDisplayWebsite(company.website);
   return (
     <div>
       <div
@@ -31,7 +33,7 @@ export function DocHeader({ company }: { company: CompanyProfile }) {
             {company.mobile2 ? ` / ${company.mobile2}` : ""}
           </p>
           <p>{company.email}</p>
-          {company.website && <p>{company.website}</p>}
+          {displayWebsite && <p>{displayWebsite}</p>}
         </div>
       </div>
       <div style={{ backgroundColor: DOC.accent }} className="h-[5px] w-full" />

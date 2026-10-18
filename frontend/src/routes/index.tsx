@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   Phone,
   MessageSquare,
@@ -18,12 +19,18 @@ import {
   Home,
   Check,
   Send,
+  Instagram,
+  Youtube,
+  Facebook,
+  Video,
+  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DEFAULT_LOGO_URL } from "@/lib/branding";
+import { fetchCompany, parseLandingConfig, DEFAULT_LANDING_CONFIG } from "@/lib/crm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -185,8 +192,11 @@ function PublicLandingPage() {
   const [area, setArea] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const phonePrimary = "7756043214";
-  const phoneSecondary = "7721926290";
+  const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
+  const landingConfig = parseLandingConfig(company?.website);
+
+  const phonePrimary = company?.mobile1 || "7756043214";
+  const phoneSecondary = company?.mobile2 || "7721926290";
 
   function handleWhatsAppSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -213,7 +223,7 @@ function PublicLandingPage() {
         "Custom geometric & curved ceiling designs",
         "Heat insulation for top-floor Nashik homes",
       ],
-      priceHint: "Starting from ₹85/sq.ft",
+      priceHint: landingConfig.rates.pop,
       image: "/images/pop-ceiling-nashik.jpg",
     },
     {
@@ -228,7 +238,7 @@ function PublicLandingPage() {
         "Rapid 24-48 hour installation (no paint odor)",
         "Fluted acoustic louvers & marble-finish panels",
       ],
-      priceHint: "Starting from ₹75/sq.ft",
+      priceHint: landingConfig.rates.pvc,
       image: "/images/pvc-wall-panels-nashik.jpg",
     },
     {
@@ -243,7 +253,7 @@ function PublicLandingPage() {
         "Thermal barrier reducing AC electricity bills",
         "Fire-resistant safety standards",
       ],
-      priceHint: "Starting from ₹95/sq.ft",
+      priceHint: landingConfig.rates.gypsum,
       image: "/images/bedroom-gypsum-ceiling-nashik.jpg",
     },
     {
@@ -258,37 +268,12 @@ function PublicLandingPage() {
         "Cost-effective for large commercial carpet areas",
         "Clean professional corporate aesthetic",
       ],
-      priceHint: "Custom commercial quotes",
+      priceHint: landingConfig.rates.commercial,
       image: "/images/modern-kitchen-ceiling-nashik.jpg",
     },
   ];
 
-  const galleryItems = [
-    {
-      title: "Luxury Living Room POP Ceiling",
-      loc: "Gangapur Road, Nashik",
-      category: "POP False Ceiling",
-      img: "/images/pop-ceiling-nashik.jpg",
-    },
-    {
-      title: "Fluted PVC Wall Paneling & TV Unit",
-      loc: "Indira Nagar, Nashik",
-      category: "PVC Wall Panels",
-      img: "/images/pvc-wall-panels-nashik.jpg",
-    },
-    {
-      title: "Master Bedroom Gypsum False Ceiling",
-      loc: "College Road, Nashik",
-      category: "Gypsum False Ceiling",
-      img: "/images/bedroom-gypsum-ceiling-nashik.jpg",
-    },
-    {
-      title: "Modern Kitchen & Dining Ceiling",
-      loc: "Govind Nagar, Nashik",
-      category: "POP & Ambient Lights",
-      img: "/images/modern-kitchen-ceiling-nashik.jpg",
-    },
-  ];
+  const galleryItems = landingConfig.projects;
 
   const nashikAreas = [
     "Wadala Naka",
@@ -342,6 +327,43 @@ function PublicLandingPage() {
             <span className="font-medium">Serving All Areas Across Nashik, Maharashtra — Free Site Inspection &amp; Estimate</span>
           </div>
           <div className="flex items-center gap-4">
+            {/* Real Social Media Account Links */}
+            <div className="flex items-center gap-3 pr-2 border-r border-blue-700/60">
+              {landingConfig.social?.instagram && (
+                <a
+                  href={landingConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink-300 hover:text-white transition-colors"
+                  title="Follow us on Instagram"
+                >
+                  <Instagram className="size-3.5" />
+                </a>
+              )}
+              {landingConfig.social?.youtube && (
+                <a
+                  href={landingConfig.social.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-red-300 hover:text-white transition-colors"
+                  title="Subscribe on YouTube"
+                >
+                  <Youtube className="size-3.5" />
+                </a>
+              )}
+              {landingConfig.social?.facebook && (
+                <a
+                  href={landingConfig.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-200 hover:text-white transition-colors"
+                  title="Follow us on Facebook"
+                >
+                  <Facebook className="size-3.5" />
+                </a>
+              )}
+            </div>
+
             <a
               href={`tel:+91${phonePrimary}`}
               className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-blue-200 transition-colors"
@@ -405,6 +427,45 @@ function PublicLandingPage() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Header Social Icons */}
+            {(landingConfig.social?.instagram || landingConfig.social?.youtube || landingConfig.social?.facebook) && (
+              <div className="hidden md:flex items-center gap-2 pr-1">
+                {landingConfig.social?.instagram && (
+                  <a
+                    href={landingConfig.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-pink-600 transition-colors"
+                    title="Instagram"
+                  >
+                    <Instagram className="size-4" />
+                  </a>
+                )}
+                {landingConfig.social?.youtube && (
+                  <a
+                    href={landingConfig.social.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-red-600 transition-colors"
+                    title="YouTube"
+                  >
+                    <Youtube className="size-4" />
+                  </a>
+                )}
+                {landingConfig.social?.facebook && (
+                  <a
+                    href={landingConfig.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-blue-600 transition-colors"
+                    title="Facebook"
+                  >
+                    <Facebook className="size-4" />
+                  </a>
+                )}
+              </div>
+            )}
+
             <a
               href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
                 "Hello Owais Interior Designer, I found your website and would like to inquire about POP false ceiling and PVC work in Nashik."
@@ -637,30 +698,62 @@ function PublicLandingPage() {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {galleryItems.map((item, idx) => (
+            {galleryItems.map((item) => (
               <div
-                key={idx}
-                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all"
+                key={item.id}
+                className="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
               >
-                <div className="overflow-hidden aspect-[4/3]">
-                  <img
-                    src={item.img}
-                    alt={`${item.title} in ${item.loc}`}
-                    className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                <div>
+                  <div className="overflow-hidden aspect-[4/3] relative bg-slate-100">
+                    <img
+                      src={item.imageUrl}
+                      alt={`${item.title} in ${item.location}`}
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-2 left-2 rounded-full bg-blue-900/80 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-xs">
+                      {item.category}
+                    </span>
+                    {item.videoUrl && (
+                      <a
+                        href={item.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-full bg-red-600/90 hover:bg-red-700 backdrop-blur-xs px-2.5 py-1 text-[11px] font-semibold text-white shadow-md transition-all"
+                      >
+                        <Video className="size-3.5" />
+                        <span>Watch Clip</span>
+                      </a>
+                    )}
+                  </div>
+                  <div className="p-4 space-y-1.5">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 flex items-center gap-1">
+                      <MapPin className="size-3 text-blue-600 shrink-0" />
+                      {item.location}
+                    </p>
+                    {item.description && (
+                      <p className="text-xs text-slate-600 line-clamp-2 pt-0.5">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div className="p-4 space-y-1">
-                  <span className="text-[11px] font-semibold text-blue-600 uppercase tracking-wider">
-                    {item.category}
-                  </span>
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 flex items-center gap-1">
-                    <MapPin className="size-3 text-blue-600" />
-                    {item.loc}
-                  </p>
+
+                <div className="p-4 pt-0">
+                  <a
+                    href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
+                      `Hello Owais Interior Designer! I loved your project "${item.title}" in ${item.location}. Can you provide an estimate for a similar design?`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-1 rounded-lg border border-blue-200 bg-blue-50/70 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all"
+                  >
+                    <MessageSquare className="size-3.5" />
+                    <span>Get Similar Quote</span>
+                  </a>
                 </div>
               </div>
             ))}
@@ -1028,6 +1121,46 @@ function PublicLandingPage() {
                 PVC wall panels, and turnkey interiors.
               </p>
               <p className="text-blue-400 font-medium">Nashik, Maharashtra, India</p>
+
+              {/* Official Social Media Channels */}
+              <div className="pt-2 flex items-center gap-3">
+                {landingConfig.social?.instagram && (
+                  <a
+                    href={landingConfig.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-1 text-slate-300 hover:text-white hover:border-pink-500 transition-colors"
+                    title="Instagram"
+                  >
+                    <Instagram className="size-3.5 text-pink-500" />
+                    <span className="text-[11px]">Instagram</span>
+                  </a>
+                )}
+                {landingConfig.social?.youtube && (
+                  <a
+                    href={landingConfig.social.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-1 text-slate-300 hover:text-white hover:border-red-500 transition-colors"
+                    title="YouTube"
+                  >
+                    <Youtube className="size-3.5 text-red-500" />
+                    <span className="text-[11px]">YouTube</span>
+                  </a>
+                )}
+                {landingConfig.social?.facebook && (
+                  <a
+                    href={landingConfig.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-1 text-slate-300 hover:text-white hover:border-blue-500 transition-colors"
+                    title="Facebook"
+                  >
+                    <Facebook className="size-3.5 text-blue-500" />
+                    <span className="text-[11px]">Facebook</span>
+                  </a>
+                )}
+              </div>
             </div>
 
             {/* Col 2 */}
