@@ -40,27 +40,27 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior Contractors",
+        title: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior",
       },
       {
         name: "description",
         content:
-          "Best POP false ceiling and PVC wall panel contractor in Nashik. Expert gypsum ceiling, modular kitchens, cove lighting & home renovation. Call +91 7756043214 for free site estimate in Nashik.",
+          "Looking for expert PVC ceiling, false ceiling and interior design work in Nashik? Contact Owais Interior Designer for best POP false ceiling, waterproof PVC wall panels, gypsum ceiling & modular home decor. Call +91 7756043214 for free site estimate.",
       },
       {
         name: "keywords",
         content:
-          "owais interior, owaisinterior, nashikpop, nashik pop, pop contractor nashik, pvc panel nashik, pvc ceiling nashik, false ceiling nashik, gypsum ceiling nashik, pop false ceiling nashik, pvc wall panel nashik, interior designer nashik, wadala nashik interior, best pop design nashik",
+          "best pvc ceiling in nashik, pvc ceiling nashik, interior designer in nashik, best interior designer nashik, pop false ceiling nashik, false ceiling contractor nashik, pvc wall panel nashik, gypsum false ceiling nashik, pvc ceiling design, pop design for hall nashik, home interior decorator nashik, false ceiling rates in nashik, owais interior nashik, owais interior, owaisinterior, nashikpop, wadala nashik interior",
       },
       { property: "og:site_name", content: "Owais Interior Designer" },
       {
         property: "og:title",
-        content: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior Contractors",
+        content: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior",
       },
       {
         property: "og:description",
         content:
-          "Top-rated POP false ceiling & PVC wall panel contractor in Nashik. Expert gypsum ceiling, modular interiors & renovation. Call 7756043214 for free site estimate!",
+          "Looking for expert PVC ceiling, false ceiling and interior design work in Nashik? Contact Owais Interior for stylish and affordable home decor.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://owais-interior.vercel.app/" },
@@ -68,12 +68,12 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
-        content: "Owais Interior Designer Nashik | POP False Ceiling, PVC & Interior",
+        content: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior",
       },
       {
         name: "twitter:description",
         content:
-          "Top POP false ceiling & PVC wall panel contractor in Nashik. Free site measurement & quotes across Nashik.",
+          "Looking for expert PVC ceiling, false ceiling and interior design work in Nashik? Contact Owais Interior for stylish and affordable home decor.",
       },
       { name: "twitter:image", content: "/images/pop-ceiling-nashik.jpg" },
     ],
@@ -224,15 +224,15 @@ function PublicLandingPage() {
       lang === "hi"
         ? "#1 नासिक का भरोसेमंद POP फॉल्स सीलिंग और PVC कांट्रैक्टर"
         : "#1 POP False Ceiling & PVC Interior Contractor in Nashik",
-    heroTitle1: lang === "hi" ? "प्रीमियम" : "Premium",
-    heroTitlePop: lang === "hi" ? "POP फॉल्स सीलिंग" : "POP False Ceiling",
-    heroTitleAnd: lang === "hi" ? "और" : "&",
-    heroTitlePvc: lang === "hi" ? "PVC पैनलिंग" : "PVC Paneling",
+    heroTitle1: lang === "hi" ? "बेस्ट" : "Top",
+    heroTitlePop: lang === "hi" ? "PVC सीलिंग" : "PVC Ceiling",
+    heroTitleAnd: lang === "hi" ? "&" : "&",
+    heroTitlePvc: lang === "hi" ? "इंटीरियर डिज़ाइन सर्विसेज़" : "Interior Design Services",
     heroTitleCity: lang === "hi" ? "नासिक में" : "in Nashik",
     heroDesc:
       lang === "hi"
-        ? "ओवैस इंटीरियर डिज़ाइनर के अनुभवी कारीगरों के साथ अपने घर, दुकान या ऑफिस को दें मॉडर्न और खूबसूरत लुक। नासिक में मॉडर्न POP सीलिंग, 100% वॉटरप्रूफ PVC वॉल पैनल्स, जिप्सम सीलिंग, कोव LED लाइटिंग और इंटीरियर का भरोसेमंद काम।"
-        : "Transform your home, shop, or office with master craftsmen from Owais Interior Designer. Specialists in designer POP false ceilings, 100% waterproof PVC wall panels, gypsum board ceilings, cove LED lighting, and turnkey interiors across Nashik.",
+        ? "ओवैस इंटीरियर डिज़ाइनर के अनुभवी कारीगरों के साथ अपने घर, दुकान या ऑफिस को दें मॉडर्न और खूबसूरत लुक। नासिक में मॉडर्न PVC फॉल्स सीलिंग, POP सीलिंग, 100% वॉटरप्रूफ PVC वॉल पैनल्स, जिप्सम सीलिंग, कोव LED लाइटिंग और इंटीरियर का भरोसेमंद काम।"
+        : "Transform your home, shop, or office with master craftsmen from Owais Interior Designer. Specialists in designer PVC ceiling, POP false ceilings, 100% waterproof PVC wall panels, gypsum board ceilings, cove LED lighting, and turnkey interior design services in Nashik.",
     statExp: lang === "hi" ? "10+ वर्ष" : "10+ Years",
     statExpSub: lang === "hi" ? "नासिक अनुभव" : "Nashik Experience",
     statProj: lang === "hi" ? "500+" : "500+",
@@ -911,7 +911,7 @@ function PublicLandingPage() {
                 <div className="relative overflow-hidden bg-slate-900">
                   <img
                     src="/images/pop-ceiling-nashik.jpg"
-                    alt="Modern POP False Ceiling with LED cove lighting in Nashik living room"
+                    alt="Best PVC ceiling, POP false ceiling design and interior work by Owais Interior Designer Nashik"
                     className="w-full h-auto max-h-[380px] sm:max-h-[440px] object-cover transition-transform duration-500 hover:scale-105"
                     loading="eager"
                     fetchPriority="high"
@@ -956,12 +956,12 @@ function PublicLandingPage() {
       <section id="services" className="border-t border-slate-200/80 bg-slate-50/70 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-2.5 sm:space-y-3">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
               {t.servicesSub}
-            </h2>
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
               {t.servicesTitle}
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm md:text-base text-slate-600">
               {t.servicesDesc}
             </p>
@@ -987,9 +987,9 @@ function PublicLandingPage() {
                     <span className="inline-block rounded-md bg-blue-50 px-2.5 py-0.5 text-[11px] sm:text-xs font-semibold text-blue-700 border border-blue-200/60">
                       {svc.badge}
                     </span>
-                    <h4 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                       {svc.title}
-                    </h4>
+                    </h3>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                       {svc.description}
                     </p>
@@ -1283,12 +1283,12 @@ function PublicLandingPage() {
       <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-2.5 sm:space-y-3">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
               {t.whySub}
-            </h2>
-            <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
               {t.whyTitle}
-            </h3>
+            </h2>
           </div>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -1296,7 +1296,7 @@ function PublicLandingPage() {
               <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
                 <Award className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">{t.why1Title}</h4>
+              <h3 className="text-base font-bold text-slate-900">{t.why1Title}</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t.why1Desc}
               </p>
@@ -1306,7 +1306,7 @@ function PublicLandingPage() {
               <div className="size-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
                 <ShieldCheck className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">{t.why2Title}</h4>
+              <h3 className="text-base font-bold text-slate-900">{t.why2Title}</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t.why2Desc}
               </p>
@@ -1316,7 +1316,7 @@ function PublicLandingPage() {
               <div className="size-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
                 <Clock className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">{t.why3Title}</h4>
+              <h3 className="text-base font-bold text-slate-900">{t.why3Title}</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t.why3Desc}
               </p>
@@ -1326,7 +1326,7 @@ function PublicLandingPage() {
               <div className="size-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600 shrink-0">
                 <Layers className="size-5" />
               </div>
-              <h4 className="text-base font-bold text-slate-900">{t.why4Title}</h4>
+              <h3 className="text-base font-bold text-slate-900">{t.why4Title}</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 {t.why4Desc}
               </p>
@@ -1339,12 +1339,12 @@ function PublicLandingPage() {
       <section id="areas" className="py-14 sm:py-16 border-t border-slate-200/80 bg-slate-50/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 text-center space-y-5 sm:space-y-6">
           <div className="space-y-2">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
               {t.areasSub}
-            </h2>
-            <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900">
+            </span>
+            <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900">
               {t.areasTitle}
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
               {t.areasDesc}
             </p>
@@ -1368,12 +1368,12 @@ function PublicLandingPage() {
       <section id="faqs" className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12 space-y-2">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
               {t.faqSub}
-            </h2>
-            <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
+            </span>
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
               {t.faqTitle}
-            </h3>
+            </h2>
           </div>
 
           <div className="space-y-3">
