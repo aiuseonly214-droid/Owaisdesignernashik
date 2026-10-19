@@ -55,7 +55,7 @@ export const DEFAULT_SHOWCASE_PROJECTS: ShowcaseProject[] = [
     title: "Luxury Living Room POP Ceiling",
     category: "POP False Ceiling",
     location: "Gangapur Road, Nashik",
-    imageUrl: "/images/pop-ceiling-nashik.jpg",
+    imageUrl: "/images/pop-ceiling-nashik.webp",
     description:
       "Multi-layered Plaster of Paris false ceiling with warm LED cove light channels and chandelier medallion.",
   },
@@ -64,7 +64,7 @@ export const DEFAULT_SHOWCASE_PROJECTS: ShowcaseProject[] = [
     title: "Fluted PVC Wall Paneling & TV Unit",
     category: "PVC Wall Panels",
     location: "Indira Nagar, Nashik",
-    imageUrl: "/images/pvc-wall-panels-nashik.jpg",
+    imageUrl: "/images/pvc-wall-panels-nashik.webp",
     description:
       "100% waterproof fluted wooden PVC louvers and glossy marble-finish wall sheets with backlit LED strips.",
   },
@@ -73,7 +73,7 @@ export const DEFAULT_SHOWCASE_PROJECTS: ShowcaseProject[] = [
     title: "Master Bedroom Gypsum False Ceiling",
     category: "Gypsum False Ceiling",
     location: "College Road, Nashik",
-    imageUrl: "/images/bedroom-gypsum-ceiling-nashik.jpg",
+    imageUrl: "/images/bedroom-gypsum-ceiling-nashik.webp",
     description:
       "Minimalist Saint-Gobain Gyproc false ceiling with acoustic sound damping and perimeter cove downlights.",
   },
@@ -82,7 +82,7 @@ export const DEFAULT_SHOWCASE_PROJECTS: ShowcaseProject[] = [
     title: "Modern Kitchen & Dining Ceiling",
     category: "Commercial & Modular",
     location: "Govind Nagar, Nashik",
-    imageUrl: "/images/modern-kitchen-ceiling-nashik.jpg",
+    imageUrl: "/images/modern-kitchen-ceiling-nashik.webp",
     description:
       "Contemporary kitchen ceiling with magnetic track spotlighting and moisture-resistant board construction.",
   },
@@ -262,7 +262,11 @@ async function currentUserId(): Promise<string | null> {
 /* ---------------- company ---------------- */
 
 export async function fetchCompany(): Promise<CompanyProfile> {
-  const { data, error } = await db.from("company_profile").select("*").limit(1).maybeSingle();
+  const { data, error } = await db
+    .from("company_profile")
+    .select("id, name, tagline, address, mobile1, mobile2, email, website, logo_url, stamp_url, signature_url, currency, default_terms")
+    .limit(1)
+    .maybeSingle();
   if (error) throw error;
   return data as CompanyProfile;
 }

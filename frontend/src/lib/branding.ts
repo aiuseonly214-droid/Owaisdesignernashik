@@ -1,5 +1,5 @@
-/** Owais brand logo served from public/. */
-export const DEFAULT_LOGO_URL = "/owais-logo.png";
+/** Owais brand logo served from public/. (WebP format for ultra-fast load, PNG fallback available) */
+export const DEFAULT_LOGO_URL = "/owais-logo.webp";
 
 /** Background-removed signature (transparent PNG) served from public/. */
 export const DEFAULT_SIGNATURE_URL = "/owais-signature.png";

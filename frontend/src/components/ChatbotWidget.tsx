@@ -385,7 +385,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
                           href={msg.actionLink.href}
                           target={msg.actionLink.isExternal ? "_blank" : undefined}
                           rel={msg.actionLink.isExternal ? "noopener noreferrer" : undefined}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] transition-colors shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[11px] transition-colors shadow-xs"
                         >
                           {msg.actionLink.label}
                           <ExternalLink className="size-3" />

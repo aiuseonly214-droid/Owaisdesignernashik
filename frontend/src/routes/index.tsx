@@ -375,7 +375,7 @@ function PublicLandingPage() {
         "Heat insulation for top-floor Nashik homes",
       ],
       priceHint: landingConfig.rates.pop,
-      image: "/images/pop-ceiling-nashik.jpg",
+      image: "/images/pop-ceiling-nashik.webp",
     },
     {
       id: "pvc",
@@ -390,7 +390,7 @@ function PublicLandingPage() {
         "Fluted acoustic louvers & marble-finish panels",
       ],
       priceHint: landingConfig.rates.pvc,
-      image: "/images/pvc-wall-panels-nashik.jpg",
+      image: "/images/pvc-wall-panels-nashik.webp",
     },
     {
       id: "gypsum",
@@ -405,7 +405,7 @@ function PublicLandingPage() {
         "Fire-resistant safety standards",
       ],
       priceHint: landingConfig.rates.gypsum,
-      image: "/images/bedroom-gypsum-ceiling-nashik.jpg",
+      image: "/images/bedroom-gypsum-ceiling-nashik.webp",
     },
     {
       id: "commercial",
@@ -420,7 +420,7 @@ function PublicLandingPage() {
         "Clean professional corporate aesthetic",
       ],
       priceHint: landingConfig.rates.commercial,
-      image: "/images/modern-kitchen-ceiling-nashik.jpg",
+      image: "/images/modern-kitchen-ceiling-nashik.webp",
     },
   ];
 
@@ -656,7 +656,7 @@ function PublicLandingPage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-600/20 hover:bg-emerald-700 transition-all shrink-0"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-700/20 hover:bg-emerald-800 transition-all shrink-0"
               title="Chat on WhatsApp"
             >
               <MessageSquare className="size-3.5 sm:size-4 shrink-0" />
@@ -859,7 +859,7 @@ function PublicLandingPage() {
                   <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statProjSub}</div>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-600">{t.statWaterproof}</div>
+                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-700">{t.statWaterproof}</div>
                   <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statWaterproofSub}</div>
                 </div>
                 <button
@@ -899,8 +899,8 @@ function PublicLandingPage() {
                 </a>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-medium text-slate-500 pt-1">
-                <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+              <div className="flex items-center gap-2 text-xs font-medium text-slate-600 pt-1">
+                <CheckCircle2 className="size-4 text-emerald-700 shrink-0" />
                 <span className="leading-snug">{t.trustLine}</span>
               </div>
             </div>
@@ -910,11 +910,16 @@ function PublicLandingPage() {
               <div className="relative overflow-hidden rounded-2xl border-2 sm:border-4 border-white bg-white shadow-xl shadow-blue-900/10">
                 <div className="relative overflow-hidden bg-slate-900">
                   <img
-                    src="/images/pop-ceiling-nashik.jpg"
+                    src="/images/pop-ceiling-nashik.webp"
+                    srcSet="/images/pop-ceiling-nashik-sm.webp 600w, /images/pop-ceiling-nashik.webp 1200w"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
+                    width={1200}
+                    height={670}
                     alt="Best PVC ceiling, POP false ceiling design and interior work by Owais Interior Designer Nashik"
-                    className="w-full h-auto max-h-[380px] sm:max-h-[440px] object-cover transition-transform duration-500 hover:scale-105"
+                    className="w-full h-auto max-h-[380px] sm:max-h-[440px] aspect-[1200/670] object-cover transition-transform duration-500 hover:scale-105"
                     loading="eager"
                     fetchPriority="high"
+                    decoding="async"
                   />
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="rounded-full bg-blue-900/90 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md border border-blue-400/30">
@@ -922,7 +927,7 @@ function PublicLandingPage() {
                     </span>
                   </div>
                   <div className="absolute top-3 right-3">
-                    <span className="rounded-full bg-emerald-600/95 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold text-white shadow-md border border-emerald-400/30">
+                    <span className="rounded-full bg-emerald-700/95 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold text-white shadow-md border border-emerald-400/30">
                       ✓ {t.featuredCompleted}
                     </span>
                   </div>
@@ -979,8 +984,11 @@ function PublicLandingPage() {
                     <img
                       src={svc.image}
                       alt={`${svc.title} by Owais Interior Designer Nashik`}
+                      width={600}
+                      height={450}
                       className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="sm:col-span-7 space-y-2.5 sm:space-y-3">
@@ -1055,8 +1063,11 @@ function PublicLandingPage() {
                     <img
                       src={item.imageUrl}
                       alt={`${item.title} in ${item.location}`}
+                      width={600}
+                      height={450}
                       className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      decoding="async"
                     />
                     <span className="absolute top-2 left-2 rounded-full bg-blue-900/80 backdrop-blur-xs px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-xs">
                       {item.category}
@@ -1262,7 +1273,7 @@ function PublicLandingPage() {
 
                     <Button
                       type="submit"
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 sm:py-6 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 text-center"
+                      className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 sm:py-6 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-700/20 text-center"
                     >
                       <Send className="size-4 shrink-0" />
                       <span className="truncate">{t.btnSendInquiry}</span>
@@ -1423,7 +1434,7 @@ function PublicLandingPage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-500 transition-all text-center"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-700/30 hover:bg-emerald-800 transition-all text-center"
             >
               <MessageSquare className="size-4 shrink-0" />
               <span>{t.ctaChatBtn}</span>
@@ -1447,7 +1458,7 @@ function PublicLandingPage() {
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-emerald-700"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-emerald-800"
         >
           <MessageSquare className="size-4" />
           <span>WhatsApp</span>
@@ -1471,7 +1482,7 @@ function PublicLandingPage() {
       </div>
 
       {/* Footer - Deep Navy */}
-      <footer className="border-t border-slate-800 bg-slate-900 py-12 text-xs text-slate-400">
+      <footer className="border-t border-slate-800 bg-slate-900 py-12 text-xs text-slate-300">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-8 md:grid-cols-4 pb-8 border-b border-slate-800">
             {/* Col 1 */}
@@ -1486,7 +1497,7 @@ function PublicLandingPage() {
                   Owais Interior Designer
                 </span>
               </div>
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-slate-300 leading-relaxed">
                 Turning your space into elegant design. Nashik's specialist in POP false ceilings,
                 PVC wall panels, and turnkey interiors.
               </p>
@@ -1538,7 +1549,7 @@ function PublicLandingPage() {
               <p className="font-semibold text-white uppercase tracking-wider text-xs">
                 Key Services
               </p>
-              <ul className="space-y-1.5 text-slate-400">
+              <ul className="space-y-1.5 text-slate-300">
                 <li>POP False Ceiling Design</li>
                 <li>PVC Wall Panels &amp; Louvers</li>
                 <li>Gypsum Board False Ceiling</li>
@@ -1565,7 +1576,7 @@ function PublicLandingPage() {
               <p className="text-slate-300">
                 <strong>Email:</strong> onlyw6469@gmail.com
               </p>
-              <p className="text-slate-400">
+              <p className="text-slate-300">
                 <strong>Hours:</strong> Mon - Sun: 9:00 AM - 8:30 PM
               </p>
             </div>
@@ -1583,17 +1594,17 @@ function PublicLandingPage() {
                   <ShieldCheck className="size-3.5 text-blue-400" />
                   <span>Admin &amp; Employee Portal</span>
                 </Link>
-                <p className="text-[11px] text-slate-500 text-center">
+                <p className="text-[11px] text-slate-300 text-center">
                   Secure staff login for quotations, billing, and receipts.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500">
+          <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-300">
             <p>© {new Date().getFullYear()} Owais Interior Designer. All rights reserved. Nashik, Maharashtra.</p>
-            <p className="text-slate-400">
-              Keywords: <span className="text-slate-500">owaisinterior • nashikpop • pvc nashik • false ceiling contractor</span>
+            <p className="text-slate-300">
+              Keywords: <span className="text-slate-200">owaisinterior • nashikpop • pvc nashik • false ceiling contractor</span>
             </p>
           </div>
         </div>
