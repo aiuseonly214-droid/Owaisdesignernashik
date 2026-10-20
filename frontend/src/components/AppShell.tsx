@@ -46,7 +46,10 @@ export function AppShell() {
   const { user } = useSession();
   const { data: role } = useRole(user?.id);
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
-  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
+  const logoUrl =
+    company?.logo_url && !company.logo_url.startsWith("data:image")
+      ? company.logo_url
+      : DEFAULT_LOGO_URL;
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   async function signOut() {
@@ -88,37 +91,47 @@ export function AppShell() {
               </p>
             </div>
           </div>
-          <button className="lg:hidden text-sidebar-foreground/70 hover:text-white" onClick={() => setOpen(false)} aria-label="Close menu">
+          <button
+            className="lg:hidden text-sidebar-foreground/70 hover:text-white"
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+          >
             <X className="size-5" />
           </button>
         </div>
 
         <nav className="flex-1 space-y-1 p-3">
-          {NAV.filter((item) => !item.adminOnly || role === "admin").map(({ to, label, icon: Icon }) => {
-            const active = pathname.startsWith(to);
-            return (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setOpen(false)}
-                className={cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-                  active
-                    ? "bg-sidebar-accent text-sidebar-primary"
-                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
-                )}
-              >
-                <Icon className="size-4 shrink-0" />
-                {label}
-              </Link>
-            );
-          })}
+          {NAV.filter((item) => !item.adminOnly || role === "admin").map(
+            ({ to, label, icon: Icon }) => {
+              const active = pathname.startsWith(to);
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                    active
+                      ? "bg-sidebar-accent text-sidebar-primary"
+                      : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                  )}
+                >
+                  <Icon className="size-4 shrink-0" />
+                  {label}
+                </Link>
+              );
+            },
+          )}
         </nav>
 
         <div className="border-t border-sidebar-border p-4">
           <p className="truncate text-xs text-sidebar-foreground/70">{user?.email}</p>
           <p className="mb-3 text-[11px] uppercase tracking-wider text-sidebar-primary">
-            {role === "admin" ? "Administrator" : role === "employee" ? "Employee" : "Pending Approval"}
+            {role === "admin"
+              ? "Administrator"
+              : role === "employee"
+                ? "Employee"
+                : "Pending Approval"}
           </p>
           <Button
             variant="outline"

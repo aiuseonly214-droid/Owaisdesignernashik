@@ -22,7 +22,10 @@ export const Route = createFileRoute("/auth")({
 function AuthChooserPage() {
   const navigate = useNavigate();
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
-  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
+  const logoUrl =
+    company?.logo_url && !company.logo_url.startsWith("data:image")
+      ? company.logo_url
+      : DEFAULT_LOGO_URL;
 
   useEffect(() => {
     let active = true;

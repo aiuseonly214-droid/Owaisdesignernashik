@@ -28,7 +28,10 @@ function AdminLoginPage() {
   const [fullName, setFullName] = useState("");
 
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
-  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
+  const logoUrl =
+    company?.logo_url && !company.logo_url.startsWith("data:image")
+      ? company.logo_url
+      : DEFAULT_LOGO_URL;
 
   useEffect(() => {
     let active = true;
@@ -91,7 +94,9 @@ function AdminLoginPage() {
       toast.success("Admin account created successfully!");
       navigate({ to: "/dashboard", replace: true });
     } else {
-      toast.success("Account created! Check your email to confirm if email verification is enabled.");
+      toast.success(
+        "Account created! Check your email to confirm if email verification is enabled.",
+      );
     }
   }
 

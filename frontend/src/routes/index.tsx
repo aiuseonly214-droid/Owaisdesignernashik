@@ -201,7 +201,10 @@ function PublicLandingPage() {
 
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
   const landingConfig = parseLandingConfig(company?.website);
-  const companyLogoUrl = company?.logo_url || DEFAULT_LOGO_URL;
+  const companyLogoUrl =
+    company?.logo_url && !company.logo_url.startsWith("data:image")
+      ? company.logo_url
+      : DEFAULT_LOGO_URL;
 
   const phonePrimary = company?.mobile1 || "7756043214";
   const phoneSecondary = company?.mobile2 || "7721926290";
@@ -249,15 +252,18 @@ function PublicLandingPage() {
         : "Zero middleman commission • Direct master craftsmen rates • Free site visit in Nashik",
     featuredBadge: lang === "hi" ? "नासिक का नया प्रोजेक्ट" : "Featured Nashik Project",
     featuredCompleted: lang === "hi" ? "सफलतापूर्वक पूर्ण" : "Completed",
-    servicesSub: lang === "hi" ? "फॉल्स सीलिंग और वॉल सोलूशन्स" : "Complete False Ceiling & Wall Solutions",
-    servicesTitle: lang === "hi" ? "नासिक में हमारी प्रमुख सेवाएं" : "Specialized Interior Services in Nashik",
+    servicesSub:
+      lang === "hi" ? "फॉल्स सीलिंग और वॉल सोलूशन्स" : "Complete False Ceiling & Wall Solutions",
+    servicesTitle:
+      lang === "hi" ? "नासिक में हमारी प्रमुख सेवाएं" : "Specialized Interior Services in Nashik",
     servicesDesc:
       lang === "hi"
         ? "मॉडर्न POP सीलिंग डिज़ाइन से लेकर नमी से सुरक्षित रखने वाले 100% वॉटरप्रूफ PVC वॉल पैनल्स तक, हम हर काम पूरी फिनिशिंग के साथ करते हैं।"
         : "From contemporary POP ceiling patterns with ambient LED channels to durable waterproof PVC wall paneling, we handle projects of every scale.",
     btnBookVisit: lang === "hi" ? "साइट विज़िट बुक करें" : "Book Site Visit",
     gallerySub: lang === "hi" ? "डिज़ाइन पोर्टफोलियो" : "Design Portfolio",
-    galleryTitle: lang === "hi" ? "नासिक में हमारे हालिया प्रोजेक्ट्स" : "Recent Projects Across Nashik",
+    galleryTitle:
+      lang === "hi" ? "नासिक में हमारे हालिया प्रोजेक्ट्स" : "Recent Projects Across Nashik",
     galleryBtn:
       lang === "hi"
         ? "व्हाट्सएप पर फोटो कैटलॉग मंगाएं"
@@ -295,15 +301,16 @@ function PublicLandingPage() {
     lblPhone: lang === "hi" ? "मोबाइल नंबर" : "Mobile Number",
     lblLocation: lang === "hi" ? "नासिक में इलाका/लोकेशन" : "Nashik Locality",
     btnSendInquiry:
-      lang === "hi"
-        ? "व्हाट्सएप पर तुरंत पूछताछ भेजें"
-        : "Send Instant Inquiry on WhatsApp",
+      lang === "hi" ? "व्हाट्सएप पर तुरंत पूछताछ भेजें" : "Send Instant Inquiry on WhatsApp",
     formGuar:
       lang === "hi"
         ? "⚡ तुरंत जवाब • कोई स्पैम नहीं • सीधे कांट्रैक्टर से बातचीत"
         : "⚡ Instant response • No spam • Direct communication with contractor",
     whySub: lang === "hi" ? "हमारे साथ काम क्यों करें" : "Why Work With Us",
-    whyTitle: lang === "hi" ? "नासिक के भरोसेमंद इंटीरियर स्पेशलिस्ट" : "The Trusted Interior Specialists in Nashik",
+    whyTitle:
+      lang === "hi"
+        ? "नासिक के भरोसेमंद इंटीरियर स्पेशलिस्ट"
+        : "The Trusted Interior Specialists in Nashik",
     why1Title: lang === "hi" ? "सीधे मास्टर कारीगर" : "Direct Master Craftsmen",
     why1Desc:
       lang === "hi"
@@ -334,7 +341,10 @@ function PublicLandingPage() {
         ? "हमारी टीम नासिक के हर प्रमुख इलाके में ऑन-साइट नाप, डिज़ाइन कंसल्टेशन और इंस्टॉलेशन करती है।"
         : "Our teams provide on-site measurement, design consultations, and installation in every major neighborhood of Nashik.",
     faqSub: lang === "hi" ? "अक्सर पूछे जाने वाले सवाल" : "Frequently Asked Questions",
-    faqTitle: lang === "hi" ? "नासिक में POP और PVC से जुड़े सवाल-जवाब" : "POP & PVC Interior FAQs in Nashik",
+    faqTitle:
+      lang === "hi"
+        ? "नासिक में POP और PVC से जुड़े सवाल-जवाब"
+        : "POP & PVC Interior FAQs in Nashik",
     ctaTitle:
       lang === "hi"
         ? "क्या आप अपने घर को खूबसूरत बनाने के लिए तैयार हैं?"
@@ -356,7 +366,7 @@ function PublicLandingPage() {
     const cleanArea = area.trim() || "Nashik";
 
     const message = encodeURIComponent(
-      `Hello Owais Interior Designer!\n\nI would like to get a free estimate and design catalog for:\n• Service: ${quoteService}\n• Property Type: ${propertyType}\n• Name: ${cleanName}\n• Contact: ${cleanPhone}\n• Location in Nashik: ${cleanArea}\n• Preferred Language: ${lang === "hi" ? "Hindi" : "English"}\n\nPlease contact me with quotation details.`
+      `Hello Owais Interior Designer!\n\nI would like to get a free estimate and design catalog for:\n• Service: ${quoteService}\n• Property Type: ${propertyType}\n• Name: ${cleanName}\n• Contact: ${cleanPhone}\n• Location in Nashik: ${cleanArea}\n• Preferred Language: ${lang === "hi" ? "Hindi" : "English"}\n\nPlease contact me with quotation details.`,
     );
     window.open(`https://wa.me/91${phonePrimary}?text=${message}`, "_blank");
   }
@@ -469,15 +479,16 @@ function PublicLandingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white pb-[calc(4.75rem+env(safe-area-inset-bottom,0px))] md:pb-0">
       {/* Top Banner - Royal Navy Blue */}
-      <aside aria-label="Announcement" className="border-b border-blue-800 bg-blue-900 px-3 py-1.5 sm:py-2 text-xs text-blue-100 shadow-xs">
+      <aside
+        aria-label="Announcement"
+        className="border-b border-blue-800 bg-blue-900 px-3 py-1.5 sm:py-2 text-xs text-blue-100 shadow-xs"
+      >
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0 flex-1">
             <span className="flex size-2 shrink-0 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium text-[11px] sm:text-xs leading-tight">
-              {t.topBanner}
-            </span>
+            <span className="font-medium text-[11px] sm:text-xs leading-tight">{t.topBanner}</span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -567,25 +578,28 @@ function PublicLandingPage() {
 
       {/* Header - Crisp White with Royal Blue Accents & Perfect Responsive Structure */}
       <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink min-w-0">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-2.5 xs:px-3 sm:px-6 py-2 sm:py-3">
+          <Link to="/" className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 shrink min-w-0">
             <img
               src={companyLogoUrl}
               alt="Owais Interior Designer Nashik Logo"
               className="size-8 sm:size-10 lg:size-11 rounded-full bg-white object-contain p-0.5 border-2 border-blue-600 shadow-md shadow-blue-600/10 shrink-0"
             />
             <div className="min-w-0">
-              <span className="block font-display text-sm sm:text-base lg:text-xl font-bold tracking-tight text-blue-950 truncate leading-tight">
+              <span className="block font-display text-[13px] xs:text-sm sm:text-base lg:text-xl font-bold tracking-tight text-blue-950 leading-tight whitespace-normal sm:whitespace-nowrap">
                 Owais Interior Designer
               </span>
-              <span className="block text-[9px] sm:text-[11px] font-semibold tracking-wider text-blue-600 uppercase truncate">
+              <span className="block text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-semibold tracking-wider text-blue-600 uppercase leading-none mt-0.5 whitespace-normal sm:whitespace-nowrap">
                 {t.tagline}
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav aria-label="Main Navigation" className="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600">
+          <nav
+            aria-label="Main Navigation"
+            className="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600"
+          >
             <a href="#services" className="hover:text-blue-600 transition-colors">
               {t.navServices}
             </a>
@@ -610,9 +624,11 @@ function PublicLandingPage() {
           </nav>
 
           {/* Header Action Buttons */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2.5 shrink-0">
             {/* Header Social Icons (Tablet & Desktop) */}
-            {(landingConfig.social?.instagram || landingConfig.social?.youtube || landingConfig.social?.facebook) && (
+            {(landingConfig.social?.instagram ||
+              landingConfig.social?.youtube ||
+              landingConfig.social?.facebook) && (
               <div className="hidden xl:flex items-center gap-1.5 pr-1 border-r border-slate-200">
                 {landingConfig.social?.instagram && (
                   <a
@@ -652,11 +668,11 @@ function PublicLandingPage() {
 
             <a
               href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
-                "Hello Owais Interior Designer, I found your website and would like to inquire about POP false ceiling and PVC work in Nashik."
+                "Hello Owais Interior Designer, I found your website and would like to inquire about POP false ceiling and PVC work in Nashik.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-700/20 hover:bg-emerald-800 transition-all shrink-0"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-2 xs:px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-md shadow-emerald-700/20 hover:bg-emerald-800 transition-all shrink-0"
               title="Chat on WhatsApp"
             >
               <MessageSquare className="size-3.5 sm:size-4 shrink-0" />
@@ -665,7 +681,7 @@ function PublicLandingPage() {
 
             <a
               href={`tel:+91${phonePrimary}`}
-              className="inline-flex items-center gap-1 sm:gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all shadow-xs shrink-0"
+              className="inline-flex items-center gap-1 sm:gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-2 xs:px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-blue-700 hover:bg-blue-600 hover:text-white transition-all shadow-xs shrink-0"
               title={`Call +91 ${phonePrimary}`}
             >
               <Phone className="size-3.5 sm:size-4 shrink-0" />
@@ -765,7 +781,9 @@ function PublicLandingPage() {
                   type="button"
                   onClick={() => setLang("en")}
                   className={`px-3 py-1 rounded text-xs font-bold transition-all ${
-                    lang === "en" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 hover:text-slate-900"
+                    lang === "en"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   English
@@ -774,7 +792,9 @@ function PublicLandingPage() {
                   type="button"
                   onClick={() => setLang("hi")}
                   className={`px-3 py-1 rounded text-xs font-bold transition-all ${
-                    lang === "hi" ? "bg-blue-600 text-white shadow-xs" : "text-slate-600 hover:text-slate-900"
+                    lang === "hi"
+                      ? "bg-blue-600 text-white shadow-xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   हिंदी
@@ -783,7 +803,9 @@ function PublicLandingPage() {
             </div>
 
             {/* Mobile Social Links in Drawer */}
-            {(landingConfig.social?.instagram || landingConfig.social?.youtube || landingConfig.social?.facebook) && (
+            {(landingConfig.social?.instagram ||
+              landingConfig.social?.youtube ||
+              landingConfig.social?.facebook) && (
               <div className="flex items-center justify-center gap-4 pt-2 border-t border-slate-100 text-slate-600">
                 {landingConfig.social?.instagram && (
                   <a
@@ -839,44 +861,59 @@ function PublicLandingPage() {
                 <span className="truncate">{t.badge}</span>
               </div>
 
-              <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2]">
-                {t.heroTitle1} <span className="text-blue-600">{t.heroTitlePop}</span> {t.heroTitleAnd}{" "}
-                <span className="text-blue-900">{t.heroTitlePvc}</span> {t.heroTitleCity}
+              <h1 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.2] break-words">
+                {t.heroTitle1} <span className="text-blue-600">{t.heroTitlePop}</span>{" "}
+                {t.heroTitleAnd} <span className="text-blue-900">{t.heroTitlePvc}</span>{" "}
+                {t.heroTitleCity}
               </h1>
 
-              <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed max-w-2xl break-words">
                 {t.heroDesc}
               </p>
 
               {/* Trust Badges - Responsive Grid (2 cols on mobile, 4 on desktop) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 pt-1">
-                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statExp}</div>
-                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statExpSub}</div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 xs:gap-2.5 sm:gap-3 pt-1">
+                <div className="rounded-xl border border-slate-200 bg-white p-2.5 xs:p-3 text-center shadow-xs min-w-0">
+                  <div className="text-base xs:text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">
+                    {t.statExp}
+                  </div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5 leading-tight">
+                    {t.statExpSub}
+                  </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">{t.statProj}</div>
-                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statProjSub}</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-2.5 xs:p-3 text-center shadow-xs min-w-0">
+                  <div className="text-base xs:text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600">
+                    {t.statProj}
+                  </div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5 leading-tight">
+                    {t.statProjSub}
+                  </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 bg-white p-3 text-center shadow-xs">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-700">{t.statWaterproof}</div>
-                  <div className="text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5">{t.statWaterproofSub}</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-2.5 xs:p-3 text-center shadow-xs min-w-0">
+                  <div className="text-base xs:text-lg sm:text-xl lg:text-2xl font-extrabold text-emerald-700">
+                    {t.statWaterproof}
+                  </div>
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs font-medium text-slate-500 mt-0.5 leading-tight">
+                    {t.statWaterproofSub}
+                  </div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setIsRatingModalOpen(true)}
-                  className="rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 p-3 text-center shadow-xs transition-all duration-200 cursor-pointer group text-left sm:text-center w-full"
+                  className="rounded-xl border border-blue-200 bg-blue-50/70 hover:bg-blue-100/80 p-2.5 xs:p-3 text-center shadow-xs transition-all duration-200 cursor-pointer group text-center w-full min-w-0"
                   title="Click to view genuine Google & Justdial ratings and customer reviews"
                 >
                   <div className="flex items-center justify-center gap-1">
-                    <span className="text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600 group-hover:scale-105 transition-transform inline-flex items-center gap-0.5">
+                    <span className="text-base xs:text-lg sm:text-xl lg:text-2xl font-extrabold text-blue-600 group-hover:scale-105 transition-transform inline-flex items-center gap-0.5">
                       {t.statRating}
                     </span>
                     <span className="size-1.5 rounded-full bg-blue-500 animate-ping inline-block sm:hidden" />
                   </div>
-                  <div className="text-[11px] sm:text-xs font-semibold text-blue-700 mt-0.5 flex items-center justify-center gap-1">
+                  <div className="text-[10px] xs:text-[11px] sm:text-xs font-semibold text-blue-700 mt-0.5 flex flex-wrap items-center justify-center gap-x-1 leading-tight">
                     <span>{t.statRatingSub}</span>
-                    <span className="text-[10px] text-blue-500 underline font-normal">(View)</span>
+                    <span className="text-[9.5px] xs:text-[10px] text-blue-500 underline font-normal shrink-0">
+                      (View)
+                    </span>
                   </div>
                 </button>
               </div>
@@ -885,22 +922,24 @@ function PublicLandingPage() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-2">
                 <a
                   href="#quote"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 sm:px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition-all text-center"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 xs:px-5 sm:px-6 py-3 xs:py-3.5 text-xs xs:text-sm font-bold text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700 transition-all text-center min-w-0"
                 >
-                  <span>{t.btnFreeEstimate}</span>
+                  <span className="truncate">{t.btnFreeEstimate}</span>
                   <ArrowRight className="size-4 shrink-0" />
                 </a>
                 <a
                   href={`tel:+91${phonePrimary}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400 transition-all text-center"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 xs:px-5 sm:px-6 py-3 xs:py-3.5 text-xs xs:text-sm font-semibold text-slate-800 shadow-xs hover:bg-slate-50 hover:border-slate-400 transition-all text-center min-w-0"
                 >
                   <Phone className="size-4 text-blue-600 shrink-0" />
-                  <span>{t.btnCall} +91 {phonePrimary}</span>
+                  <span className="truncate">
+                    {t.btnCall} +91 {phonePrimary}
+                  </span>
                 </a>
               </div>
 
-              <div className="flex items-center gap-2 text-xs font-medium text-slate-600 pt-1">
-                <CheckCircle2 className="size-4 text-emerald-700 shrink-0" />
+              <div className="flex items-start gap-2 text-xs font-medium text-slate-600 pt-1">
+                <CheckCircle2 className="size-4 text-emerald-700 shrink-0 mt-0.5" />
                 <span className="leading-snug">{t.trustLine}</span>
               </div>
             </div>
@@ -921,32 +960,30 @@ function PublicLandingPage() {
                     fetchPriority="high"
                     decoding="async"
                   />
-                  <div className="absolute top-3 left-3 flex items-center gap-2">
-                    <span className="rounded-full bg-blue-900/90 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md border border-blue-400/30">
+                  <div className="absolute top-2.5 sm:top-3 inset-x-2.5 sm:inset-x-3 flex items-center justify-between gap-1.5 pointer-events-none">
+                    <span className="rounded-full bg-blue-900/90 backdrop-blur-md px-2 xs:px-2.5 py-0.5 sm:py-1 text-[9px] xs:text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white shadow-md border border-blue-400/30 truncate max-w-[62%] sm:max-w-none">
                       {t.featuredBadge}
                     </span>
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <span className="rounded-full bg-emerald-700/95 backdrop-blur-md px-2.5 py-1 text-[10px] sm:text-[11px] font-bold text-white shadow-md border border-emerald-400/30">
+                    <span className="rounded-full bg-emerald-700/95 backdrop-blur-md px-2 xs:px-2.5 py-0.5 sm:py-1 text-[9px] xs:text-[10px] sm:text-[11px] font-bold text-white shadow-md border border-emerald-400/30 shrink-0">
                       ✓ {t.featuredCompleted}
                     </span>
                   </div>
                 </div>
 
                 {/* Clear uncropped Project Details bar directly below the photo */}
-                <div className="p-3.5 sm:p-4 bg-white border-t border-slate-100 flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold text-slate-900 truncate">
+                <div className="p-3 xs:p-3.5 sm:p-4 bg-white border-t border-slate-100 flex items-center justify-between gap-2 sm:gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs xs:text-sm font-bold text-slate-900 truncate">
                       Modern Living Room POP Ceiling
                     </p>
-                    <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
-                      <MapPin className="size-3.5 text-blue-600 shrink-0" />
+                    <p className="text-[11px] xs:text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
+                      <MapPin className="size-3 xs:size-3.5 text-blue-600 shrink-0" />
                       Gangapur Road, Nashik
                     </p>
                   </div>
                   <a
                     href="#gallery"
-                    className="shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 px-2.5 py-1.5 rounded-lg border border-blue-100 transition-colors"
+                    className="shrink-0 text-[11px] xs:text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 px-2 xs:px-2.5 py-1.5 rounded-lg border border-blue-100 transition-colors"
                   >
                     View All →
                   </a>
@@ -967,9 +1004,7 @@ function PublicLandingPage() {
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
               {t.servicesTitle}
             </h2>
-            <p className="text-xs sm:text-sm md:text-base text-slate-600">
-              {t.servicesDesc}
-            </p>
+            <p className="text-xs sm:text-sm md:text-base text-slate-600">{t.servicesDesc}</p>
           </div>
 
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
@@ -1010,7 +1045,9 @@ function PublicLandingPage() {
                       ))}
                     </ul>
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                      <span className="text-xs sm:text-sm font-bold text-blue-700">{svc.priceHint}</span>
+                      <span className="text-xs sm:text-sm font-bold text-blue-700">
+                        {svc.priceHint}
+                      </span>
                       <a
                         href="#quote"
                         className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-800"
@@ -1041,7 +1078,7 @@ function PublicLandingPage() {
             </div>
             <a
               href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
-                "Hello Owais Interior Designer, please share your latest false ceiling and PVC design photo catalogue."
+                "Hello Owais Interior Designer, please share your latest false ceiling and PVC design photo catalogue.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -1103,7 +1140,7 @@ function PublicLandingPage() {
                 <div className="p-3.5 sm:p-4 pt-0">
                   <a
                     href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
-                      `Hello Owais Interior Designer! I loved your project "${item.title}" in ${item.location}. Can you provide an estimate for a similar design?`
+                      `Hello Owais Interior Designer! I loved your project "${item.title}" in ${item.location}. Can you provide an estimate for a similar design?`,
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -1120,7 +1157,10 @@ function PublicLandingPage() {
       </section>
 
       {/* Free Quotation Form & WhatsApp Estimator - Crisp Clean Gradient */}
-      <section id="quote" className="py-16 sm:py-20 border-t border-slate-200/80 bg-gradient-to-br from-blue-50/60 via-white to-blue-50/40">
+      <section
+        id="quote"
+        className="py-16 sm:py-20 border-t border-slate-200/80 bg-gradient-to-br from-blue-50/60 via-white to-blue-50/40"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center">
             {/* Left Info */}
@@ -1142,9 +1182,7 @@ function PublicLandingPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">{t.quoteF1Title}</h3>
-                    <p className="text-xs text-slate-600">
-                      {t.quoteF1Desc}
-                    </p>
+                    <p className="text-xs text-slate-600">{t.quoteF1Desc}</p>
                   </div>
                 </div>
 
@@ -1154,9 +1192,7 @@ function PublicLandingPage() {
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">{t.quoteF2Title}</h3>
-                    <p className="text-xs text-slate-600">
-                      {t.quoteF2Desc}
-                    </p>
+                    <p className="text-xs text-slate-600">{t.quoteF2Desc}</p>
                   </div>
                 </div>
 
@@ -1167,7 +1203,8 @@ function PublicLandingPage() {
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">{t.quoteF3Title}</h3>
                     <p className="text-xs text-slate-600">
-                      Call directly at <strong className="text-blue-900 font-semibold">+91 {phonePrimary}</strong> or{" "}
+                      Call directly at{" "}
+                      <strong className="text-blue-900 font-semibold">+91 {phonePrimary}</strong> or{" "}
                       <strong className="text-blue-900 font-semibold">+91 {phoneSecondary}</strong>.
                     </p>
                   </div>
@@ -1178,18 +1215,19 @@ function PublicLandingPage() {
             {/* Right Form Card - White Card with Blue Accents */}
             <div className="lg:col-span-6">
               <Card className="border-slate-200 bg-white shadow-xl shadow-blue-900/5">
-                <CardContent className="p-6 sm:p-8">
+                <CardContent className="p-4 xs:p-6 sm:p-8">
                   <form onSubmit={handleWhatsAppSubmit} className="space-y-4">
                     <div className="border-b border-slate-100 pb-3">
                       <h3 className="text-lg font-bold text-blue-950">{t.quoteFormTitle}</h3>
-                      <p className="text-xs text-slate-500">
-                        {t.quoteFormSub}
-                      </p>
+                      <p className="text-xs text-slate-500">{t.quoteFormSub}</p>
                     </div>
 
                     <div className="grid gap-3.5 sm:gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
-                        <Label htmlFor="service-select" className="text-xs font-semibold text-slate-700">
+                        <Label
+                          htmlFor="service-select"
+                          className="text-xs font-semibold text-slate-700"
+                        >
                           {t.lblService}
                         </Label>
                         <select
@@ -1199,7 +1237,9 @@ function PublicLandingPage() {
                           className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-blue-600 focus:outline-hidden"
                         >
                           <option value="POP False Ceiling">POP False Ceiling</option>
-                          <option value="PVC Wall Paneling & Ceiling">PVC Wall Panels / Louvers</option>
+                          <option value="PVC Wall Paneling & Ceiling">
+                            PVC Wall Panels / Louvers
+                          </option>
                           <option value="Gypsum False Ceiling">Gypsum Board Ceiling</option>
                           <option value="Commercial Grid Ceiling">Commercial Grid Ceiling</option>
                           <option value="Full Home Interior Renovation">Full Home Interior</option>
@@ -1207,7 +1247,10 @@ function PublicLandingPage() {
                       </div>
 
                       <div className="space-y-1.5">
-                        <Label htmlFor="property-select" className="text-xs font-semibold text-slate-700">
+                        <Label
+                          htmlFor="property-select"
+                          className="text-xs font-semibold text-slate-700"
+                        >
                           {t.lblProperty}
                         </Label>
                         <select
@@ -1242,7 +1285,10 @@ function PublicLandingPage() {
 
                     <div className="grid gap-3.5 sm:gap-4 sm:grid-cols-2">
                       <div className="space-y-1.5">
-                        <Label htmlFor="cust-phone" className="text-xs font-semibold text-slate-700">
+                        <Label
+                          htmlFor="cust-phone"
+                          className="text-xs font-semibold text-slate-700"
+                        >
                           {t.lblPhone}
                         </Label>
                         <Input
@@ -1279,9 +1325,7 @@ function PublicLandingPage() {
                       <span className="truncate">{t.btnSendInquiry}</span>
                     </Button>
 
-                    <p className="text-center text-[11px] text-slate-500">
-                      {t.formGuar}
-                    </p>
+                    <p className="text-center text-[11px] text-slate-500">{t.formGuar}</p>
                   </form>
                 </CardContent>
               </Card>
@@ -1308,9 +1352,7 @@ function PublicLandingPage() {
                 <Award className="size-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">{t.why1Title}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {t.why1Desc}
-              </p>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.why1Desc}</p>
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
@@ -1318,9 +1360,7 @@ function PublicLandingPage() {
                 <ShieldCheck className="size-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">{t.why2Title}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {t.why2Desc}
-              </p>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.why2Desc}</p>
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
@@ -1328,9 +1368,7 @@ function PublicLandingPage() {
                 <Clock className="size-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">{t.why3Title}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {t.why3Desc}
-              </p>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.why3Desc}</p>
             </div>
 
             <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xs">
@@ -1338,9 +1376,7 @@ function PublicLandingPage() {
                 <Layers className="size-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">{t.why4Title}</h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {t.why4Desc}
-              </p>
+              <p className="text-xs text-slate-600 leading-relaxed">{t.why4Desc}</p>
             </div>
           </div>
         </div>
@@ -1356,9 +1392,7 @@ function PublicLandingPage() {
             <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900">
               {t.areasTitle}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">
-              {t.areasDesc}
-            </p>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto">{t.areasDesc}</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 max-w-4xl mx-auto">
@@ -1430,7 +1464,7 @@ function PublicLandingPage() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md sm:max-w-none mx-auto">
             <a
               href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
-                "Hello Owais Interior Designer, I would like to schedule a site visit for POP / PVC work in Nashik."
+                "Hello Owais Interior Designer, I would like to schedule a site visit for POP / PVC work in Nashik.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -1444,37 +1478,39 @@ function PublicLandingPage() {
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white px-6 py-3.5 text-xs sm:text-sm font-bold text-blue-950 shadow-md hover:bg-blue-50 transition-all text-center"
             >
               <Phone className="size-4 text-blue-600 shrink-0" />
-              <span>{t.btnCall} +91 {phonePrimary}</span>
+              <span>
+                {t.btnCall} +91 {phonePrimary}
+              </span>
             </a>
           </div>
         </div>
       </section>
 
       {/* Mobile Sticky Quick Action Bar (Never Moves / Always in Fixed Place) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center gap-2 shadow-2xl">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] flex items-center gap-2 shadow-2xl">
         <a
           href={`https://wa.me/91${phonePrimary}?text=${encodeURIComponent(
-            "Hello Owais Interior Designer, I would like to get a quote for POP / PVC work in Nashik."
+            "Hello Owais Interior Designer, I would like to get a quote for POP / PVC work in Nashik.",
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-emerald-800"
+          className="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-emerald-800"
         >
-          <MessageSquare className="size-4" />
-          <span>WhatsApp</span>
+          <MessageSquare className="size-4 shrink-0" />
+          <span className="truncate">WhatsApp</span>
         </a>
 
         <a
           href={`tel:+91${phonePrimary}`}
-          className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-blue-700"
+          className="flex-1 min-w-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 py-2.5 px-2 text-xs font-bold text-white shadow-md active:bg-blue-700"
         >
-          <Phone className="size-4" />
-          <span>Call Now</span>
+          <Phone className="size-4 shrink-0" />
+          <span className="truncate">Call Now</span>
         </a>
 
         <a
           href="#quote"
-          className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2.5 text-slate-700"
+          className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2.5 text-slate-700 hover:bg-slate-200 shrink-0"
           title="Estimate"
         >
           <Send className="size-4 text-blue-600" />
@@ -1602,9 +1638,15 @@ function PublicLandingPage() {
           </div>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-300">
-            <p>© {new Date().getFullYear()} Owais Interior Designer. All rights reserved. Nashik, Maharashtra.</p>
+            <p>
+              © {new Date().getFullYear()} Owais Interior Designer. All rights reserved. Nashik,
+              Maharashtra.
+            </p>
             <p className="text-slate-300">
-              Keywords: <span className="text-slate-200">owaisinterior • nashikpop • pvc nashik • false ceiling contractor</span>
+              Keywords:{" "}
+              <span className="text-slate-200">
+                owaisinterior • nashikpop • pvc nashik • false ceiling contractor
+              </span>
             </p>
           </div>
         </div>
@@ -1634,7 +1676,10 @@ function PublicLandingPage() {
                   <Star className="size-5 fill-amber-300" />
                 </div>
                 <div>
-                  <h3 id="rating-modal-title" className="text-base sm:text-lg font-bold text-white leading-tight">
+                  <h3
+                    id="rating-modal-title"
+                    className="text-base sm:text-lg font-bold text-white leading-tight"
+                  >
                     Customer Ratings &amp; Reviews
                   </h3>
                   <p className="text-xs text-blue-200">
@@ -1673,9 +1718,7 @@ function PublicLandingPage() {
 
                     <div className="flex items-baseline gap-2 pt-1">
                       <span className="text-3xl font-extrabold text-blue-600">4.9</span>
-                      <div className="flex items-center text-amber-500 text-sm">
-                        {"★★★★★"}
-                      </div>
+                      <div className="flex items-center text-amber-500 text-sm">{"★★★★★"}</div>
                     </div>
                     <p className="text-xs font-medium text-slate-500">
                       Owais Interior Designer, Nashik
@@ -1710,9 +1753,7 @@ function PublicLandingPage() {
 
                     <div className="flex items-baseline gap-2 pt-1">
                       <span className="text-3xl font-extrabold text-amber-600">4.7</span>
-                      <div className="flex items-center text-amber-500 text-sm">
-                        {"★★★★★"}
-                      </div>
+                      <div className="flex items-center text-amber-500 text-sm">{"★★★★★"}</div>
                       <span className="text-xs text-slate-500">(43 Ratings)</span>
                     </div>
                     <p className="text-xs font-medium text-slate-500">
@@ -1738,7 +1779,9 @@ function PublicLandingPage() {
                   <h4 className="text-xs font-bold uppercase tracking-wider text-blue-700">
                     Top Customer Experiences
                   </h4>
-                  <span className="text-[11px] font-medium text-slate-500">100% Genuine Feedback</span>
+                  <span className="text-[11px] font-medium text-slate-500">
+                    100% Genuine Feedback
+                  </span>
                 </div>
 
                 <div className="space-y-2.5">
@@ -1749,12 +1792,15 @@ function PublicLandingPage() {
                         <div className="size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center border border-blue-200">
                           BK
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-slate-900">Bilal Khan</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">
+                          Bilal Khan
+                        </span>
                       </div>
                       <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
-                      &ldquo;Every thing ok I liked his work And I would like to thanks owais khan for making more professional my office&rdquo;
+                      &ldquo;Every thing ok I liked his work And I would like to thanks owais khan
+                      for making more professional my office&rdquo;
                     </p>
                   </div>
 
@@ -1765,12 +1811,15 @@ function PublicLandingPage() {
                         <div className="size-7 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex items-center justify-center border border-emerald-200">
                           SK
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-slate-900">Shradhal Kumavat</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">
+                          Shradhal Kumavat
+                        </span>
                       </div>
                       <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
-                      &ldquo;Owais Interior is great! Their prices are very good, and I saved money. The service is quick, and they finished my project fast.&rdquo;
+                      &ldquo;Owais Interior is great! Their prices are very good, and I saved money.
+                      The service is quick, and they finished my project fast.&rdquo;
                     </p>
                   </div>
 
@@ -1786,7 +1835,8 @@ function PublicLandingPage() {
                       <div className="text-amber-500 text-xs">★★★★★</div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-600 italic leading-relaxed">
-                      &ldquo;I had a great experience with Owais Interior... They responded very quickly to my request, which I really liked. Excellent service!&rdquo;
+                      &ldquo;I had a great experience with Owais Interior... They responded very
+                      quickly to my request, which I really liked. Excellent service!&rdquo;
                     </p>
                   </div>
                 </div>
@@ -1795,9 +1845,7 @@ function PublicLandingPage() {
 
             {/* Footer action: Crisp White & Royal Blue Accent */}
             <div className="border-t border-slate-200 bg-white px-5 py-3.5 flex items-center justify-between gap-3 text-xs">
-              <span className="text-slate-600">
-                Want to book a free site inspection?
-              </span>
+              <span className="text-slate-600">Want to book a free site inspection?</span>
               <a
                 href="#quote"
                 onClick={() => setIsRatingModalOpen(false)}

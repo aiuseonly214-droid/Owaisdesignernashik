@@ -28,7 +28,10 @@ function EmployeeLoginPage() {
   const [fullName, setFullName] = useState("");
 
   const { data: company } = useQuery({ queryKey: ["company"], queryFn: fetchCompany });
-  const logoUrl = company?.logo_url || DEFAULT_LOGO_URL;
+  const logoUrl =
+    company?.logo_url && !company.logo_url.startsWith("data:image")
+      ? company.logo_url
+      : DEFAULT_LOGO_URL;
 
   useEffect(() => {
     let active = true;
@@ -53,9 +56,9 @@ function EmployeeLoginPage() {
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    
+
     await supabase.auth.signOut();
-    
+
     const { error } = await supabase.auth.signInWithPassword({
       email: email.trim().toLowerCase(),
       password,
@@ -73,9 +76,9 @@ function EmployeeLoginPage() {
   async function requestAccess(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    
+
     await supabase.auth.signOut();
-    
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,

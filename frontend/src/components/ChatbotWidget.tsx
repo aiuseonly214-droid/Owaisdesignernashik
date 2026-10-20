@@ -32,25 +32,47 @@ interface ChatbotWidgetProps {
 
 const FAQ_KNOWLEDGE_BASE = [
   {
-    keywords: ["rate", "cost", "price", "kitna", "kharcha", "bhav", "charges", "sq ft", "square feet"],
+    keywords: [
+      "rate",
+      "cost",
+      "price",
+      "kitna",
+      "kharcha",
+      "bhav",
+      "charges",
+      "sq ft",
+      "square feet",
+    ],
     category: "Pricing & Rates",
     answer:
       "💰 **Rates & Pricing (Nashik Direct Craftsman Rates):**\n\n• **POP False Ceiling:** ₹85 – ₹130 / sq.ft (Designs, Cove LEDs ke anusaar)\n• **PVC Wall Panels:** Starting from ₹75 / sq.ft (100% Waterproof)\n• **Gypsum Ceiling (Saint-Gobain):** Starting from ₹95 / sq.ft\n• **Commercial / Grid Tiles:** Custom quotes according to area\n\n✨ Free site inspection ke baad hum exact itemized estimate provide karte hain!",
-    quickReplies: ["Free Site Visit Kaise Book Kare?", "POP vs PVC difference kya hai?", "Call directly"],
+    quickReplies: [
+      "Free Site Visit Kaise Book Kare?",
+      "POP vs PVC difference kya hai?",
+      "Call directly",
+    ],
   },
   {
     keywords: ["pop", "plaster of paris", "cove", "ceiling", "false ceiling"],
     category: "POP False Ceiling",
     answer:
       "✨ **POP False Ceiling Services:**\n\nHum high-quality Plaster of Paris false ceiling banate hain with:\n- Designer Cove LED Lighting channels\n- Modern geometric, curved & layered patterns\n- Fan & Chandelier heavy-load reinforcement\n- Ultra-smooth paint finish\n\nNashik ke Wadala, Gangapur Rd, College Rd, Indira Nagar sabhi jagah hamara kaam chalu hai!",
-    quickReplies: ["POP Ceiling ka rate kya hai?", "Kitna time lagta hai?", "Photos / Gallery dekhni hai"],
+    quickReplies: [
+      "POP Ceiling ka rate kya hai?",
+      "Kitna time lagta hai?",
+      "Photos / Gallery dekhni hai",
+    ],
   },
   {
     keywords: ["pvc", "waterproof", "damp", "seelan", "nami", "wall panel", "louver", "louvers"],
     category: "PVC Wall Panels",
     answer:
       "🛡️ **PVC Wall Panels & Ceiling (100% Waterproof):**\n\nNashik me deewaro ki nami (moisture/seelan) ke liye PVC best solution hai:\n- 100% Waterproof & Termite-Proof (Deemak nahi lagti)\n- 24–48 hours me fast installation\n- No paint smell or dust\n- Woodgrain, Marble finish & Fluted Louvers available!\n\nLiving Room TV units, Bedroom feature walls, aur Kitchen me bohot popular hai.",
-    quickReplies: ["PVC ka rate kya hai?", "POP vs PVC me kaunsa best hai?", "Site visit book karein"],
+    quickReplies: [
+      "PVC ka rate kya hai?",
+      "POP vs PVC me kaunsa best hai?",
+      "Site visit book karein",
+    ],
   },
   {
     keywords: ["time", "duration", "din", "kitne din", "how long", "speed"],
@@ -60,7 +82,17 @@ const FAQ_KNOWLEDGE_BASE = [
     quickReplies: ["Rates kya hain?", "Free Site Visit Kaise Book Kare?"],
   },
   {
-    keywords: ["visit", "inspection", "site visit", "nap", "measurement", "estimate", "quotation", "quote", "book"],
+    keywords: [
+      "visit",
+      "inspection",
+      "site visit",
+      "nap",
+      "measurement",
+      "estimate",
+      "quotation",
+      "quote",
+      "book",
+    ],
     category: "Free Site Visit",
     answer:
       "📐 **Free Site Visit & Measurement in Nashik:**\n\nHanji! Owais Interior Designer Nashik me kisi bhi area me **100% FREE Site Visit & Measurement** provide karta hai.\n\nHum actual material samples lekar aapke ghar/site par aate hain aur exact measurement karke instant estimate dete hain.",
@@ -72,7 +104,18 @@ const FAQ_KNOWLEDGE_BASE = [
     },
   },
   {
-    keywords: ["area", "location", "kaha", "where", "service area", "nashik", "wadala", "indira nagar", "gangapur", "panchavati"],
+    keywords: [
+      "area",
+      "location",
+      "kaha",
+      "where",
+      "service area",
+      "nashik",
+      "wadala",
+      "indira nagar",
+      "gangapur",
+      "panchavati",
+    ],
     category: "Service Areas",
     answer:
       "📍 **Service Locations (Across Entire Nashik):**\n\nHum poore Nashik me services dete hain:\n• Wadala Naka & Rahmat Nagar\n• Gangapur Road & College Road\n• Indira Nagar & Govind Nagar\n• Panchavati & Nashik Road\n• Pathardi Phata, Ambad MIDC & Satpur MIDC\n• Deolali Camp & Dwarka\n\nNashik me kahin bhi ho, free visit available hai!",
@@ -262,7 +305,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
   return (
     <>
       {/* Floating Toggle Button */}
-      <div className="fixed bottom-18 md:bottom-6 right-4 sm:right-6 z-50 flex items-center">
+      <div className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] md:bottom-6 right-3 sm:right-6 z-40 md:z-50 flex items-center">
         {!isOpen && (
           <div className="hidden sm:flex items-center gap-2 mr-3 px-3 py-1.5 rounded-full bg-white/95 text-slate-800 text-xs font-semibold shadow-lg border border-slate-200 animate-bounce">
             <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -273,17 +316,17 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
         <button
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? "Close AI Chatbot" : "Open AI Chatbot"}
-          className={`group relative flex size-13 sm:size-14 items-center justify-center rounded-full shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 ${
+          className={`group relative flex size-12 sm:size-14 items-center justify-center rounded-full shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-400 ${
             isOpen
               ? "bg-slate-900 text-white hover:bg-slate-800 rotate-90"
               : "bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white hover:scale-105 hover:shadow-blue-500/50"
           }`}
         >
           {isOpen ? (
-            <X className="size-6 transition-transform" />
+            <X className="size-5 sm:size-6 transition-transform" />
           ) : (
             <>
-              <MessageSquare className="size-6 transition-transform group-hover:scale-110" />
+              <MessageSquare className="size-5 sm:size-6 transition-transform group-hover:scale-110" />
               <span className="absolute -top-1 -right-1 flex size-4">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-4 rounded-full bg-emerald-500 text-[9px] font-bold text-white items-center justify-center">
@@ -297,7 +340,7 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
 
       {/* Chat Window Dialog */}
       {isOpen && (
-        <div className="fixed bottom-20 md:bottom-24 right-2 sm:right-6 z-50 flex w-[calc(100vw-1rem)] sm:w-[400px] h-[550px] sm:h-[580px] max-h-[82vh] flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xl transition-all animate-in fade-in slide-in-from-bottom-5 duration-200">
+        <div className="fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] md:bottom-24 right-2 sm:right-6 left-2 sm:left-auto z-50 flex w-[calc(100vw-1rem)] sm:w-[400px] max-w-[420px] h-[min(540px,calc(100dvh-6.5rem-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)))] max-h-[calc(100dvh-6.5rem)] flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xl transition-all animate-in fade-in slide-in-from-bottom-5 duration-200">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-blue-800 bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 px-4 py-3 text-white">
             <div className="flex items-center gap-3">
@@ -367,7 +410,11 @@ export function ChatbotWidget({ companyPhone = "7756043214" }: ChatbotWidgetProp
                         : "bg-blue-900 text-amber-300"
                     }`}
                   >
-                    {msg.sender === "user" ? <User className="size-3.5" /> : <Bot className="size-3.5" />}
+                    {msg.sender === "user" ? (
+                      <User className="size-3.5" />
+                    ) : (
+                      <Bot className="size-3.5" />
+                    )}
                   </div>
 
                   <div

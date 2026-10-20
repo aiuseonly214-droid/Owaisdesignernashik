@@ -67,10 +67,8 @@ async function fetchPublicDocVerification(type: string, idOrCode: string) {
 
   // ── FALLBACK PATH: Direct table query (requires anon RLS policies) ──────────
   // Used only when the verify_document RPC has not been applied to the database.
-  const table =
-    type === "quotation" ? "quotations" : type === "invoice" ? "invoices" : "receipts";
-  const isUuid =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(trimmedId);
+  const table = type === "quotation" ? "quotations" : type === "invoice" ? "invoices" : "receipts";
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(trimmedId);
   const column = isUuid ? "id" : "code";
 
   const selectFields =
@@ -123,16 +121,18 @@ function VerifyDocPage() {
     type === "quotation" ? "Quotation" : type === "invoice" ? "Invoice" : "Payment Receipt";
 
   const totalValue =
-    type === "receipt"
-      ? doc?.amount_received
-      : doc?.grand_total ?? doc?.total_amount;
+    type === "receipt" ? doc?.amount_received : (doc?.grand_total ?? doc?.total_amount);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-100 to-slate-200 py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-lg space-y-6">
         <div className="text-center">
           <img
-            src={company?.logo_url || DEFAULT_LOGO_URL}
+            src={
+              company?.logo_url && !company.logo_url.startsWith("data:image")
+                ? company.logo_url
+                : DEFAULT_LOGO_URL
+            }
             alt={company?.name || "Owais Interior Designer"}
             className="mx-auto mb-3 size-16 rounded-full bg-white object-contain p-1 border-2 border-blue-500/20 shadow-md"
           />
@@ -173,23 +173,35 @@ function VerifyDocPage() {
             <CardContent className="pt-6 space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3 rounded-lg bg-slate-50 p-4 border border-slate-100">
                 <div>
-                  <span className="text-xs text-slate-500 uppercase tracking-wider block">Document Type</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider block">
+                    Document Type
+                  </span>
                   <span className="font-semibold text-slate-900">{typeLabel}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 uppercase tracking-wider block">Document Ref</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider block">
+                    Document Ref
+                  </span>
                   <span className="font-mono font-medium text-slate-900">{doc.code}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 uppercase tracking-wider block">Issued Date</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider block">
+                    Issued Date
+                  </span>
                   <span className="font-medium text-slate-800">{formatDate(doc.date)}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-500 uppercase tracking-wider block">Status</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider block">
+                    Status
+                  </span>
                   {(() => {
-                    const st = statusStyle(doc.status || (type === "receipt" ? "paid" : "approved"));
+                    const st = statusStyle(
+                      doc.status || (type === "receipt" ? "paid" : "approved"),
+                    );
                     return (
-                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium mt-0.5 ${st.badge}`}>
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium mt-0.5 ${st.badge}`}
+                      >
                         <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
                         {st.label}
                       </span>
