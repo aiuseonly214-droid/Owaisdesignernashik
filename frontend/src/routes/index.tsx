@@ -850,7 +850,7 @@ function PublicLandingPage() {
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-slate-50 pt-8 sm:pt-12 pb-16 sm:pb-20 lg:pt-20 lg:pb-28 border-b border-slate-100">
         {/* Soft blue ambient glow accents - contained within bounds */}
         <div className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[320px] sm:size-[500px] lg:size-[600px] -translate-x-1/2 rounded-full bg-blue-400/15 blur-[100px] sm:blur-[140px]" />
-        <div className="pointer-events-none absolute top-1/3 -right-20 -z-10 size-[250px] sm:size-[400px] rounded-full bg-sky-300/20 blur-[90px] sm:blur-[130px]" />
+        <div className="pointer-events-none absolute top-1/3 right-0 -z-10 size-[250px] sm:size-[400px] rounded-full bg-sky-300/20 blur-[90px] sm:blur-[130px]" />
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-12 lg:items-center">
