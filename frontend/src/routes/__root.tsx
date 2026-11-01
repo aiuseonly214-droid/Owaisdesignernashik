@@ -72,6 +72,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "msvalidate.01", content: "29EC7A85901CDA734F4795E79C1DE619" },
       { title: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior" },
       {
         name: "description",

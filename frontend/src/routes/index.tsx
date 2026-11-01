@@ -42,6 +42,7 @@ export const Route = createFileRoute("/")({
       { rel: "canonical", href: "https://owais-interior.vercel.app/" },
     ],
     meta: [
+      { name: "msvalidate.01", content: "29EC7A85901CDA734F4795E79C1DE619" },
       {
         title: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior",
       },
