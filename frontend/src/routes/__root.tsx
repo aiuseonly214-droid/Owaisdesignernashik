@@ -96,8 +96,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Expert PVC false ceiling, POP designer ceilings, and interior design work in Nashik. Affordable and stylish home decor by Owais Interior Designer.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://owais-interior.vercel.app/" },
       { property: "og:locale", content: "en_IN" },
-      { property: "og:image", content: "/images/pop-ceiling-nashik.jpg" },
+      { property: "og:image", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { property: "og:image:secure_url", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Best PVC False Ceiling & Interior Designer in Nashik - Owais Interior" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
@@ -108,9 +114,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Looking for expert PVC ceiling, false ceiling & interior design work in Nashik? Call +91 7756043214 for free site estimate.",
       },
-      { name: "twitter:image", content: "/images/pop-ceiling-nashik.jpg" },
+      { name: "twitter:image", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { name: "twitter:image:alt", content: "Best PVC False Ceiling & Interior Designer in Nashik - Owais Interior" },
     ],
     links: [
+      { rel: "canonical", href: "https://owais-interior.vercel.app/" },
       {
         rel: "stylesheet",
         href: appCss,

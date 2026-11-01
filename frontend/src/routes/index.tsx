@@ -38,6 +38,9 @@ import { fetchCompany, parseLandingConfig, DEFAULT_LANDING_CONFIG } from "@/lib/
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    links: [
+      { rel: "canonical", href: "https://owais-interior.vercel.app/" },
+    ],
     meta: [
       {
         title: "Best PVC Ceiling & Interior Designer in Nashik | Owais Interior",
@@ -64,7 +67,13 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://owais-interior.vercel.app/" },
-      { property: "og:image", content: "/images/pop-ceiling-nashik.jpg" },
+      { property: "og:locale", content: "en_IN" },
+      { property: "og:image", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { property: "og:image:secure_url", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Best PVC False Ceiling & Interior Designer in Nashik - Owais Interior" },
       { name: "twitter:card", content: "summary_large_image" },
       {
         name: "twitter:title",
@@ -75,7 +84,8 @@ export const Route = createFileRoute("/")({
         content:
           "Looking for expert PVC ceiling, false ceiling and interior design work in Nashik? Contact Owais Interior for stylish and affordable home decor.",
       },
-      { name: "twitter:image", content: "/images/pop-ceiling-nashik.jpg" },
+      { name: "twitter:image", content: "https://owais-interior.vercel.app/images/pop-ceiling-nashik.jpg" },
+      { name: "twitter:image:alt", content: "Best PVC False Ceiling & Interior Designer in Nashik - Owais Interior" },
     ],
     scripts: [
       {
